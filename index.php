@@ -27,6 +27,8 @@
 $PATH_LOCAL = getcwd();
 $PATH_LOG   = "/log/github-webooks.log";
 
+echo md5(time());
+
 if(isset($_POST['payload'], $_GET['idkeys3'])) {
 
 	ob_start();
