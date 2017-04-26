@@ -30,6 +30,10 @@ $PATH_LOG   = "/log/github-webooks.log";
 
 if(isset($_POST['payload'], $_GET['idkeys3'])) {
 
+
+	// if webhooks registered
+	// 
+	// 
 	ob_start();
 
 	#
@@ -40,13 +44,19 @@ if(isset($_POST['payload'], $_GET['idkeys3'])) {
 
 	#
 	#
-	#
+	# Picking up the database
+	# 
 	$COMANDO = "export GIT_PATH={$path_git_projeto} && /bin/sh {$PATH_LOCAL}/script-deploy.sh 2>&1";
 
 	#
 	#
 	#
 	$last_line2 = shell_exec($COMANDO);
+
+	#
+	#
+	#
+	print_r($_GET);
 
 	#
 	#
