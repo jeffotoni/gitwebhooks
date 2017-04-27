@@ -52,12 +52,29 @@ define("PATH_SCRIPT", "scripts/");
 // 
 // 
 
-$ARRAY_PROJECT_GIT = [
+
+define("ARRAY_PROJECT_GIT", [
 
     "gitwebhooks"        => "../../../",
     "s3archiviobrasil"     => "../../../../",
     "s3rafaelmendonca"    => "../../../../",
-];
+
+    ]
+);
+
+//
+//
+//
+
+define("TEMPLATE_DEPLOY", [
+
+    "beta"        => "template-script-deploy",
+    "test"        => "template-script-deploy",
+    "product"     => "template-script-deploy",
+
+    ]
+   );
+
 
 // 
 // 

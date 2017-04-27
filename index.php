@@ -27,7 +27,7 @@
 // 
 // 
 
-require_once "config/setconfig.php";
+require_once "config/setconfig.conf.php";
 
 // 
 // 
@@ -114,7 +114,7 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
             [
 
             "REPOSITORY" => $REPOSITORY,
-            "PATH"       => $ARRAY_PROJECT_GIT[$REPOSITORY],
+            "PATH"       => ARRAY_PROJECT_GIT[$REPOSITORY],
             "BRANCH"     => $BRANCH,
             ]
         )

@@ -27,7 +27,7 @@
 // 
 // 
 
-require_once "config/setconfig.php";
+require_once "config/setconfig.conf.php";
 
 // 
 // 
@@ -49,14 +49,14 @@ $api->WScript()->LoadTemplate(
     [
 
                 "REPOSITORY" => $REPOSITORY,
-                "PATH"       => $ARRAY_PROJECT_GIT[$REPOSITORY],
+                "PATH"       => ARRAY_PROJECT_GIT[$REPOSITORY],
                 "BRANCH"     => $BRANCH,
             ]
 )
 
    ->LoadFileScript(true)
             ->Save()
-            ->Execute()
+            ->Execute(false)
             ->DelFile()
             ->LoadLog();
 // 

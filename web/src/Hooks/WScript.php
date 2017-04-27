@@ -37,16 +37,6 @@ namespace web\src\Hooks;
 class WScript
 {
     
-    const TEMPLATE_DEPLOY = [
-
-    "beta"        => "template-script-deploy",
-    "test"         => "template-script-deploy",
-    "product"     => "template-script-deploy",
-    ];
-
-    // 
-    // 
-    // 
 
     private static $msgconcat = "";
     
@@ -97,8 +87,11 @@ class WScript
 
     private static function GetTemplate()
     {
-        /* use `self` to access class constants from inside the class definition. */
-        return self::TEMPLATE_DEPLOY;
+        // 
+        // use `self` to access class constants from inside the class definition. 
+        // 
+
+        return TEMPLATE_DEPLOY;
     } 
 
     // 
@@ -304,25 +297,63 @@ class WScript
     // 
     // 
     // 
-    public function Execute()
+    public function Execute($exec=true)
     {
 
 
         if(is_file(self::$pathScript)) {
 
-            // 
-            // 
-            // 
+            //
+            //
+            //
 
-            $COMANDO = "/bin/sh ".self::$pathScript." 2>&1";
+            if($exec) {
 
-            // 
-            // 
-            // 
+            	// 
+	            // 
+	            // 
 
-            $LAST_LINE = shell_exec($COMANDO);
+	            $COMANDO = "/bin/sh ".self::$pathScript." 2>&1";
 
-            self::$msgconcat .= " {".$LAST_LINE."}";
+	            // 
+	            // Executes even the generated template
+	            // 
+
+	            $LAST_LINE = shell_exec($COMANDO);
+
+
+            	//
+            	// 
+            	//
+
+            	self::$msgconcat .= " {".$LAST_LINE."}";
+            	
+            } else {
+
+            	//
+            	//
+            	//
+
+            	$SIMULACAO_SH = PATH_LOCAL."templates/simulacao-example.sh";
+            	
+            	//
+            	// Only simulate
+            	//
+
+            	$COMANDO = "/bin/sh ".$SIMULACAO_SH." 2>&1";
+
+            	//
+            	// Run a simulation
+            	//
+
+            	$LAST_LINE = shell_exec($COMANDO);
+
+            	//
+            	//
+            	//
+
+            	self::$msgconcat .= " {".$LAST_LINE."}";
+            }
 
             // 
             // 
