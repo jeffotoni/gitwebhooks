@@ -47,7 +47,7 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 	// 
 	//
 
-	ob_start();
+	//ob_start();
 
 	$XGitHubEvent 	= $_SERVER['X-GitHub-Event'];
 	$UserAgent 		= $_SERVER['User-Agent'];
@@ -81,6 +81,10 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 	echo "\n";
 	echo $rep_name;
 	echo "\n";
+
+	print_r($_SERVER);
+	
+	print_r($json);
 
 	#
 	#
