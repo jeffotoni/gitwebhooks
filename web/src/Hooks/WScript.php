@@ -149,8 +149,9 @@ class WScript
                 #
                 #
                 #
-                return $this;
-            }
+            } else {exit("erro, not found array LoadTemplate..");}
+
+            return $this;
 
         } else {exit("erro, not found file [{$file_template}]..");}
 	}
