@@ -73,7 +73,7 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 	echo "\n";
 	echo $rep_name;
 	echo "\n";
-	
+
 	#
 	#
 	#
@@ -104,5 +104,5 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 	#
 	#
 	//$string = ob_get_clean();
-	file_put_contents(PATH_LOCAL. "" .PATH_LOG , $string . PHP_EOL, FILE_APPEND);
+	file_put_contents(PATH_FISICO. PATH_LOG , $string . PHP_EOL, FILE_APPEND);
 }
