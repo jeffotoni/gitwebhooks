@@ -17,12 +17,12 @@ cd `pwd`
 #
 #
 #
-echo "{REPOSITORY}"
+echo "gitwebhooks"
 
 #
 #
 #
-cd {PATH}{REPOSITORY}
+cd ../../../gitwebhooks
 
 
 #
@@ -34,7 +34,7 @@ echo "checkout $BRANCH"
 #
 #
 #
-git checkout {BRANCH}
+git checkout beta
 
 #
 #
@@ -49,7 +49,7 @@ echo "Starting pull.."
 #
 #
 #
-git pull origin {BRANCH}
+git pull origin beta
 
 
 echo "\End deploy!!"

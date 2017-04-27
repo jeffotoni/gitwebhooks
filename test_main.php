@@ -30,15 +30,26 @@ require_once "config/setconfig.php";
 
 #
 #
+$BRANCH = "beta";
+
+#
+#
+$REPOSITORY = "gitwebhooks";
+
+#
+#
 #
 $api->WScript()->LoadTemplate([
 
-		"REPOSITORY" => "repositorio1",
-		"BRANCH" => "beta",
-	])
-	->LoadFileScript(true)
-		->Save()
-			->Show();
+				"REPOSITORY" => $REPOSITORY,
+				"PATH"		 => $ARRAY_PROJECT_GIT[$REPOSITORY],
+				"BRANCH" 	 => $BRANCH,
+			])
+
+		->LoadFileScript(true)
+			->Save()
+					->LoadLog()->Show();
+
 
 #
 #

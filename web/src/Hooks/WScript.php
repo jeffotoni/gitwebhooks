@@ -45,7 +45,20 @@ class WScript
 		"product" 	=> "template-script-deploy",
 	];
 
+	#
+	#
+	#
 	private static $msgconcat = "";
+	
+
+	#
+	#
+	#
+	private static $show_msg_load = "";
+
+	#
+	#
+	#
 	private static $msg;
 
 	#
@@ -196,7 +209,7 @@ class WScript
 	public function Save(){
 
 		#
-		# /var/www/gitvirtualhosts/beta/gitwebhooks/scripts/s3rafaelmendonca-beta.sh
+		# 
 		#
 		if(file_put_contents(self::$pathScript, self::$TemplateContent)){
 
@@ -259,9 +272,11 @@ class WScript
 	public function LoadLog(){
 
 
-		$string_log = date("Y-m-d [H:i]") . " - " . self::$msgconcat . PHP_EOL;
+		self::$show_msg_load = date("Y-m-d [H:i]") . " - " . self::$msgconcat . PHP_EOL;
 
-		file_put_contents(PATH_LOG, $string_log , FILE_APPEND);
+		file_put_contents(PATH_LOG, self::$show_msg_load , FILE_APPEND);
+
+		return $this;
 	}
 
 	#
@@ -269,8 +284,13 @@ class WScript
 	#
 	public function Show(){
 
-		print "\n";
-		print self::$msg;
-		print "\n";
+		if(self::$show_msg_load){
+
+			print "\n";
+			print self::$show_msg_load;
+			print "\n";
+			
+		}
+		
 	}
 }
