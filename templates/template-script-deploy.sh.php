@@ -7,15 +7,31 @@
 # since: Version 0.1
 #
 
-echo "\nDeploying"
+echo "\nDeploy being done!!"
 
 #
 #
 #
 cd `pwd`
-echo `pwd`
+
+#
+#
+#
+echo {REPOSITORY}
+
+#
+#
+#
 cd ../../../../{REPOSITORY}
 
+
+#
+#
+#
+echo "checkout $BRANCH"
+
+
+#
 #
 #
 git checkout {BRANCH}
@@ -24,6 +40,13 @@ git checkout {BRANCH}
 #
 git reset --hard HEAD
 
+
+#
+#
+#
+echo "Starting pull.."
+
+#
 #
 #
 git pull origin {BRANCH}
