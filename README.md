@@ -12,7 +12,7 @@ The server is written in php and we do not use any library, the code is simple a
 
 We use psr2, autoloading, namespaces to write our server, our model instantiates class execution time with this technique we can instantiate classes and their methods in a light and practical way and with the possibility of doing Injection.
 
-* [Github, gitlab or bitbucket ?](#gitseveral)
+* [Github, Gitlab or Bitbucket ?](#gitseveral)
 
 * [Setting up our server to deploy](#deploy)
 
@@ -25,8 +25,6 @@ We use psr2, autoloading, namespaces to write our server, our model instantiates
 * [ssh, http ou https?](#sshttp)
 
 * [Configure ssh github](#github)
-
-* [Configure ssh server](#gitserver)
 
 * [Configure ssh server](#gitserver)
 
