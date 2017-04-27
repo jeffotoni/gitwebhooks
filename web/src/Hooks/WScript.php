@@ -45,6 +45,7 @@ class WScript
 		"product" 	=> "template-script-deploy",
 	];
 
+	private static $msgconcat = "";
 	private static $msg;
 
 	#
@@ -74,7 +75,9 @@ class WScript
         return self::TEMPLATE_DEPLOY;
     } 
 
-	/** [LoadTemplate description] */
+	#
+	#
+	#
 	public function LoadTemplate($_ARRAY, $modelo = "beta") {
 
 		#
@@ -98,11 +101,14 @@ class WScript
         if (is_file($file_template)) 
         {
 
+        	self::$msgconcat .= "{$modelo} {$modeloName}";
         	#
         	#
         	#
         	$NOME_SCRIPT = $_ARRAY["REPOSITORY"] . "-".$modelo;
 
+
+        	self::$msgconcat .= " {$_ARRAY["REPOSITORY"]}";
         	#
         	#
         	#
@@ -149,7 +155,9 @@ class WScript
         } else {exit("erro, not found file [{$file_template}]..");}
 	}
 
-	/** [LoadFileScript description] */
+	#
+	#
+	#
 	public function LoadFileScript($show=false) {
 
 		
@@ -171,11 +179,15 @@ class WScript
 
 			self::$pathScript = $PATH_SCRIPT;
 
+			self::$msgconcat .= " {".self::$pathScript."}";
+
 			return $this;
 		}
 	}
 
-	/** [Save description] */
+	#
+	#
+	#
 	public function Save(){
 
 		#
@@ -183,17 +195,71 @@ class WScript
 		#
 		if(file_put_contents(self::$pathScript, self::$TemplateContent)){
 
+			#
+			#
+			#
 			self::$msg = "Saved successfully!";
+
+			self::$msgconcat .= " {".self::$msg."}";
 
 		} else {
 
+			#
+			#
+			#
 			self::$msg = "Error while saving!";
+
+			self::$msgconcat .= " {".self::$msg."}";
 		}
 
 		return $this;
 	}
 
-	/** [Save description] */
+	#
+	#
+	#
+	public function Execute(){
+
+
+		if(is_file(self::$pathScript)){
+
+			#
+			#
+			# 
+			$COMANDO = "/bin/sh ".self::$pathScript." 2>&1";
+
+			#
+			#
+			#
+			$LAST_LINE = shell_exec($COMANDO);
+
+			self::$msgconcat .= " {".$LAST_LINE."}";
+
+			#
+			#
+			#
+			print "\n{$LAST_LINE}\n";
+
+		} else {
+
+			exit("erro, not found file [".self::$pathScript."]..");
+		}
+	}
+
+	#
+	#
+	#
+	public function LoadLog(){
+
+
+		$string_log = date("Y-m-d [H:i]") . " - " . self::$msgconcat . PHP_EOL;
+
+		file_put_contents(PATH_FISICO. PATH_LOG, $string_log , FILE_APPEND);
+	}
+
+	#
+	#
+	#
 	public function Show(){
 
 		print "\n";
