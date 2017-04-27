@@ -12,6 +12,27 @@ The server is written in php and we do not use any library, the code is simple a
 
 We use psr2, autoloading, namespaces to write our server, our model instantiates class execution time with this technique we can instantiate classes and their methods in a light and practical way and with the possibility of doing Injection.
 
+* [Github, gitlab or bitbucket ?](#gitseveral)
+
+* [Setting up our server to deploy](#deploy)
+
+* [Why do not we use git hooks?](#githooks)
+
+* [Why choose Webhooks?](#webhooks)
+
+* [Configuring Access Keys](#acesskey)
+
+* [ssh, http ou https?](#sshttp)
+
+* [Configure ssh github](#github)
+
+* [Configure ssh server](#gitserver)
+
+* [Configure ssh server](#gitserver)
+
+* [Structure](#structure)
+
+
 ## Structure of the program
 
 The $api object is special it can create and instantiate any class that is in the web/src/Hooks structure, so: $api = special object, WScript() = Class, LoadTemplate() == class method.
