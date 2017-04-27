@@ -89,6 +89,8 @@ But you can extend exactly here what you want for your scripts
 
 ```
 
+This is our template, but you can create it the way you want it, confore your real need
+
 ```sh
 #!/bin/bash
 
