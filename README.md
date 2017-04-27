@@ -29,39 +29,60 @@ The $api object is special it can create and instantiate any class that is in th
             "BRANCH"     => $BRANCH,
             ]
         )
-        	// 
-        	// Generate script from template
-        	//
+        // 
+        // Generate script from template
+        //
 
-            ->LoadFileScript()
+        ->LoadFileScript()
 
-           // 
-        	// Prepares to run, saves script to disk
-        	//
+        // 
+        // Prepares to run, saves script to disk
+        //
 
-            ->Save()
+        ->Save()
 
-           // 
-        	// It runs the script
-        	//
+        // 
+        // It runs the script
+        //
         	
-            ->Execute()
+        ->Execute(false) // false => simule | true execute your script template
 
-           // 
-        	// Possibility to delete file, it is not mandatory
-        	//
+         // 
+        // Possibility to delete file, it is not mandatory
+        //
 
-            ->DelFile()
+          ->DelFile()
 
-           // 
-        	// Generates log on disk so you can keep track of all executions
-        	//
+         // 
+        // Generates log on disk so you can keep track of all executions
+        //
 
-            ->LoadLog();
+        ->LoadLog();
     
 ```
 
 ## Template .sh
+
+The template you can create your own, the way you want, you can assemble your vector to build it dynamically.
+
+Standard Model:
+
+  [
+    "REPOSITORY" => $ REPOSITORY,
+    "PATH" => $ ARRAY_PROJECT_GIT [$ REPOSITORY],
+    "BRANCH" => $ BRANCH,
+]
+
+But you can extend exactly here what you want for your scripts
+
+[
+   "REPOSITORY" => $ REPOSITORY,
+   "PATH" => $ ARRAY_PROJECT_GIT [$ REPOSITORY],
+   "BRANCH" => $ BRANCH,
+   "CMD1" => "git checkout deploy",
+   "CMD2" => "git merge master",
+   "CMD3" => 'echo "Executing merge!"'
+]
 
 ```sh
 #!/bin/bash
