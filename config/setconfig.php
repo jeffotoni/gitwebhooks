@@ -49,9 +49,9 @@ define("PATH_SCRIPT", "scripts/");
 #
 $ARRAY_PROJECT_GIT = [
 
-	"gitwebhooks",
-	"s3archiviobrasil",
-	"s3rafaelmendonca",
+	"gitwebhooks"		=> "../../../",
+	"s3archiviobrasil" 	=> "../../../../",
+	"s3rafaelmendonca"	=> "../../../../",
 ];
 
 #

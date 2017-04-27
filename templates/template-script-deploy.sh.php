@@ -22,7 +22,7 @@ echo {REPOSITORY}
 #
 #
 #
-cd ../../../../{REPOSITORY}
+cd {PATH}{REPOSITORY}
 
 
 #
