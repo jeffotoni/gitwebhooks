@@ -297,6 +297,7 @@ class WScript
     // 
     // 
     // 
+
     public function Execute($exec=true)
     {
 
@@ -327,40 +328,15 @@ class WScript
             	//
 
             	self::$msgconcat .= " {".$LAST_LINE."}";
-            	
-            } else {
 
-            	//
-            	//
-            	//
+            	// 
+	            // 
+    	        // 
 
-            	$SIMULACAO_SH = PATH_LOCAL."templates/simulacao-example.sh";
-            	
-            	//
-            	// Only simulate
-            	//
-
-            	$COMANDO = "/bin/sh ".$SIMULACAO_SH." 2>&1";
-
-            	//
-            	// Run a simulation
-            	//
-
-            	$LAST_LINE = shell_exec($COMANDO);
-
-            	//
-            	//
-            	//
-
-            	self::$msgconcat .= " {".$LAST_LINE."}";
+        	    print "\n{$LAST_LINE}\n";
             }
 
-            // 
-            // 
-            // 
-
-            print "\n{$LAST_LINE}\n";
-
+            
         } else {
 
             exit("erro, not found file [".self::$pathScript."]..");

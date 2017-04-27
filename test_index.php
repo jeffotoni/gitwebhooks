@@ -52,35 +52,35 @@ $api->WScript()->LoadTemplate(
                 "PATH"       => ARRAY_PROJECT_GIT[$REPOSITORY],
                 "BRANCH"     => $BRANCH,
             ]
-)
+,  "simulation" )
 
    ->LoadFileScript(true)
             ->Save()
-            ->Execute(false)
+            ->Execute(true)
             ->DelFile()
             ->LoadLog();
 // 
 // 
 // 
 
-$api->WScript()->LoadTemplate(
-    [
+// $api->WScript()->LoadTemplate(
+//     [
 
-        "REPOSITORY" => "repositorio2",
-        "BRANCH" => "beta",
-    ]
-)
-    ->LoadFileScript();
+//         "REPOSITORY" => "repositorio2",
+//         "BRANCH" => "beta",
+//     ]
+// )
+//     ->LoadFileScript();
 
-// 
-// 
-// 
+// // 
+// // 
+// // 
     
-$api->WScript()->LoadTemplate(
-    [
+// $api->WScript()->LoadTemplate(
+//     [
 
-        "REPOSITORY" => "repositorio3",
-        "BRANCH" => "beta",
-    ]
-)
-    ->LoadFileScript();
+//         "REPOSITORY" => "repositorio3",
+//         "BRANCH" => "beta",
+//     ]
+// )
+//     ->LoadFileScript();

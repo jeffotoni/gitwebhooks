@@ -4,7 +4,7 @@ utor: @jeffotoni
 # since: Version 0.1
 #
 
-echo "\nDeploy being done!!"
+echo "\nWe're just pretending"
 
 #
 #
@@ -24,12 +24,12 @@ echo `pwd`
 #
 #
 #
-echo "{REPOSITORY}"
+echo "gitwebhooks"
 
 #
 #
 #
-cd {PATH}{REPOSITORY}
+cd ../../../gitwebhooks
 
 #
 #
@@ -39,4 +39,14 @@ echo "git branch"
 #
 #
 #
-git {BRANCH}
+git branch
+
+#
+#
+#
+echo "git log"
+
+#
+#
+#
+git log

@@ -71,6 +71,7 @@ define("TEMPLATE_DEPLOY", [
     "beta"        => "template-script-deploy",
     "test"        => "template-script-deploy",
     "product"     => "template-script-deploy",
+    "simulation"  => "simulation-example",
 
     ]
    );
