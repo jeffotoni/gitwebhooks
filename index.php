@@ -49,8 +49,11 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 
 	//ob_start();
 
-	$XGitHubEvent 	= $_SERVER['X-GitHub-Event'];
-	$UserAgent 		= $_SERVER['User-Agent'];
+	$XGitHubEvent 	= $_SERVER['HTTP_X_GITHUB_EVENT'];
+
+	$UserAgent 		= $_SERVER['HTTP_USER_AGENT'];
+
+	$HTTP_X_HUB_SIGNATURE = $_SERVER['HTTP_X_HUB_SIGNATURE'];
 
 
 	echo "\n";
@@ -61,14 +64,18 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 	echo $UserAgent;
 	echo "\n";
 
+	echo "\n";
+	echo $HTTP_X_HUB_SIGNATURE;
+	echo "\n";
+
 	#
 	#
 	#
 	$json = json_decode($_POST['payload'], true);
 
 	$ref 		= $json["ref"];
-	$rep_id 	= $json->repository->id;
-	$rep_name 	= $json->repository->name;
+	$rep_id 	= $json["repository"]["id"];
+	$rep_name 	= $json["repository"]["name"];
 
 	echo "\n";
 	echo $ref;
@@ -83,7 +90,7 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 	echo "\n";
 
 	print_r($_SERVER);
-	
+
 	print_r($json);
 
 	#
