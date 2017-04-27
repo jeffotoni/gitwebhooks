@@ -87,7 +87,7 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 		#
 		#
 		#
-		$api()->WScript()->LoadTemplate([
+		$api->WScript()->LoadTemplate([
 
 				"REPOSITORY" => $REPOSITORY,
 				"BRANCH" => $BRANCH,
