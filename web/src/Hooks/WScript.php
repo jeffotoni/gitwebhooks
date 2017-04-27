@@ -261,7 +261,7 @@ class WScript
 
 		$string_log = date("Y-m-d [H:i]") . " - " . self::$msgconcat . PHP_EOL;
 
-		file_put_contents(PATH_FISICO. PATH_LOG, $string_log , FILE_APPEND);
+		file_put_contents(PATH_LOG, $string_log , FILE_APPEND);
 	}
 
 	#

@@ -33,7 +33,7 @@ require_once "config/setconfig.php";
 #
 $api->WScript()->LoadTemplate([
 
-		"REPOSITORY" => "s3archiviobrasilxx",
+		"REPOSITORY" => "repositorio1",
 		"BRANCH" => "beta",
 	])
 	->LoadFileScript(true)
@@ -45,17 +45,17 @@ $api->WScript()->LoadTemplate([
 #
 $api->WScript()->LoadTemplate([
 
-		"REPOSITORY" => "s3archiviobrasil",
+		"REPOSITORY" => "repositorio2",
 		"BRANCH" => "beta",
 	])
-->LoadFileScript(true);
+->LoadFileScript();
 
 #
 #
 #
 $api->WScript()->LoadTemplate([
 
-		"REPOSITORY" => "s3rafaelmendonca",
+		"REPOSITORY" => "repositorio3",
 		"BRANCH" => "beta",
 	])
-->LoadFileScript(true);
+->LoadFileScript();

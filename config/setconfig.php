@@ -32,7 +32,7 @@ define("PATH_FISICO", getcwd() . "/");
 #
 #
 #
-define("PATH_LOG", "/log/github-webooks.log");
+define("PATH_LOG", PATH_FISICO. "log/github-webooks.log");
 
 #
 #

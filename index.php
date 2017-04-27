@@ -61,9 +61,9 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 	#
 	$json = json_decode($vetorJson, true);
 
-	$ref 		= $json["ref"];
-	$rep_id 	= $json["repository"]["id"];
-	$rep_name 	= $json["repository"]["name"];
+	$ref 		= (string) $json["ref"];
+	$rep_id 	= (string) $json["repository"]["id"];
+	$rep_name 	= (string) $json["repository"]["name"];
 
 	#
 	#
@@ -81,7 +81,8 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 	#
 	$BRANCH 	= $ref_branch;
 
-	if($REPOSITORY && $BRANCH){
+	if($REPOSITORY && $BRANCH)
+	{
 
 		#
 		#
