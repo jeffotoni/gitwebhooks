@@ -66,15 +66,17 @@ The $api object is special it can create and instantiate any class that is in th
 The template you can create your own, the way you want, you can assemble your vector to build it dynamically.
 
 Standard Model:
-
+```php
   [
     "REPOSITORY" => $ REPOSITORY,
     "PATH" => $ ARRAY_PROJECT_GIT [$ REPOSITORY],
     "BRANCH" => $ BRANCH,
 ]
 
+```
 But you can extend exactly here what you want for your scripts
 
+```php
 [
    "REPOSITORY" => $ REPOSITORY,
    "PATH" => $ ARRAY_PROJECT_GIT [$ REPOSITORY],
@@ -83,6 +85,8 @@ But you can extend exactly here what you want for your scripts
    "CMD2" => "git merge master",
    "CMD3" => 'echo "Executing merge!"'
 ]
+
+```
 
 ```sh
 #!/bin/bash
