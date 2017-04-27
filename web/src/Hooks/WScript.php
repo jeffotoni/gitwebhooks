@@ -181,8 +181,12 @@ class WScript
 
 			self::$msgconcat .= " {".self::$pathScript."}";
 
-			return $this;
+		} else {
+
+			exit("erro, not found file [{".self::$pathTemplate."}]..");
 		}
+
+		return $this;
 	}
 
 	#
@@ -244,6 +248,8 @@ class WScript
 
 			exit("erro, not found file [".self::$pathScript."]..");
 		}
+
+		return $this;
 	}
 
 	#

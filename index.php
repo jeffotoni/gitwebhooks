@@ -74,21 +74,21 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 	#
 	#
 	#
-	$GIT_PATH 	= $rep_name;
+	$REPOSITORY 	= $rep_name;
 
 	#
 	#
 	#
 	$BRANCH 	= $ref_branch;
 
-	if($GIT_PATH && $BRANCH){
+	if($REPOSITORY && $BRANCH){
 
 		#
 		#
 		#
 		$api()->WebHooks()->LoadTemplate([
 
-				"REPOSITORY" => $GIT_PATH,
+				"REPOSITORY" => $REPOSITORY,
 				"BRANCH" => $BRANCH,
 			])
 
