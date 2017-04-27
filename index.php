@@ -118,11 +118,34 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
             "BRANCH"     => $BRANCH,
             ]
         )
+        	// 
+        	// Generate script from template
+        	//
 
             ->LoadFileScript()
+
+            // 
+        	// Prepares to run, saves script to disk
+        	//
+
             ->Save()
+
+            // 
+        	// It runs the script
+        	//
+        	
             ->Execute()
+
+            // 
+        	// Possibility to delete file, it is not mandatory
+        	//
+
             ->DelFile()
+
+            // 
+        	// Generates log on disk so you can keep track of all executions
+        	//
+
             ->LoadLog();
     }
 }
