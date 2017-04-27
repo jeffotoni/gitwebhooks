@@ -23,274 +23,411 @@
 * 
 */
 
-#
-#
-#
+// 
+// 
+// 
+
 namespace web\src\Hooks;
 
 
-/**
-* 
-* WScript 
-*
-* 
-*/
+//
+//
+//
+
 class WScript
 {
-	
-	const TEMPLATE_DEPLOY = [
+    
+    const TEMPLATE_DEPLOY = [
 
-		"beta"		=> "template-script-deploy",
-		"test" 		=> "template-script-deploy",
-		"product" 	=> "template-script-deploy",
-	];
+    "beta"        => "template-script-deploy",
+    "test"         => "template-script-deploy",
+    "product"     => "template-script-deploy",
+    ];
 
-	#
-	#
-	#
-	private static $msgconcat = "";
-	
+    // 
+    // 
+    // 
 
-	#
-	#
-	#
-	private static $show_msg_load = "";
+    private static $msgconcat = "";
+    
 
-	#
-	#
-	#
-	private static $msg;
+    // 
+    // 
+    // 
 
-	#
-	#
-	#
-	private static $TemplateContent ;
+    private static $show_msg_load = "";
 
-	#
-	#
-	#
-	private static $pathTemplate; 
+    // 
+    // 
+    // 
 
-	#
-	#
-	#
-	private static $pathScript; 
+    private static $msg;
+
+    // 
+    // 
+    // 
+
+    private static $TemplateContent ;
+
+    // 
+    // 
+    // 
+
+    private static $pathTemplate; 
+
+    // 
+    // 
+    // 
+
+    private static $pathScript; 
 
 
-	function __construct()
-	{
-		# code...
-	}
+    //
+    //
+    //
 
-	private static function GetTemplate()
+    function __construct()
+    {
+        // code...
+    }
+
+    //
+    //
+    //
+
+    private static function GetTemplate()
     {
         /* use `self` to access class constants from inside the class definition. */
         return self::TEMPLATE_DEPLOY;
     } 
 
-	#
-	#
-	#
-	public function LoadTemplate($_ARRAY, $modelo = "beta") {
+    // 
+    // 
+    // 
 
-		#
-		#
-		#
-		$path = PATH_FISICO;
+    public function LoadTemplate($_ARRAY, $modelo = "beta") 
+    {
 
-		#
-		#
-		#
-		$modeloName = isset(self::GetTemplate()[$modelo]) ? self::GetTemplate()[$modelo] : "beta";
+        // 
+        // 
+        // 
 
-		#
-		#
-		#
-		$file_template = "{$path}/" . PATH_TEMPLATE . "{$modeloName}.sh.php";
+        $path = PATH_LOCAL;
 
-		#
-		#
-		#
-        if (is_file($file_template)) 
-        {
+        // 
+        // 
+        // 
 
-        	self::$msgconcat .= "{$modelo} {$modeloName}";
-        	#
-        	#
-        	#
-        	$NOME_SCRIPT = $_ARRAY["REPOSITORY"] . "-".$modelo;
+        $modeloName = isset(self::GetTemplate()[$modelo]) ? self::GetTemplate()[$modelo] : "beta";
+
+        // 
+        // 
+        // 
+
+        $file_template = "{$path}/" . PATH_TEMPLATE . "{$modeloName}.sh.php";
+
+        // 
+        // 
+        // 
+
+        if (is_file($file_template)) {
+
+        	//
+        	//
+        	//
+
+            self::$msgconcat .= "{$modelo} {$modeloName}";
+
+            // 
+            // 
+            // 
+
+            $NOME_SCRIPT = $_ARRAY["REPOSITORY"] . "-".$modelo;
 
 
-        	self::$msgconcat .= " {$_ARRAY["REPOSITORY"]}";
-        	#
-        	#
-        	#
-        	self::$pathScript = PATH_SCRIPT . $NOME_SCRIPT . ".sh";
+            //
+            //
+            //
 
-        	#
-        	#
-        	#
-        	self::$pathTemplate = $file_template;
+            self::$msgconcat .= " {$_ARRAY["REPOSITORY"]}";
+            
 
-        	#
-        	#
-        	#
+            // 
+            // 
+            // 
+
+            self::$pathScript = PATH_SCRIPT . $NOME_SCRIPT . ".sh";
+
+            // 
+            // 
+            // 
+
+            self::$pathTemplate = $file_template;
+
+            // 
+            // 
+            // 
+
             $content = file_get_contents($file_template);
 
 
-            #
-            #
-            #
+            // 
+            // 
+            // 
+
             if (is_array($_ARRAY)) {
 
-            	#
-            	#
-            	#
+                // 
+                // 
+                // 
+
                 foreach ($_ARRAY as $key => $value) {
-                 	
-                 	#
-                 	#   
-                 	#         
-                    $content = str_replace('{'.strtoupper($key).'}', $value, $content) ;
+                     
+                    // 
+                    // 
+                    // 
+
+                    $content = str_replace('{'.strtoupper($key).'}', $value, $content);
                 }
 
-                #
-                #
-                #
+                // 
+                // 
+                // 
+
                 self::$TemplateContent = $content;
 
-                #
-                #
-                #
-            } else {exit("erro, not found array LoadTemplate..");}
+                // 
+                // 
+                // 
+                // 
+            } else {
+
+            	exit("erro, not found array LoadTemplate..");
+            }
 
             return $this;
 
-        } else {exit("erro, not found file [{$file_template}]..");}
-	}
+        } else {
 
-	#
-	#
-	#
-	public function LoadFileScript($show=false) {
+        	exit("erro, not found file [{$file_template}]..");
+        }
+    }
 
-		
-		#
-		#
-		#
-		if(self::$TemplateContent && is_file(self::$pathTemplate)) {
+    // 
+    // 
+    // 
 
-			#
-			#
-			#
-			if($show)
-				print_r(self::$TemplateContent);
+    public function LoadFileScript($show=false) 
+    {
 
-			#
-			#
-			#
-			$PATH_SCRIPT = PATH_FISICO . self::$pathScript;
+        
+        // 
+        // 
+        // 
 
-			self::$pathScript = $PATH_SCRIPT;
+        if(self::$TemplateContent && is_file(self::$pathTemplate)) {
 
-			self::$msgconcat .= " {".self::$pathScript."}";
+            // 
+            // 
+            // 
 
-		} else {
+            if($show) {
 
-			exit("erro, not found file [{".self::$pathTemplate."}]..");
-		}
+                print_r(self::$TemplateContent); 
+            }
 
-		return $this;
-	}
+            // 
+            // 
+            // 
 
-	#
-	#
-	#
-	public function Save(){
+            $PATH_SCRIPT = PATH_LOCAL . self::$pathScript;
 
-		#
-		# 
-		#
-		if(file_put_contents(self::$pathScript, self::$TemplateContent)){
+            //
+            //
+            //
 
-			#
-			#
-			#
-			self::$msg = "Saved successfully!";
+            self::$pathScript = $PATH_SCRIPT;
 
-			self::$msgconcat .= " {".self::$msg."}";
+            //
+            //
+            //
 
-		} else {
+            self::$msgconcat .= " {".self::$pathScript."}";
 
-			#
-			#
-			#
-			self::$msg = "Error while saving!";
+        } else {
 
-			self::$msgconcat .= " {".self::$msg."}";
-		}
+            exit("erro, not found file [{".self::$pathTemplate."}]..");
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
-	#
-	#
-	#
-	public function Execute(){
+    // 
+    // 
+    // 
 
+    public function Save()
+    {
 
-		if(is_file(self::$pathScript)){
+        // 
+        // 
+        // 
 
-			#
-			#
-			# 
-			$COMANDO = "/bin/sh ".self::$pathScript." 2>&1";
+        if(file_put_contents(self::$pathScript, self::$TemplateContent)) {
 
-			#
-			#
-			#
-			$LAST_LINE = shell_exec($COMANDO);
+            // 
+            // 
+            // 
 
-			self::$msgconcat .= " {".$LAST_LINE."}";
+            self::$msg = "Saved successfully!";
 
-			#
-			#
-			#
-			print "\n{$LAST_LINE}\n";
+            //
+            //
+            //
 
-		} else {
+            self::$msgconcat .= " {".self::$msg."}";
 
-			exit("erro, not found file [".self::$pathScript."]..");
-		}
+        } else {
 
-		return $this;
-	}
+            // 
+            // 
+            // 
 
-	#
-	#
-	#
-	public function LoadLog(){
+            self::$msg = "Error while saving!";
+
+            self::$msgconcat .= " {".self::$msg."}";
+        }
+
+        return $this;
+    }
+
+    // 
+    // 
+    // 
+    public function Execute()
+    {
 
 
-		self::$show_msg_load = date("Y-m-d [H:i]") . " - " . self::$msgconcat . PHP_EOL;
+        if(is_file(self::$pathScript)) {
 
-		file_put_contents(PATH_LOG, self::$show_msg_load , FILE_APPEND);
+            // 
+            // 
+            // 
 
-		return $this;
-	}
+            $COMANDO = "/bin/sh ".self::$pathScript." 2>&1";
 
-	#
-	#
-	#
-	public function Show(){
+            // 
+            // 
+            // 
 
-		if(self::$show_msg_load){
+            $LAST_LINE = shell_exec($COMANDO);
 
-			print "\n";
-			print self::$show_msg_load;
-			print "\n";
-			
-		}
-		
-	}
+            self::$msgconcat .= " {".$LAST_LINE."}";
+
+            // 
+            // 
+            // 
+
+            print "\n{$LAST_LINE}\n";
+
+        } else {
+
+            exit("erro, not found file [".self::$pathScript."]..");
+        }
+
+        return $this;
+    }
+
+    //
+    //
+    //
+
+    public function DelFile(){
+
+    	//
+    	//
+    	//
+
+    	if(self::$pathScript && is_file(self::$pathScript)) {
+
+    		if(@unlink(self::$pathScript)) {
+
+    			$filescriptTmp = explode("/", self::$pathScript);
+    			$filescript = end($filescriptTmp);
+
+    			//
+    			//
+    			//
+
+    			self::$msgconcat .= " File removed [{$filescript}]!";
+
+    		} else {
+
+
+    			$filescriptTmp = explode("/", self::$pathScript);
+    			$filescript = end($filescriptTmp);
+
+    			//
+    			//
+    			//
+
+    			self::$msgconcat .= " Error while trying to remove file:[{$filescript}]";
+
+    		}
+    	}
+
+    	return $this;
+    }
+
+
+    // 
+    // 
+    // 
+
+    public function LoadLog()
+    {
+
+    	//
+    	//
+    	//
+
+        self::$show_msg_load = date("Y-m-d [H:i]") . " - " . self::$msgconcat . PHP_EOL;
+
+        //
+        //
+        //
+
+        file_put_contents(PATH_LOG, self::$show_msg_load, FILE_APPEND);
+
+        //
+        //
+        //
+
+        return $this;
+    }
+
+    // 
+    // 
+    // 
+
+    public function Show()
+    {
+
+    	//
+    	//
+    	//
+
+        if(self::$show_msg_load) {
+
+        	//
+        	//
+        	//
+
+            print "\n";
+            print self::$show_msg_load;
+            print "\n";
+            
+        }
+        
+    }
 }

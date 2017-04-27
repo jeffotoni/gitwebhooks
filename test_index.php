@@ -23,50 +23,64 @@
 * 
 */
 
-#
-#
-#
+// 
+// 
+// 
+
 require_once "config/setconfig.php";
 
-#
-#
+// 
+// 
+// 
+
 $BRANCH = "beta";
 
-#
-#
+// 
+// 
+// 
+
 $REPOSITORY = "gitwebhooks";
 
-#
-#
-#
-$api->WScript()->LoadTemplate([
+// 
+// 
+// 
 
-				"REPOSITORY" => $REPOSITORY,
-				"PATH"		 => $ARRAY_PROJECT_GIT[$REPOSITORY],
-				"BRANCH" 	 => $BRANCH,
-			])
+$api->WScript()->LoadTemplate(
+    [
 
-		->LoadFileScript(true)
-			->Save()
-					->LoadLog()->Show();
+                "REPOSITORY" => $REPOSITORY,
+                "PATH"       => $ARRAY_PROJECT_GIT[$REPOSITORY],
+                "BRANCH"     => $BRANCH,
+            ]
+)
 
+   ->LoadFileScript(true)
+            ->Save()
+            ->Execute()
+            ->DelFile()
+            ->LoadLog();
+// 
+// 
+// 
 
-#
-#
-#
-$api->WScript()->LoadTemplate([
+$api->WScript()->LoadTemplate(
+    [
 
-		"REPOSITORY" => "repositorio2",
-		"BRANCH" => "beta",
-	])
-->LoadFileScript();
+        "REPOSITORY" => "repositorio2",
+        "BRANCH" => "beta",
+    ]
+)
+    ->LoadFileScript();
 
-#
-#
-#
-$api->WScript()->LoadTemplate([
+// 
+// 
+// 
+    
+$api->WScript()->LoadTemplate(
+    [
 
-		"REPOSITORY" => "repositorio3",
-		"BRANCH" => "beta",
-	])
-->LoadFileScript();
+        "REPOSITORY" => "repositorio3",
+        "BRANCH" => "beta",
+    ]
+)
+    ->LoadFileScript();

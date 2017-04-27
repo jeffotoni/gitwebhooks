@@ -23,228 +23,269 @@
 * 
 */
 
-#
-#
-#
-#
+// 
+// 
+// 
+// 
 
 namespace web\src\Hooks;
 
-/**
-* 
-* Auto Class 
-*
-* 
-*/
+//
+//
+//
+
 class Api
 {
 
-	#
-	#
-	#
-	const NameSpaceApi = "web\src\Hooks\\";
+    // 
+    // 
+    // 
 
-	const NameSpaceCollect = [
+    const NameSpaceApi = "web\src\Hooks\\";
 
-		"Api" => "web\src\Hooks\\",
-	];
+    //
+    //
+    //
 
-	#
-	#
-	#
-	private static $_REGIS = array();
+    const NameSpaceCollect = [
 
-	#
-	#
-	#
-	private static $nomeNameSpace;
+    "Api" => "web\src\Hooks\\",
 
-	#
-	#
-	#
-	private static $PATH_INSTANCE = "";
+    ];
 
-	#
-	#
-	#
-	private static $CLASS_INSTANCE = "";
+    // 
+    // 
+    // 
 
-	#
-	#
-	#
-	public function __construct($instance=null){
-		
+    private static $_REGIS = array();
 
-		#
-		#
-		#
-		if(!defined("PATH_FISICO_API"))
-		define("PATH_FISICO_API", getcwd() . "/" . trim(str_replace("\\", "/", self::NameSpaceCollect["Api"]), "/"));
+    // 
+    // 
+    // 
 
-		#
-		#
-		#
-		self::SAutoLoaderPath();
+    private static $nomeNameSpace;
 
-		#
-		#
-		#
-		spl_autoload_register(array( $this, 's3AutoLoaderNsp' ));
+    // 
+    // 
+    // 
 
-	}
+    private static $PATH_INSTANCE = "";
 
+    // 
+    // 
+    // 
 
-	#
-	#
-	#
-	private static function SAutoLoaderPath(){
+    private static $CLASS_INSTANCE = "";
 
-		#
-		#
-		#
-		chdir(dirname(__FILE__));
+    // 
+    // 
+    // 
 
-		#
-		#
-		#
-		$realPath = realPath("");
+    public function __construct($instance=null)
+    {
+        
 
-		#
-		#
-		#
-		self::$PATH_INSTANCE = $realPath;
+        // 
+        // 
+        // 
+
+        if(!defined("PATH_LOCAL_API")) {
+
+            define("PATH_LOCAL_API", getcwd() . "/" . trim(str_replace("\\", "/", self::NameSpaceCollect["Api"]), "/")); 
+        }
+
+        // 
+        // 
+        // 
+
+        self::SAutoLoaderPath();
+
+        // 
+        // 
+        // 
+
+        spl_autoload_register(array( $this, 's3AutoLoaderNsp' ));
+
+    }
 
 
-		#
-		#
-		#
-		self::$CLASS_INSTANCE = str_replace( PATH_FISICO_API, "", self::$PATH_INSTANCE );
+    // 
+    // 
+    // 
 
-		#
-		#
-		#
-		if( !is_dir(self::$PATH_INSTANCE)){ exit("\n\nnot path!!\n");}
+    private static function SAutoLoaderPath()
+    {
 
-	}
+        // 
+        // 
+        // 
 
-	/**
-	* Metodo ser carregado dinamicamente
-	* @param unknown_type $_CLASS
-	*/
-	private function s3AutoLoaderNsp($_CLASS){
+        chdir(dirname(__FILE__));
 
-		#
-		#
-		#
-		$_CLASS_CLEAN = explode("\\", $_CLASS); 
+        // 
+        // 
+        // 
 
-		#
-		#
-		#
-		$_CLASS_CLEAN = trim(end($_CLASS_CLEAN),"/");
+        $realPath = realPath("");
 
-		#
-		#
-		#
-		$PATH_CLASS = PATH_FISICO_API."/{$_CLASS_CLEAN}";
+        // 
+        // 
+        // 
+
+        self::$PATH_INSTANCE = $realPath;
 
 
-		#
-		#
-		#
-		$PATH_CLASS = str_replace(array("\\"), array("/"), $PATH_CLASS);
+        // 
+        // 
+        // 
+
+        self::$CLASS_INSTANCE = str_replace(PATH_LOCAL_API, "", self::$PATH_INSTANCE);
+
+        // 
+        // 
+        // 
+
+        if(!is_dir(self::$PATH_INSTANCE)) { 
+
+            exit("\n\nnot path!!\n");
+        }
+
+    }
+
+    
+    /**
+    * Metodo ser carregado dinamicamente
+    *
+    * @param unknown_type $_CLASS
+    */
+
+    private function s3AutoLoaderNsp($_CLASS)
+    {
+
+        // 
+        // 
+        // 
+
+        $_CLASS_CLEAN = explode("\\", $_CLASS); 
+
+        // 
+        // 
+        // 
+
+        $_CLASS_CLEAN = trim(end($_CLASS_CLEAN), "/");
+
+        // 
+        // 
+        // 
+
+        $PATH_CLASS = PATH_LOCAL_API."/{$_CLASS_CLEAN}";
 
 
-		#
-		#
-		#
-		$PATH_CLASS.=".php";
+        // 
+        // 
+        // 
 
-		#
-		#
-		#
-		if(is_file($PATH_CLASS)){
-			
-			require( $PATH_CLASS );	
-
-		} else { exit("\n\nnot file in path [{$PATH_CLASS}]!!\n"); }
-
-	}
-
-	//public function Instance( $instance ){
-
-		//self::$PATH_INSTANCE = $instance;
-	//}
-
-	////agora precisaremos chamar o call para executar toda nossa brincadeira..
-	////now we need to call the call to run all our play ..
-
-	/**
-	* Metodo ser carregado dinamicamente
-	* @param unknown_type $_CLASS
-	* @param unknown_type $_PARAM
-	* @return object
-	*/
-
-	public function __call($_CLASS, $_PARAM){
-
-		
-		#
-		#
-		#
-		if( isset(self::$_REGIS[ $_CLASS ]) && self::$_REGIS[ $_CLASS ] ){
-
-			#
-			#
-			#
-			return(self::$_REGIS[ $_CLASS ]);
-
-		} else {
-
-			#
-			#
-			#
-			$INSTANCE_LIMPO = rtrim( self::$PATH_INSTANCE, "/" );
+        $PATH_CLASS = str_replace(array("\\"), array("/"), $PATH_CLASS);
 
 
-			#
-			#
-			#
-			if(self::$CLASS_INSTANCE)
-				$CLASS_NEW = str_replace( array("/", "\\"), array() , self::$CLASS_INSTANCE )."\\".$_CLASS;
-			else
-				$CLASS_NEW = $_CLASS;
+        // 
+        // 
+        // 
+
+        $PATH_CLASS.=".php";
+
+        // 
+        // 
+        // 
+
+        if(is_file($PATH_CLASS)) {
+            
+            include $PATH_CLASS;    
+
+        } else { 
+
+            exit("\n\nnot file in path [{$PATH_CLASS}]!!\n"); 
+        }
+
+    }
 
 
-			#
-			#
-			#
-			if(self::NameSpaceApi) {
-				
-				#
-				#
-				#
-				$CLASS_NEW = self::NameSpaceApi.$CLASS_NEW;
+    /**
+    * Metodo ser carregado dinamicamente
+    *
+    * @param  unknown_type $_CLASS
+    * @param  unknown_type $_PARAM
+    * @return object
+    */
 
-			} else {
+    public function __call($_CLASS, $_PARAM)
+    {
 
-				#
-				#
-				#
-				$CLASS_NEW = $CLASS_NEW;
-			}
-			
+        
+        // 
+        // 
+        // 
 
-			#
-			#
-			#
-			self::$_REGIS[ $_CLASS ] = new $CLASS_NEW( isset($_PARAM[0]) ? $_PARAM[0] : "" ) ;
+        if(isset(self::$_REGIS[ $_CLASS ]) && self::$_REGIS[ $_CLASS ] ) {
+
+            // 
+            // 
+            // 
+
+            return(self::$_REGIS[ $_CLASS ]);
+
+        } else {
+
+            // 
+            // 
+            // 
+
+            $INSTANCE_LIMPO = rtrim(self::$PATH_INSTANCE, "/");
 
 
-			#
-			#
-			#
-			return(self::$_REGIS[ $_CLASS ]);
-		}
-	}
+            // 
+            // 
+            // 
+
+            if(self::$CLASS_INSTANCE) {
+                
+                $CLASS_NEW = str_replace(array("/", "\\"), array(), self::$CLASS_INSTANCE)."\\".$_CLASS; 
+
+                if(self::NameSpaceApi) {
+
+                    // 
+                    // 
+                    // 
+
+                    $CLASS_NEW = self::NameSpaceApi.$CLASS_NEW;   
+                }
+            }
+            else {
+
+                $CLASS_NEW = $_CLASS; 
+
+                if(self::NameSpaceApi) {
+                    
+                    // 
+                    // 
+                    // 
+
+                    $CLASS_NEW = self::NameSpaceApi.$CLASS_NEW;   
+                }
+            }            
+
+            // 
+            // 
+            //
+
+            self::$_REGIS[ $_CLASS ] = new $CLASS_NEW( isset($_PARAM[0]) ? $_PARAM[0] : "" ) ;
+
+
+            // 
+            // 
+            // 
+            
+            return(self::$_REGIS[ $_CLASS ]);
+        }
+    }
 }
