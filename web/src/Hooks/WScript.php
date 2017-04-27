@@ -196,7 +196,7 @@ class WScript
 	public function Save(){
 
 		#
-		#
+		# /var/www/gitvirtualhosts/beta/gitwebhooks/scripts/s3rafaelmendonca-beta.sh
 		#
 		if(file_put_contents(self::$pathScript, self::$TemplateContent)){
 
