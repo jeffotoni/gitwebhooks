@@ -13,7 +13,7 @@ echo "\nDeploying"
 #
 #
 cd `pwd`
-cd ../{REPOSITORY}
+cd ../../{REPOSITORY}
 
 #
 #
