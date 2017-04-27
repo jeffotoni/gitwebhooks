@@ -53,14 +53,22 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 	$UserAgent 		= $_SERVER['User-Agent'];
 
 
+	echo "\n";
+	echo $XGitHubEvent;
+	echo "\n";
+
+	echo "\n";
+	echo $UserAgent;
+	echo "\n";
+
 	#
 	#
 	#
 	$json = json_decode($_POST['payload'], true);
 
 	$ref 		= $json["ref"];
-	$rep_id 	= $json->repository["id"];
-	$rep_name 	= $json->repository["name"];
+	$rep_id 	= $json->repository->id;
+	$rep_name 	= $json->repository->name;
 
 	echo "\n";
 	echo $ref;
