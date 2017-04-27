@@ -19,7 +19,7 @@ The $api object is special it can create and instantiate any class that is in th
 ```php
         // 
         // 
-        // 
+        //
 
         $api->WScript()->LoadTemplate(
             [
@@ -29,6 +29,7 @@ The $api object is special it can create and instantiate any class that is in th
             "BRANCH"     => $BRANCH,
             ]
         )
+        
         // 
         // Generate script from template
         //
@@ -47,13 +48,13 @@ The $api object is special it can create and instantiate any class that is in th
         	
         ->Execute(false) // false => simule | true execute your script template
 
-         // 
+        // 
         // Possibility to delete file, it is not mandatory
         //
 
           ->DelFile()
 
-         // 
+        // 
         // Generates log on disk so you can keep track of all executions
         //
 
@@ -78,9 +79,9 @@ But you can extend exactly here what you want for your scripts
 
 ```php
 [
-   "REPOSITORY" => $ REPOSITORY,
-   "PATH" => $ ARRAY_PROJECT_GIT [$ REPOSITORY],
-   "BRANCH" => $ BRANCH,
+   "REPOSITORY" => $REPOSITORY,
+   "PATH" => $ARRAY_PROJECT_GIT [$ REPOSITORY],
+   "BRANCH" => $BRANCH,
    "CMD1" => "git checkout deploy",
    "CMD2" => "git merge master",
    "CMD3" => 'echo "Executing merge!"'
