@@ -25,84 +25,59 @@
 
 #
 #
-require_once "config/setconfig.php";
+#
+define("PATH_FISICO", getcwd() . "/");
 
-echo "\nStart\n";
-
-// print_r($_GET);
-// print_r($_POST);
 
 #
 #
 #
-if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789') {
+define("PATH_LOG", "/log/github-webooks.log");
 
+#
+#
+#
+define("PATH_TEMPLATE", "templates/");
 
-	#
-	#
-	#
-	$vetorJson = $_POST['payload'];
+#
+#
+#
+define("PATH_SCRIPT", "scripts/");
+
+#
+#
+#
+$ARRAY_PROJECT_GIT = [
+
+	"gitwebhooks",
+	"s3archiviobrasil",
+	"s3rafaelmendonca",
+];
+
+#
+#
+#
+$apifunc2 = function ($namespace) {
 	
-	// if webhooks registered
-	// 
-	//
-
-	ob_start();
-
-	$XGitHubEvent 	= $_SERVER['X-GitHub-Event'];
-	$UserAgent 		= $_SERVER['User-Agent'];
+	$path_n = str_replace(array("\\"), array("/"), $namespace);
+	$path_n = PATH_FISICO.$path_n . ".php";
 
 
-	#
-	#
-	#
-	$json = json_decode($_POST['payload'], true);
+	if(is_file($path_n)) {
 
-	$ref 		= $json["ref"];
-	$rep_id 	= $json->repository["id"];
-	$rep_name 	= $json->repository["name"];
+		require_once $path_n;
 
-	echo "\n";
-	echo $ref;
-	echo "\n";
+		#
+		#
+		#
+		$classApi = new $namespace;
+		return $classApi;
 
-	echo "\n";
-	echo $rep_id;
-	echo "\n";
+	} else {
 
-	echo "\n";
-	echo $rep_name;
-	echo "\n";
-	
-	#
-	#
-	#
-	// $api()->WebHooks()->LoadTemplate([
+		exit("\nFile not exist! [{$path_n}]");
 
-	// 		"GIT_PATH" => "s3archiviobrasil",
-	// 		"BRANCH" => "beta",
-	// 	])
-	// ->LoadFileScript(true);
+	}
+};
 
-	#
-	#
-	# Picking up the database
-	# 
-	//$COMANDO = "export GIT_PATH={$path_git_projeto} && /bin/sh ".PATH_LOCAL."/script-deploy.sh 2>&1";
-
-	#
-	#
-	#
-	//$last_line2 = shell_exec($COMANDO);
-
-	#
-	#
-	#
-	//print_r($last_line2);
-
-	#
-	#
-	#
-	//$string = ob_get_clean();
-	file_put_contents(PATH_LOCAL. "" .PATH_LOG , $string . PHP_EOL, FILE_APPEND);
-}
+$api = $apifunc2("web\src\Hooks\Api");
