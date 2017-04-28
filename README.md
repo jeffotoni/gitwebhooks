@@ -153,7 +153,7 @@ define("TEMPLATE_DEPLOY", [
 
     ]
    );
-   
+
 define("ARRAY_PROJECT_GIT", [
 
     "gitwebhooks"        => "../../../",
@@ -218,6 +218,8 @@ The $api object is special it can create and instantiate any class that is in th
 ## Structure of the Class WScript
 
 ```php
+
+/*
 *
 * @about    project GitHub Webhooks, 
 * Application responsible 
