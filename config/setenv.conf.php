@@ -27,18 +27,17 @@
 //
 //
 
-define("PATH_LOCAL", getcwd() . "/");
+define("PATHSET_LOCAL", getcwd() . "/");
 
 //
 //
 //
 
-$PATH_SETCONF = PATH_LOCAL . "setconfig.conf.php" ;
+$PATH_SETCONF = PATHSET_LOCAL . "config/setconfig.conf.php" ;
 
 if(!is_file($PATH_SETCONF)) {
 
-$SETCONF_PHP = '
-<?php
+$SETCONF_PHP = '<?php
 /***********
 
  ▄▄▄██▀▀▀▓█████   █████▒ █████▒▒█████  ▄▄▄█████▓ ▒█████   ███▄    █  ██▓
@@ -62,6 +61,12 @@ $SETCONF_PHP = '
 * @since    Version 0.1
 * 
 */
+
+//
+//
+//
+
+define("PATH_LOCAL", getcwd() . "/");
 
 //
 //
@@ -128,7 +133,7 @@ $apifunc2 = function ($namespace) {
     //
     //
 
-    $path_n = str_replace(array("\\"), array("/"), $namespace);
+    $path_n = str_replace(array("\\\"), array("/"), $namespace);
 
     //
     //
@@ -177,11 +182,13 @@ $api = $apifunc2("web\src\Hooks\Api");
 
 	file_put_contents($PATH_SETCONF, $SETCONF_PHP . PHP_EOL);
 
+	require_once $PATH_SETCONF;
+
 } else {
 
 	//
 	//
 	//
 
-	require_once PATH_LOCAL."setconfig.conf.php";
+	require_once $PATH_SETCONF;
 }

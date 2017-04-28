@@ -109,6 +109,12 @@ $ sudo -u www-data -H chmod 755  -R Your directory
 
 ## System Settings
 
+We made an abstraction of our config, now we have a new file setenv.conf.php, it is responsible for generating our config, so your file setconfig.conf.php will be outside the git respository, and you can make your own configurations on the server without affecting It with updates, it will only be generated once.
+
+## System Settings, setenv.conf.php
+
+It is responsible for generating your config once, setconfig.conf.php
+
 ```php
 /*
 *

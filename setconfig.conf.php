@@ -1,3 +1,4 @@
+
 <?php
 /***********
 
@@ -23,64 +24,110 @@
 * 
 */
 
-// 
-// 
-// 
+//
+//
+//
 
-require_once "config/setenv.conf.php";
-
-// 
-// 
-// 
-
-$BRANCH = "beta";
+define("KEY", "b118eda467d926d003f9b4af9c203994");
 
 // 
 // 
 // 
 
-$REPOSITORY = "gitwebhooks";
+define("PATH_LOG", PATH_LOCAL. "log/github-webooks.log");
 
 // 
 // 
 // 
 
-$api->WScript()->LoadTemplate(
-    [
+define("PATH_TEMPLATE", "templates/");
 
-                "REPOSITORY" => $REPOSITORY,
-                "PATH"       => ARRAY_PROJECT_GIT[$REPOSITORY],
-                "BRANCH"     => $BRANCH,
-            ]
-,  "simulation" )
-
-   ->LoadFileScript(true)
-            ->Save()
-            ->Execute(true)
-            ->DelFile()
-            ->LoadLog();
 // 
 // 
 // 
 
-// $api->WScript()->LoadTemplate(
-//     [
+define("PATH_SCRIPT", "scripts/");
 
-//         "REPOSITORY" => "repositorio2",
-//         "BRANCH" => "beta",
-//     ]
-// )
-//     ->LoadFileScript();
 
-// // 
-// // 
-// // 
+//
+//
+//
+
+define("TEMPLATE_DEPLOY", [
+
+    "beta"        => "template-script-deploy",
+    "test"        => "template-script-deploy",
+    "product"     => "template-script-deploy",
+    "simulation"  => "simulation-example",
+
+    ]
+   );
+
+// 
+// 
+// 
+
+
+define("ARRAY_PROJECT_GIT", [
+
+    "gitwebhooks"        => "../../../",
+    "s3archiviobrasil"     => "../../../../",
+    "s3rafaelmendonca"    => "../../../../",
+
+    ]
+);
+
+
+
+// 
+// 
+// 
+
+$apifunc2 = function ($namespace) {
     
-// $api->WScript()->LoadTemplate(
-//     [
+    //
+    //
+    //
 
-//         "REPOSITORY" => "repositorio3",
-//         "BRANCH" => "beta",
-//     ]
-// )
-//     ->LoadFileScript();
+    $path_n = str_replace(array("\"), array("/"), $namespace);
+
+    //
+    //
+    //
+    
+    $path_n = PATH_LOCAL.$path_n . ".php";
+
+
+    if(is_file($path_n)) {
+
+    	//
+    	//
+    	//
+
+        include_once $path_n;
+
+        // 
+        // 
+        // 
+
+        $classApi = new $namespace;
+
+        //
+        //
+        //
+
+        return $classApi;
+
+    } else {
+
+        exit("\nFile not exist! [{$path_n}]");
+
+    }
+};
+
+//
+//
+//
+
+$api = $apifunc2("web\src\Hooks\Api");
+
