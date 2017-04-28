@@ -98,7 +98,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
 
     //
-    //
+    // Coming from github
     //
 
     $ref           = (string) $json["ref"];
@@ -110,13 +110,13 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
     $rep_id        = (string) $json["repository"]["id"];
 
     //
-    //
+    // Coming from github
     //
 
     $rep_name       = (string) $json["repository"]["name"];
 
     // 
-    // 
+    // Coming from github
     // 
 
     $tmp = explode("/", $ref);
