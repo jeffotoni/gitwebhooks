@@ -43,7 +43,7 @@ For everything to work, we suggest that you use ssh: // to do the git clone, thi
 
 ## Installing the program on the server
 
-Our program is done in php, on your web server, can be running apache, ngnix or we can simply upload the program with php -S <addr>: <port>.
+Our program is done in php, on your web server, can be running apache, ngnix or we can simply upload the program with php -S localhost:9001
 
 ```sh
 
