@@ -48,19 +48,6 @@ define("PATH_TEMPLATE", "templates/");
 
 define("PATH_SCRIPT", "scripts/");
 
-// 
-// 
-// 
-
-
-define("ARRAY_PROJECT_GIT", [
-
-    "gitwebhooks"        => "../../../",
-    "s3archiviobrasil"     => "../../../../",
-    "s3rafaelmendonca"    => "../../../../",
-
-    ]
-);
 
 //
 //
@@ -75,6 +62,21 @@ define("TEMPLATE_DEPLOY", [
 
     ]
    );
+
+// 
+// 
+// 
+
+
+define("ARRAY_PROJECT_GIT", [
+
+    "gitwebhooks"        => "../../../",
+    "s3archiviobrasil"     => "../../../../",
+    "s3rafaelmendonca"    => "../../../../",
+
+    ]
+);
+
 
 
 // 

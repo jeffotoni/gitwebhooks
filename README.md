@@ -41,36 +41,129 @@ Creating SSH Keys and using git clone on our remote server
 
 For everything to work, we suggest that you use ssh: // to do the git clone, this way we guarantee that when we run the git commands as www user we will not have to worry about the system request password or user, although we have to cache but Ssh is still the best option for good health of your server.
 
+```sh
+
 $ git clone ssh: //git@github.com/username/repository.git
+
+```
 
 For this to work well you should do as www user as follows.
 
+```sh
+
 $ sudo -u www-data -H git clone -v ssh: //git@github.com/username/repository.git
 
+```
+
 For this to work you will have to do the following steps.
+
+```sh
 
 $ sudo -u www-data mkdir /var/www/.ssh
 
 $ sudo -u www-data ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
+```
+
 It will generate the id_rsa, id_rsa.pub, in /var/www/.ssh now just paste your public key and paste it into github settings -> keys -> new SSH Key
 
 Copying the Public Key
 
+```sh
+
 $ sudo -u www-data cat /var/www/.ssh/id_rsa.pub
+
+```
 
 Now that we have configured our access keys we can use the git clone
 
+```sh
+
 $ sudo -u www-data -H git clone -v ssh: //git@github.com/username/repository.git
 
+```
+
 An example of a structure you might create on your server so that our program works correctly
+
+```sh
 
 $ mkdir /var/www/githtml/beta/repository.git
 
 $ mkdir /var/www/githtml/product/repository.git
 
-The program will always check for the POST received by GitHub to determine how it will deploy.
+```
 
+### The program will always check for the POST received by GitHub to determine how it will deploy.
+
+## System Settings
+
+```php
+/*
+*
+* @about project GitHub Webhooks, 
+* Application responsible 
+* for receiving posts from github webhooks, and automating 
+* our production environment by deploying
+* 
+* @autor    @jeffotoni
+* @date     25/04/2017
+* @since    Version 0.1
+* 
+*/
+
+// 
+// 
+// 
+
+define("PATH_LOCAL", getcwd() . "/");
+
+
+// 
+// 
+// 
+
+define("PATH_LOG", PATH_LOCAL. "log/github-webooks.log");
+
+// 
+// 
+// 
+
+define("PATH_TEMPLATE", "templates/");
+
+// 
+// 
+// 
+
+define("PATH_SCRIPT", "scripts/");
+
+// 
+// 
+// 
+
+//
+//
+//
+
+define("TEMPLATE_DEPLOY", [
+
+    "beta"        => "template-script-deploy",
+    "test"        => "template-script-deploy",
+    "product"     => "template-script-deploy",
+    "simulation"  => "simulation-example",
+
+    ]
+   );
+   
+define("ARRAY_PROJECT_GIT", [
+
+    "gitwebhooks"        => "../../../",
+    "s3archiviobrasil"     => "../../../../",
+    "s3rafaelmendonca"    => "../../../../",
+
+    ]
+);
+
+```
 
 ## Structure of the program
 
