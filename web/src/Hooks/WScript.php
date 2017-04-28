@@ -161,6 +161,8 @@ class WScript
             // 
             // 
 
+            self::$msgconcat .= " File empty create: [{$file_template}]!";
+
             $content = file_get_contents($file_template);
 
 
@@ -272,7 +274,7 @@ class WScript
             // 
             // 
 
-            self::$msg = "Saved successfully!";
+            self::$msg = "Saved successfully [{".self::$pathScript."}]!";
 
             //
             //
