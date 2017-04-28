@@ -38,6 +38,7 @@ git checkout {BRANCH}
 
 #
 #
+#
 git reset --hard HEAD
 
 
@@ -53,4 +54,5 @@ git pull origin {BRANCH}
 
 
 echo "\End deploy!!"
-echo " ------------ "
+echo " @@@@@@@@@@@@@@@@ "
+echo " ------------------ "
