@@ -36,8 +36,16 @@ require_once "config/setenv.conf.php";
 
   echo "\nShow Methods\n\n";
 
+  //
+  //
+  //
+  
   print_r($_GET);
 
+  //
+  //
+  //
+ 
   print_r($_POST);
 
   if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
