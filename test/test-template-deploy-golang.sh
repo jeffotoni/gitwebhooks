@@ -7,7 +7,8 @@
 
 echo "\nKill all Process program!!"
 
-PROGRAM="hello"
+PROGRAM="server-http"
+
 
 for pid in $(ps -fe | grep $PROGRAM | grep -v grep | awk '{print $2}'); do
 
@@ -38,6 +39,13 @@ go build "$PROGRAM.go"
 #echo "go install $PROGRAM"
 #go install "$PROGRAM.go"
 
-echo "\nExecute $PROGRAM"
-exec ./$PROGRAM
+#
+#
+#
+echo "\nExecute $PROGRAM Again!!"
+
+#
+#
+#
+exec ./$PROGRAM &
 

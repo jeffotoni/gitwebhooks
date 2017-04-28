@@ -16,7 +16,11 @@ package main
 //
 //
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
 
 //
 //
@@ -29,5 +33,8 @@ func main() {
 	//
 
 	fmt.Println("vim-go && you!!!")
+	fmt.Println("server start port: 9003")
+
+	log.Fatal(http.ListenAndServe(":9003", nil))
 
 }
