@@ -22,18 +22,17 @@ Git Hooks is interesting, if you have no problem keeping multiple remote servers
 
 To know more about git hooks is my reference.
 
-[Git (Hooks)] (https://git-scm.com/book/gr/v2/Customizing-Git-Git-Hooks)
+[Git (Hooks)](https://git-scm.com/book/gr/v2/Customizing-Git-Git-Hooks)
 
 WebHooks is the feature that tools like github, gitlab and bitbucket make available so that we can have a notification for each event in our repository, the events are diverse, all are programmable. You set up the URL that will point to your server, the webhooks sends a POST to your URL, with all the information you need so that you can automate your development process.
 
 To know a little more about Webhhoks here are the references I've used:
 
-[Github (Webhooks)] (https://developer.github.com/webhooks/)
+[Github (Webhooks)](https://developer.github.com/webhooks/)
 
-[Gitlab (Webhooks)] (https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
+[Gitlab (Webhooks)](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
 
-[Bitbucket (Webhooks)] (https://bitbucket.org/StephenHowells/webhook)
-
+[Bitbucket (Webhooks)](https://bitbucket.org/StephenHowells/webhook)
 
 Our program will receive a POST from Github, the event being what we programmed it will generate a script from a template that we define for our deploy and execute it on our server.
 
@@ -67,7 +66,7 @@ $ sudo -u www-data ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
 If you want a good reference of a checked here
 
-[SSH Keys (SSH)](https://help.github.com/articles/connecting-to-github-with-ssh)
+[Generate SSH Keys (SSH)](https://help.github.com/articles/connecting-to-github-with-ssh)
 
 
 It will generate the id_rsa, id_rsa.pub, in /var/www/.ssh now just paste your public key and paste it into github settings -> keys -> new SSH Key
