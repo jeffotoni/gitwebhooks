@@ -68,6 +68,23 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
     $json = json_decode($vetorJson, true);
 
+
+    if(!isset($json["ref"])) {
+
+        exit("Error ref payload empty!!!")
+    }
+
+    else if(!isset($json["repository"]["id"])) {
+
+        exit("Error ref repository[id] empty!!!")
+    }
+
+    else if(!isset($json["repository"]["name"])) {
+
+        exit("Error ref repository[name] empty!!!")
+    }
+
+    
     //
     //
     //
