@@ -23,12 +23,51 @@
 * 
 */
 
-// 
-// 
-// 
+//
+//
+//
 
 define("PATH_LOCAL", getcwd() . "/");
 
+//
+//
+//
+
+$PATH_SETCONF = PATH_LOCAL . "setconfig.conf.php" ;
+
+if(!is_file($PATH_SETCONF)) {
+
+$SETCONF_PHP = '
+<?php
+/***********
+
+ ▄▄▄██▀▀▀▓█████   █████▒ █████▒▒█████  ▄▄▄█████▓ ▒█████   ███▄    █  ██▓
+   ▒██   ▓█   ▀ ▓██   ▒▓██   ▒▒██▒  ██▒▓  ██▒ ▓▒▒██▒  ██▒ ██ ▀█   █ ▓██▒
+   ░██   ▒███   ▒████ ░▒████ ░▒██░  ██▒▒ ▓██░ ▒░▒██░  ██▒▓██  ▀█ ██▒▒██▒
+▓██▄██▓  ▒▓█  ▄ ░▓█▒  ░░▓█▒  ░▒██   ██░░ ▓██▓ ░ ▒██   ██░▓██▒  ▐▌██▒░██░
+ ▓███▒   ░▒████▒░▒█░   ░▒█░   ░ ████▓▒░  ▒██▒ ░ ░ ████▓▒░▒██░   ▓██░░██░
+ ▒▓▒▒░   ░░ ▒░ ░ ▒ ░    ▒ ░   ░ ▒░▒░▒░   ▒ ░░   ░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ░▓
+ ▒ ░▒░    ░ ░  ░ ░      ░       ░ ▒ ▒░     ░      ░ ▒ ▒░ ░ ░░   ░ ▒░ ▒ ░
+ ░ ░ ░      ░    ░ ░    ░ ░   ░ ░ ░ ▒    ░      ░ ░ ░ ▒     ░   ░ ░  ▒ ░
+ ░   ░      ░  ░                  ░ ░               ░ ░           ░  ░
+
+*
+* @about 	project GitHub Webhooks, 
+* Application responsible 
+* for receiving posts from github webhooks, and automating 
+* our production environment by deploying
+* 
+* @autor 	@jeffotoni
+* @date 	25/04/2017
+* @since    Version 0.1
+* 
+*/
+
+//
+//
+//
+
+define("KEY", "b118eda467d926d003f9b4af9c203994");
 
 // 
 // 
@@ -130,3 +169,19 @@ $apifunc2 = function ($namespace) {
 //
 
 $api = $apifunc2("web\src\Hooks\Api");
+';
+	
+	//
+	//
+	//
+
+	file_put_contents($PATH_SETCONF, $SETCONF_PHP . PHP_EOL);
+
+} else {
+
+	//
+	//
+	//
+
+	require_once PATH_LOCAL."setconfig.conf.php";
+}

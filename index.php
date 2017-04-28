@@ -27,38 +27,40 @@
 // 
 // 
 
-require_once "config/setconfig.conf.php";
+require_once "config/setenv.conf.php";
+
+
 
 // 
 // 
 // 
 
-if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789') {
+if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
 
     // 
     // 
     // 
 
-    $vetorJson         = $_POST['payload'];
+    $vetorJson        = $_POST['payload'];
 
     // 
     // 
     // 
 
-    $XGitHubEvent     = $_SERVER['HTTP_X_GITHUB_EVENT'];
+    $XGitHubEvent     = isset($_SERVER['HTTP_X_GITHUB_EVENT']) ? $_SERVER['HTTP_X_GITHUB_EVENT'] : "";
 
     // 
     // 
     // 
 
-    $UserAgent         = $_SERVER['HTTP_USER_AGENT'];
+    $UserAgent         = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
 
     // 
     // 
     // 
 
-    $HTTP_X_HUB_SIGNATURE = $_SERVER['HTTP_X_HUB_SIGNATURE'];
+    $HTTP_X_HUB_SIGNATURE = isset($_SERVER['HTTP_X_HUB_SIGNATURE']) ? $_SERVER['HTTP_X_HUB_SIGNATURE'] : "";
 
 
     // 
@@ -71,7 +73,7 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
     //
     //
 
-    $ref        = (string) $json["ref"];
+    $ref           = (string) $json["ref"];
 
     //
     //
@@ -83,7 +85,7 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
     //
     //
 
-    $rep_name   = (string) $json["repository"]["name"];
+    $rep_name       = (string) $json["repository"]["name"];
 
     // 
     // 
