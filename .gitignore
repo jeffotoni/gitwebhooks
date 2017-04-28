@@ -1,2 +1,3 @@
+log/**/*
 script/**/*
 config/setconfig.conf.php
