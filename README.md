@@ -6,7 +6,7 @@ The program receives a POST from github's WebHooks, so you can generate your scr
 
 Our example shows the call of the class executing all its methods: Treat the rules of WeHooks, Generate script.sh, save the script to disk, execute it, remove server script or not and generate log of all execution.
 
-## Used libraries:
+## Does not use library
 
 The server is written in php and we do not use any library, the code is simple and very light, we know we can improve and extend the application even more and this is our goal.
 
@@ -40,9 +40,14 @@ Creating SSH Keys and using git clone on our remote server
 
 For everything to work, we suggest that you use ssh: // to do the git clone, this way we guarantee that when we run the git commands as www user we will not have to worry about the system request password or user, although we have to cache but Ssh is still the best option for good health of your server.
 
+
+## Installing the program on the server
+
+Our program is done in php, on your web server, can be running apache, ngnix or we can simply upload the program with php -S <addr>: <port>.
+
 ```sh
 
-$ git clone ssh: //git@github.com/username/repository.git
+$ git clone ssh://git@github.com/jeffotoni/gitwebhooks.git
 
 ```
 
@@ -50,7 +55,7 @@ For this to work well you should do as www user as follows.
 
 ```sh
 
-$ sudo -u www-data -H git clone -v ssh: //git@github.com/username/repository.git
+$ sudo -u www-data -H git clone -v ssh: //git@ggithub.com/jeffotoni/gitwebhooks.git
 
 ```
 
@@ -93,7 +98,7 @@ Now that we have configured our access keys we can use the git clone
 
 ```sh
 
-$ sudo -u www-data -H git clone -v ssh: //git@github.com/username/repository.git
+$ sudo -u www-data -H git clone -v ssh: //git@github.com/jeffotoni/gitwebhooks.git
 
 $ sudo -u www-data -H chmod 755  -R Your directory
 
