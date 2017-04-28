@@ -57,6 +57,9 @@ require_once "config/setenv.conf.php";
 
     $json = $vetorJson        = isset($_POST['payload']) ? $_POST['payload'] : "";
 
+    //
+    // decode string json to array
+    //
 
     $json = json_decode($vetorJson, true);
 
