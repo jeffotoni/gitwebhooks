@@ -117,7 +117,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
             "PATH"       => ARRAY_PROJECT_GIT[$REPOSITORY],
             "BRANCH"     => $BRANCH,
             ]
-        )
+        , $BRANCH)
         	// 
         	// Generate script from template
         	//
