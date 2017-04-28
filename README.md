@@ -65,6 +65,11 @@ $ sudo -u www-data ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
 ```
 
+If you want a good reference of a checked here
+
+[SSH Keys (SSH)](https://help.github.com/articles/connecting-to-github-with-ssh)
+
+
 It will generate the id_rsa, id_rsa.pub, in /var/www/.ssh now just paste your public key and paste it into github settings -> keys -> new SSH Key
 
 Copying the Public Key
@@ -72,14 +77,6 @@ Copying the Public Key
 ```sh
 
 $ sudo -u www-data cat /var/www/.ssh/id_rsa.pub
-
-```
-
-Now that we have configured our access keys we can use the git clone
-
-```sh
-
-$ sudo -u www-data -H git clone -v ssh: //git@github.com/username/repository.git
 
 ```
 
@@ -93,7 +90,18 @@ $ mkdir /var/www/githtml/product/repository.git
 
 ```
 
-### The program will always check for the POST received by GitHub to determine how it will deploy.
+Now that we have configured our access keys we can use the git clone
+
+```sh
+
+$ sudo -u www-data -H git clone -v ssh: //git@github.com/username/repository.git
+
+$ sudo -u www-data -H chmod 755  -R Your directory
+
+```
+
+### The program will always check for the POST 
+### received by GitHub to determine how it will deploy.
 
 ## System Settings
 
