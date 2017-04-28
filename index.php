@@ -75,7 +75,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
     if(!isset($json["ref"])) {
 
-        exit("Error ref payload empty!!!")
+        exit("Error ref payload empty!!!");
     }
 
     //
@@ -84,7 +84,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
     else if(!isset($json["repository"]["id"])) {
 
-        exit("Error ref repository[id] empty!!!")
+        exit("Error ref repository[id] empty!!!");
     }
 
     //
@@ -93,7 +93,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
     else if(!isset($json["repository"]["name"])) {
 
-        exit("Error ref repository[name] empty!!!")
+        exit("Error ref repository[name] empty!!!");
     }
 
 
