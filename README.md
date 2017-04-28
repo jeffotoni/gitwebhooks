@@ -12,23 +12,25 @@ The server is written in php and we do not use any library, the code is simple a
 
 We use psr2, autoloading, namespaces to write our server, our model instantiates class execution time with this technique we can instantiate classes and their methods in a light and practical way and with the possibility of doing Injection.
 
-* [Github, Gitlab or Bitbucket ?](#gitseveral)
+## Git Server Environment
 
-* [Setting up our server to deploy](#deploy)
+We know there are many hundreds of solutions for deploys, each one meets a need and reality.
 
-* [Why do not we use git hooks?](#githooks)
+Before developing a simple and light deploy solution for my need, I did several tests with git hooks, bitbucket webhooks, gitlab and github.
 
-* [Why choose Webhooks?](#webhooks)
+Git Hooks is interesting, if you have no problem keeping multiple remote in your branch in git is a valid option. To create a git server using the hooks is very simple and practical.
 
-* [Configuring Access Keys](#acesskey)
+To learn more how to create a git hooks server click here.
 
-* [ssh, http ou https?](#sshttp)
+WebHooks is the feature that the tools make available so that we can have a notification for each event in our repository, the events are diverse, all are programmable. You configure the URL that will point to your server, the webhooks sends a POST to your URL, with all the information you need so you can automate your development process.
 
-* [Configure ssh github](#github)
+To know a little more about Webhhoks here are the references I used:
 
-* [Configure ssh server](#gitserver)
+[Github (Webhooks)](https://developer.github.com/webhooks/)
 
-* [Structure](#structure)
+[Gitlab (Webhooks)](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
+
+[Bitbucket (Webhooks)](https://bitbucket.org/StephenHowells/webhook)
 
 
 ## Structure of the program
@@ -79,6 +81,440 @@ The $api object is special it can create and instantiate any class that is in th
 
         ->LoadLog();
     
+```
+
+## Structure of the Class WScript
+
+```php
+*
+* @about    project GitHub Webhooks, 
+* Application responsible 
+* for receiving posts from github webhooks, and automating 
+* our production environment by deploying
+* 
+* @autor    @jeffotoni
+* @date     25/04/2017
+* @since    Version 0.1
+* 
+*/
+
+// 
+// 
+// 
+
+namespace web\src\Hooks;
+
+
+//
+//
+//
+
+class WScript
+{
+    
+
+    private static $msgconcat = "";
+    
+
+    // 
+    // 
+    // 
+
+    private static $show_msg_load = "";
+
+    // 
+    // 
+    // 
+
+    private static $msg;
+
+    // 
+    // 
+    // 
+
+    private static $TemplateContent ;
+
+    // 
+    // 
+    // 
+
+    private static $pathTemplate; 
+
+    // 
+    // 
+    // 
+
+    private static $pathScript; 
+
+
+    //
+    //
+    //
+
+    function __construct()
+    {
+        // code...
+    }
+
+    //
+    //
+    //
+
+    private static function GetTemplate()
+    {
+        // 
+        // use `self` to access class constants from inside the class definition. 
+        // 
+
+        return TEMPLATE_DEPLOY;
+    } 
+
+    // 
+    // 
+    // 
+
+    public function LoadTemplate($_ARRAY, $modelo = "beta") 
+    {
+
+        // 
+        // 
+        // 
+
+        $path = PATH_LOCAL;
+
+        // 
+        // 
+        // 
+
+        $modeloName = isset(self::GetTemplate()[$modelo]) ? self::GetTemplate()[$modelo] : "beta";
+
+        // 
+        // 
+        // 
+
+        $file_template = "{$path}/" . PATH_TEMPLATE . "{$modeloName}.sh.php";
+
+        // 
+        // 
+        // 
+
+        if (is_file($file_template)) {
+
+            //
+            //
+            //
+
+            self::$msgconcat .= "{$modelo} {$modeloName}";
+
+            // 
+            // 
+            // 
+
+            $NOME_SCRIPT = $_ARRAY["REPOSITORY"] . "-".$modelo;
+
+
+            //
+            //
+            //
+
+            self::$msgconcat .= " {$_ARRAY["REPOSITORY"]}";
+            
+
+            // 
+            // 
+            // 
+
+            self::$pathScript = PATH_SCRIPT . $NOME_SCRIPT . ".sh";
+
+            // 
+            // 
+            // 
+
+            self::$pathTemplate = $file_template;
+
+            // 
+            // 
+            // 
+
+            $content = file_get_contents($file_template);
+
+
+            // 
+            // 
+            // 
+
+            if (is_array($_ARRAY)) {
+
+                // 
+                // 
+                // 
+
+                foreach ($_ARRAY as $key => $value) {
+                     
+                    // 
+                    // 
+                    // 
+
+                    $content = str_replace('{'.strtoupper($key).'}', $value, $content);
+                }
+
+                // 
+                // 
+                // 
+
+                self::$TemplateContent = $content;
+
+                // 
+                // 
+                // 
+                // 
+            } else {
+
+                exit("erro, not found array LoadTemplate..");
+            }
+
+            return $this;
+
+        } else {
+
+            exit("erro, not found file [{$file_template}]..");
+        }
+    }
+
+    // 
+    // 
+    // 
+
+    public function LoadFileScript($show=false) 
+    {
+
+        
+        // 
+        // 
+        // 
+
+        if(self::$TemplateContent && is_file(self::$pathTemplate)) {
+
+            // 
+            // 
+            // 
+
+            if($show) {
+
+                print_r(self::$TemplateContent); 
+            }
+
+            // 
+            // 
+            // 
+
+            $PATH_SCRIPT = PATH_LOCAL . self::$pathScript;
+
+            //
+            //
+            //
+
+            self::$pathScript = $PATH_SCRIPT;
+
+            //
+            //
+            //
+
+            self::$msgconcat .= " {".self::$pathScript."}";
+
+        } else {
+
+            exit("erro, not found file [{".self::$pathTemplate."}]..");
+        }
+
+        return $this;
+    }
+
+    // 
+    // 
+    // 
+
+    public function Save()
+    {
+
+        // 
+        // 
+        // 
+
+        if(file_put_contents(self::$pathScript, self::$TemplateContent)) {
+
+            // 
+            // 
+            // 
+
+            self::$msg = "Saved successfully!";
+
+            //
+            //
+            //
+
+            self::$msgconcat .= " {".self::$msg."}";
+
+        } else {
+
+            // 
+            // 
+            // 
+
+            self::$msg = "Error while saving!";
+
+            self::$msgconcat .= " {".self::$msg."}";
+        }
+
+        return $this;
+    }
+
+    // 
+    // 
+    // 
+
+    public function Execute($exec=true)
+    {
+
+
+        if(is_file(self::$pathScript)) {
+
+            //
+            //
+            //
+
+            if($exec) {
+
+                // 
+                // 
+                // 
+
+                $COMANDO = "/bin/sh ".self::$pathScript." 2>&1";
+
+                // 
+                // Executes even the generated template
+                // 
+
+                $LAST_LINE = shell_exec($COMANDO);
+
+
+                //
+                // 
+                //
+
+                self::$msgconcat .= " {".$LAST_LINE."}";
+
+                // 
+                // 
+                // 
+
+                print "\n{$LAST_LINE}\n";
+            }
+
+            
+        } else {
+
+            exit("erro, not found file [".self::$pathScript."]..");
+        }
+
+        return $this;
+    }
+
+    //
+    //
+    //
+
+    public function DelFile(){
+
+        //
+        //
+        //
+
+        if(self::$pathScript && is_file(self::$pathScript)) {
+
+            if(@unlink(self::$pathScript)) {
+
+                $filescriptTmp = explode("/", self::$pathScript);
+                $filescript = end($filescriptTmp);
+
+                //
+                //
+                //
+
+                self::$msgconcat .= " File removed [{$filescript}]!";
+
+            } else {
+
+
+                $filescriptTmp = explode("/", self::$pathScript);
+                $filescript = end($filescriptTmp);
+
+                //
+                //
+                //
+
+                self::$msgconcat .= " Error while trying to remove file:[{$filescript}]";
+
+            }
+        }
+
+        return $this;
+    }
+
+
+    // 
+    // 
+    // 
+
+    public function LoadLog()
+    {
+
+        //
+        //
+        //
+
+        self::$show_msg_load = date("Y-m-d [H:i]") . " - " . self::$msgconcat . PHP_EOL;
+
+        //
+        //
+        //
+
+        file_put_contents(PATH_LOG, self::$show_msg_load, FILE_APPEND);
+
+        //
+        //
+        //
+
+        return $this;
+    }
+
+    // 
+    // 
+    // 
+
+    public function Show()
+    {
+
+        //
+        //
+        //
+
+        if(self::$show_msg_load) {
+
+            //
+            //
+            //
+
+            print "\n";
+            print self::$show_msg_load;
+            print "\n";
+            
+        }
+        
+    }
+}
+
+
 ```
 
 ## Template .sh

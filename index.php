@@ -112,7 +112,6 @@ if(isset($_POST['payload'], $_GET['idkeys3']) && $_GET['idkeys3'] == '123456789'
 
         $api->WScript()->LoadTemplate(
             [
-
             "REPOSITORY" => $REPOSITORY,
             "PATH"       => ARRAY_PROJECT_GIT[$REPOSITORY],
             "BRANCH"     => $BRANCH,
