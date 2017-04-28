@@ -31,7 +31,7 @@ namespace web\src\Hooks;
 
 
 //
-//
+// To handle the post coming from github
 //
 
 class GitHubCheck
@@ -41,7 +41,7 @@ class GitHubCheck
 	//
 	//
 
-	public function CheckPost() {
+	public function CheckPost($json) {
 
 		//
 		//
