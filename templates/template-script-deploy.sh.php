@@ -17,18 +17,18 @@ cd $(pwd)
 #
 #
 #
-echo "{$BRANCH}/{REPOSITORY}"
+echo "{BRANCH}/{REPOSITORY}"
 
 #
 #
 #
-cd {PATH}{$BRANCH}/{REPOSITORY}
+cd {PATH}{BRANCH}/{REPOSITORY}
 
 
 #
 #
 #
-echo "checkout $BRANCH"
+echo "checkout {BRANCH}"
 
 
 #
