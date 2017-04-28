@@ -12,23 +12,23 @@ echo "\nDeploy being done!!"
 #
 #
 #
-cd `pwd`
+cd $(pwd)
 
 #
 #
 #
-echo "{REPOSITORY}"
+echo "{BRANCH}/{REPOSITORY}"
 
 #
 #
 #
-cd {PATH}{REPOSITORY}
+cd {PATH}{BRANCH}/{REPOSITORY}
 
 
 #
 #
 #
-echo "checkout $BRANCH"
+echo "checkout {BRANCH}"
 
 
 #
@@ -36,6 +36,7 @@ echo "checkout $BRANCH"
 #
 git checkout {BRANCH}
 
+#
 #
 #
 git reset --hard HEAD
@@ -53,4 +54,5 @@ git pull origin {BRANCH}
 
 
 echo "\End deploy!!"
-echo " ------------ "
+echo " @@@@@@@@@@@@@@@@ "
+echo " ------------------ "

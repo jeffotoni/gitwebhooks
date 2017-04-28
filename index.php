@@ -105,6 +105,10 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
     $BRANCH     = $ref_branch;
 
+    //
+    //
+    //
+    
     if($REPOSITORY && $BRANCH) {
 
         // 
@@ -118,6 +122,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
             "BRANCH"     => $BRANCH,
             ]
         , $BRANCH)
+
         	// 
         	// Generate script from template
         	//
@@ -140,7 +145,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
         	// Possibility to delete file, it is not mandatory
         	//
 
-            ->DelFile()
+            //->DelFile()
 
             // 
         	// Generates log on disk so you can keep track of all executions
