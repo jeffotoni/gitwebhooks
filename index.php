@@ -70,7 +70,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
 
     //
-    //
+    // If you can not find it
     //
 
     if(!isset($json["ref"])) {
@@ -79,7 +79,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
     }
 
     //
-    //
+    // If you can not find it
     //
 
     else if(!isset($json["repository"]["id"])) {
@@ -88,7 +88,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
     }
 
     //
-    //
+    // If you can not find it
     //
 
     else if(!isset($json["repository"]["name"])) {
