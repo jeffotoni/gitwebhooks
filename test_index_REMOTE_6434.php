@@ -49,13 +49,8 @@ require_once "config/setenv.conf.php";
   print_r($_POST);
 
 
-  //
-  // github sen POST width payload
-  //
-
   $api->GitHubCheck()->CheckPost();
   
-
   if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
     //

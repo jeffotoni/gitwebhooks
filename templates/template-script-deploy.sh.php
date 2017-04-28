@@ -9,6 +9,10 @@
 
 echo "\nDeploy being done!!"
 
+
+echo "\nYou are in:"
+echo $(pwd)
+
 #
 #
 #

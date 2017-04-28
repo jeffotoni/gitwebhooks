@@ -50,7 +50,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
     $XGitHubEvent     = isset($_SERVER['HTTP_X_GITHUB_EVENT']) ? $_SERVER['HTTP_X_GITHUB_EVENT'] : "";
 
     // 
-    // 
+    // You can prevent by agent the shipments
     // 
 
     $UserAgent         = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
@@ -68,8 +68,16 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
     $json = json_decode($vetorJson, true);
 
+
     //
+    // If you can not find it
     //
+
+    $api->GitHubCheck()->CheckPost();
+
+
+    //
+    // Coming from github
     //
 
     $ref           = (string) $json["ref"];
@@ -81,13 +89,13 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
     $rep_id        = (string) $json["repository"]["id"];
 
     //
-    //
+    // Coming from github
     //
 
     $rep_name       = (string) $json["repository"]["name"];
 
     // 
-    // 
+    // Coming from github
     // 
 
     $tmp = explode("/", $ref);
@@ -112,7 +120,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
     if($REPOSITORY && $BRANCH) {
 
         // 
-        // 
+        // Loading and running updates
         // 
 
         $api->WScript()->LoadTemplate(
