@@ -14,23 +14,62 @@ We use psr2, autoloading, namespaces to write our server, our model instantiates
 
 ## Git Server Environment
 
-We know there are many hundreds of solutions for deploys, each one meets a need and reality.
+We know there are hundreds of solutions for implementations, each satisfying a need and reality.
 
-Before developing a simple and light deploy solution for my need, I did several tests with git hooks, bitbucket webhooks, gitlab and github.
+Before developing a simple and lightweight deployment solution for my need, I ran several tests with git hooks, bitbucket webhooks, gitlab, and github.
 
-Git Hooks is interesting, if you have no problem keeping multiple remote in your branch in git is a valid option. To create a git server using the hooks is very simple and practical.
+Git Hooks is interesting, if you have no problem keeping multiple remote servers is a valid option. To create a git server using the hooks is very simple and practical.
 
-To learn more how to create a git hooks server click here.
+To know more about git hooks is my reference.
 
-WebHooks is the feature that the tools make available so that we can have a notification for each event in our repository, the events are diverse, all are programmable. You configure the URL that will point to your server, the webhooks sends a POST to your URL, with all the information you need so you can automate your development process.
+[Git (Hooks)] (https://git-scm.com/book/gr/v2/Customizing-Git-Git-Hooks)
 
-To know a little more about Webhhoks here are the references I used:
+WebHooks is the feature that tools like github, gitlab and bitbucket make available so that we can have a notification for each event in our repository, the events are diverse, all are programmable. You set up the URL that will point to your server, the webhooks sends a POST to your URL, with all the information you need so that you can automate your development process.
 
-[Github (Webhooks)](https://developer.github.com/webhooks/)
+To know a little more about Webhhoks here are the references I've used:
 
-[Gitlab (Webhooks)](https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
+[Github (Webhooks)] (https://developer.github.com/webhooks/)
 
-[Bitbucket (Webhooks)](https://bitbucket.org/StephenHowells/webhook)
+[Gitlab (Webhooks)] (https://docs.gitlab.com/ce/user/project/integrations/webhooks.html)
+
+[Bitbucket (Webhooks)] (https://bitbucket.org/StephenHowells/webhook)
+
+
+Our program will receive a POST from Github, the event being what we programmed it will generate a script from a template that we define for our deploy and execute it on our server.
+
+Creating SSH Keys and using git clone on our remote server
+
+For everything to work, we suggest that you use ssh: // to do the git clone, this way we guarantee that when we run the git commands as www user we will not have to worry about the system request password or user, although we have to cache but Ssh is still the best option for good health of your server.
+
+# git clone ssh: //git@github.com/username/repository.git
+
+For this to work well you should do as www user as follows.
+
+# sudo -u www-data -H git clone -v ssh: //git@github.com/username/repository.git
+
+For this to work you will have to do the following steps.
+
+# sudo -u www-data mkdir /var/www/.ssh
+
+# sudo -u www-data ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+It will generate the id_rsa, id_rsa.pub, in /var/www/.ssh now just paste your public key and paste it into github settings -> keys -> new SSH Key
+
+Copying the Public Key
+
+# sudo -u www-data cat /var/www/.ssh/id_rsa.pub
+
+Now that we have configured our access keys we can use the git clone
+
+# sudo -u www-data -H git clone -v ssh: //git@github.com/username/repository.git
+
+An example of a structure you might create on your server so that our program works correctly
+
+# mkdir /var/www/githtml/beta/repository.git
+
+# mkdir /var/www/githtml/product/repository.git
+
+The program will always check for the POST received by GitHub to determine how it will deploy.
 
 
 ## Structure of the program
@@ -603,5 +642,98 @@ git pull origin {BRANCH}
 
 echo "\End deploy!!"
 echo " ------------ "
+
+```
+
+This template is for deploy in a golang project
+
+
+```sh
+#!/bin/bash
+# autor: @jeffotoni
+# about: Script to deploy our applications
+# date:  25/04/2017
+# since: Version 0.1
+#
+
+echo "\nDeploy Go(Golang) .. Being done!!"
+
+#
+#
+cd `pwd`
+
+#
+#
+echo "{REPOSITORY}"
+
+#
+#
+cd {PATH}{REPOSITORY}
+
+#
+#
+echo "checkout $BRANCH"
+
+#
+#
+#git checkout {BRANCH}
+
+#
+#
+git reset --hard HEAD
+
+#
+#
+echo "Starting pull.."
+
+#
+#
+git pull origin {BRANCH}
+
+#
+# stop process, id kill of program
+#
+echo "\nKill all Process program!!"
+
+#
+#
+#
+for pid in $(ps -fe | grep {PROGRAM} | grep -v grep | awk '{print $2}'); do
+
+    if [ "$(echo $pid | grep "^[ [:digit:] ]*$")" ] 
+        then
+
+        kill -9 "$pid"
+        echo "\nKill [$pid]" 
+    fi
+done
+
+#
+#
+#
+for pid2 in $(ps -C {PROGRAM} -o pid 2>/dev/null); do
+
+
+if [ "$(echo $pid2 | grep "^[ [:digit:] ]*$")" ]
+    then
+    kill -9 $pid2
+    echo "\nkill [$pid2]"
+fi
+done
+
+echo "\nDone!!!"
+
+echo "go build {PROGRAM}.go"
+go build "{PROGRAM}.go"
+
+#echo "go install {PROGRAM}"
+#go install "{PROGRAM}.go"
+
+echo "\nExecute {PROGRAM}"
+exec ./{PROGRAM}
+
+echo "\End deploy!!"
+echo " ------------ "
+
 
 ```
