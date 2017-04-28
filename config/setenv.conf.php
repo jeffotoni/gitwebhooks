@@ -72,7 +72,7 @@ define("PATH_LOCAL", getcwd() . "/");
 //
 //
 
-define("KEY", "b118eda467d926d003f9b4af9c203994");
+define("KEY", "152bb9666e52be4c77b3b86222cd66d5");
 
 // 
 // 
