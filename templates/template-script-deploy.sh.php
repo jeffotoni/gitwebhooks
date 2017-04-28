@@ -17,12 +17,12 @@ cd `pwd`
 #
 #
 #
-echo "{REPOSITORY}"
+echo "{$BRANCH}/{REPOSITORY}"
 
 #
 #
 #
-cd {PATH}{REPOSITORY}
+cd {PATH}{$BRANCH}/{REPOSITORY}
 
 
 #
