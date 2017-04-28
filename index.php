@@ -73,7 +73,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
     // If you can not find it
     //
 
-    $api->GitHubCheck()->CheckPost();
+    $api->GitHubCheck()->CheckPost($json);
 
 
     //

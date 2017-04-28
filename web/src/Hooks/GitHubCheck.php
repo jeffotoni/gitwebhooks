@@ -41,7 +41,7 @@ class GitHubCheck
 	//
 	//
 
-	public function CheckPost() {
+	public function CheckPost($json) {
 
 		//
 		//
