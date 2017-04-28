@@ -63,7 +63,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
 
     // 
-    // 
+    // Convertendo em array o post enviado por github
     // 
 
     $json = json_decode($vetorJson, true);
