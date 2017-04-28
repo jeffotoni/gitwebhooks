@@ -50,7 +50,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
     $XGitHubEvent     = isset($_SERVER['HTTP_X_GITHUB_EVENT']) ? $_SERVER['HTTP_X_GITHUB_EVENT'] : "";
 
     // 
-    // 
+    // You can prevent by agent the shipments
     // 
 
     $UserAgent         = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
@@ -112,7 +112,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
     if($REPOSITORY && $BRANCH) {
 
         // 
-        // 
+        // Loading and running updates
         // 
 
         $api->WScript()->LoadTemplate(
