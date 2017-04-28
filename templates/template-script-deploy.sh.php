@@ -12,7 +12,7 @@ echo "\nDeploy being done!!"
 #
 #
 #
-cd `pwd`
+cd $(pwd)
 
 #
 #
