@@ -73,28 +73,7 @@ if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
     // If you can not find it
     //
 
-    if(!isset($json["ref"])) {
-
-        exit("Error ref payload empty!!!");
-    }
-
-    //
-    // If you can not find it
-    //
-
-    else if(!isset($json["repository"]["id"])) {
-
-        exit("Error ref repository[id] empty!!!");
-    }
-
-    //
-    // If you can not find it
-    //
-
-    else if(!isset($json["repository"]["name"])) {
-
-        exit("Error ref repository[name] empty!!!");
-    }
+    $api->GitHubCheck()->CheckPost();
 
 
     //

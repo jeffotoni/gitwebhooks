@@ -48,6 +48,9 @@ require_once "config/setenv.conf.php";
  
   print_r($_POST);
 
+
+  $api->GitHubCheck()->CheckPost();
+  
   if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
     //
