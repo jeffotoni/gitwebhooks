@@ -29,8 +29,62 @@
 
 require_once "config/setenv.conf.php";
 
+  
+  // test curl conexao
+  // 
+  //   
+
+  echo "\nShow Methods\n\n";
+
+  print_r($_GET);
+
+  print_r($_POST);
+
+  if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
+
+
+    $json = $vetorJson        = isset($_POST['payload']) ? $_POST['payload'] : "";
+
+
+    $json = json_decode($vetorJson, true);
+
+    //
+    // refs/heads/beta or refs/heads/master or refs/heads/product etc..
+    //
+
+    $ref           = (string) $json["ref"];
+
+    if($ref) {
+
+      print "\n======= json ref sucess !!! ========";
+      echo "\n";
+      echo $ref;
+      echo "\n";  
+
+    }
+  }
+  
+  // 
+  // just github
+  // 
+
+  $XGitHubEvent     = isset($_SERVER['HTTP_X_GITHUB_EVENT']) ? $_SERVER['HTTP_X_GITHUB_EVENT'] : "";
+
+  // 
+  // just github
+  // 
+
+  $UserAgent         = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
+
+  // 
+  // just github
+  // 
+
+  $HTTP_X_HUB_SIGNATURE = isset($_SERVER['HTTP_X_HUB_SIGNATURE']) ? $_SERVER['HTTP_X_HUB_SIGNATURE'] : "";
+
+
 // 
-// 
+// test 
 // 
 
 $BRANCH = "beta";

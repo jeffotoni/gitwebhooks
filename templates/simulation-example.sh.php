@@ -1,4 +1,7 @@
-utor: @jeffotoni
+#!/bin/bash
+
+#
+# autor: @jeffotoni
 # about: Script to deploy our applications
 # date:  25/04/2017
 # since: Version 0.1

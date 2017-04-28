@@ -107,9 +107,78 @@ $ sudo -u www-data -H chmod 755  -R Your directory
 ### The program will always check for the POST 
 ### received by GitHub to determine how it will deploy.
 
+## System structure
+
+```
+ - config/
+    setenv.conf.php
+    setconfig.conf.php (Generated in real time)
+ 
+ - test/
+    curl-test.sh
+    github.webhooks.json
+    hello.go
+    teste-template-deploy-golang.sh
+    
+ - web/src/Hooks/
+    Api.php
+    WScript.php
+    
+ - templates/
+    simulation-example.sh.php
+    template-script-deploy.sh.php
+    template-script-golang-deploy.sh.php
+```
+
+## CURL to perform the tests Locally
+
+First under the application with php just to test as follows
+
+```php
+
+$ php -S localhost:9001 test_index.php
+
+```
+
+Now we can run local tests with curl
+
+```sh
+
+$ cd test
+$ sh curl-test.sh
+
+```
+
+## curl-test.sh source
+
+
+```sh
+#!/bin/bash
+
+#
+# autor: @jeffotoni
+# about: Script to deploy our applications
+# date:  25/04/2017
+# since: Version 0.1
+#
+#
+
+# -d @github.webhooks.json \
+# -v \
+# -H "Content-Type: application/x-www-form-urlencoded" \
+# -H 'Content-Type: application/json' \
+
+curl -X POST \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     localhost:9001/\?key=b118eda467d926d003f9b4af9c203994 \
+     -d @github.webhooks.json
+
+```
+
 ## System Settings
 
 We made an abstraction of our config, now we have a new file setenv.conf.php, it is responsible for generating our config, so your file setconfig.conf.php will be outside the git respository, and you can make your own configurations on the server without affecting It with updates, it will only be generated once.
+
 
 ## System Settings, setenv.conf.php
 
