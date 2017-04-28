@@ -50,6 +50,10 @@ require_once "config/setenv.conf.php";
 
   if(isset($_POST['payload'], $_GET['key']) && $_GET['key'] == KEY) {
 
+    //
+    //
+    //
+    //
 
     $json = $vetorJson        = isset($_POST['payload']) ? $_POST['payload'] : "";
 
