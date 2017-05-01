@@ -70,6 +70,11 @@ $api->NewRouter()
     //
 
     ->HandleFunc(
+        
+        //
+        // Defining your routes
+        //
+
         '/github/webhooks', function (Response $response, Request $request) use ($api) {
 
             //
