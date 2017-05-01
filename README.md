@@ -262,11 +262,6 @@ First under the application with php just to test as follows
 
 $ cd public
 $ php -S localhost:9001 test_index.php
-$ 
-$ OR
-$ 
-$ php -S localhost:9001 -t public
-$
 
 ```
 
