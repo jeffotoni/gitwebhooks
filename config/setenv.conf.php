@@ -53,11 +53,17 @@ $SETCONF_PHP = '<?php
 * 
 */
 
+
 //
 //
 //
 
-define("ROOT_DIR", getcwd() . "/");
+define("ROOT_DIR", PATHSET_LOCAL);
+
+//
+//
+//
+chdir(ROOT_DIR);
 
 //
 //
