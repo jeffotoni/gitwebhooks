@@ -1,16 +1,5 @@
 <?php
-/***********
-
- ▄▄▄██▀▀▀▓█████   █████▒ █████▒▒█████  ▄▄▄█████▓ ▒█████   ███▄    █  ██▓
-   ▒██   ▓█   ▀ ▓██   ▒▓██   ▒▒██▒  ██▒▓  ██▒ ▓▒▒██▒  ██▒ ██ ▀█   █ ▓██▒
-   ░██   ▒███   ▒████ ░▒████ ░▒██░  ██▒▒ ▓██░ ▒░▒██░  ██▒▓██  ▀█ ██▒▒██▒
-▓██▄██▓  ▒▓█  ▄ ░▓█▒  ░░▓█▒  ░▒██   ██░░ ▓██▓ ░ ▒██   ██░▓██▒  ▐▌██▒░██░
- ▓███▒   ░▒████▒░▒█░   ░▒█░   ░ ████▓▒░  ▒██▒ ░ ░ ████▓▒░▒██░   ▓██░░██░
- ▒▓▒▒░   ░░ ▒░ ░ ▒ ░    ▒ ░   ░ ▒░▒░▒░   ▒ ░░   ░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ░▓
- ▒ ░▒░    ░ ░  ░ ░      ░       ░ ▒ ▒░     ░      ░ ▒ ▒░ ░ ░░   ░ ▒░ ▒ ░
- ░ ░ ░      ░    ░ ░    ░ ░   ░ ░ ░ ▒    ░      ░ ░ ░ ▒     ░   ░ ░  ▒ ░
- ░   ░      ░  ░                  ░ ░               ░ ░           ░  ░
-
+/**
 *
 * @about 	project GitHub Webhooks, 
 * Application responsible 
@@ -26,8 +15,21 @@
 //
 //
 //
+$PATH_CLEN = str_replace(array("public/",
+                                "simulation/",
+                                "config/", 
+                                "templates/"), array(), getcwd() . "/");
 
-define("PATHSET_LOCAL", getcwd() . "/");
+//
+//
+//
+
+define("PATHSET_LOCAL", $PATH_CLEN);
+
+//
+//
+//
+chdir(PATHSET_LOCAL);
 
 //
 //
@@ -38,18 +40,7 @@ $PATH_SETCONF = PATHSET_LOCAL . "config/setconfig.conf.php" ;
 if(!is_file($PATH_SETCONF)) {
 
 $SETCONF_PHP = '<?php
-/***********
-
- ▄▄▄██▀▀▀▓█████   █████▒ █████▒▒█████  ▄▄▄█████▓ ▒█████   ███▄    █  ██▓
-   ▒██   ▓█   ▀ ▓██   ▒▓██   ▒▒██▒  ██▒▓  ██▒ ▓▒▒██▒  ██▒ ██ ▀█   █ ▓██▒
-   ░██   ▒███   ▒████ ░▒████ ░▒██░  ██▒▒ ▓██░ ▒░▒██░  ██▒▓██  ▀█ ██▒▒██▒
-▓██▄██▓  ▒▓█  ▄ ░▓█▒  ░░▓█▒  ░▒██   ██░░ ▓██▓ ░ ▒██   ██░▓██▒  ▐▌██▒░██░
- ▓███▒   ░▒████▒░▒█░   ░▒█░   ░ ████▓▒░  ▒██▒ ░ ░ ████▓▒░▒██░   ▓██░░██░
- ▒▓▒▒░   ░░ ▒░ ░ ▒ ░    ▒ ░   ░ ▒░▒░▒░   ▒ ░░   ░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ░▓
- ▒ ░▒░    ░ ░  ░ ░      ░       ░ ▒ ▒░     ░      ░ ▒ ▒░ ░ ░░   ░ ▒░ ▒ ░
- ░ ░ ░      ░    ░ ░    ░ ░   ░ ░ ░ ▒    ░      ░ ░ ░ ▒     ░   ░ ░  ▒ ░
- ░   ░      ░  ░                  ░ ░               ░ ░           ░  ░
-
+/**
 *
 * @about 	project GitHub Webhooks, 
 * Application responsible 
@@ -66,19 +57,32 @@ $SETCONF_PHP = '<?php
 //
 //
 
-define("PATH_LOCAL", getcwd() . "/");
+define("ROOT_DIR", getcwd() . "/");
 
 //
 //
 //
 
-define("KEY", "152bb9666e52be4c77b3b86222cd66d5");
+define("GITHUB_SECRET", "12345");
+
+
+//
+//
+//
+
+define("KEY", "b118eda467d926d003f9b4af9c203994");
+
+//
+//
+//
+
+define("GITWEBHOOKS_SECRET", "827ccb0eea8a706c4c34a16891f84e7b");
 
 // 
 // 
 // 
 
-define("PATH_LOG", PATH_LOCAL. "log/github-webooks.log");
+define("PATH_LOG", ROOT_DIR. "log/github-webooks.log");
 
 // 
 // 
@@ -92,6 +96,19 @@ define("PATH_TEMPLATE", "templates/");
 
 define("PATH_SCRIPT", "scripts/");
 
+
+// 
+// 
+// 
+
+define("PATH_CLASS", "web/src");
+
+
+// 
+// 
+// 
+
+define("PATH_CLASS_NAMESPACE", "web\src");
 
 //
 //
@@ -111,16 +128,60 @@ define("TEMPLATE_DEPLOY", [
 // 
 // 
 
-
 define("ARRAY_PROJECT_GIT", [
+    
+    /** 
+     *
+     * or /var/www/gitmyprojects/
+     *
+     * example:
+     * 
+     * /var/www/gitmyprojects/beta
+     * /var/www/gitmyprojects/product
+     * /var/www/gitmyprojects/test
+     *
+     * /var/www/gitmyprojects/beta/project1.git
+     * /var/www/gitmyprojects/beta/project2.git
+     * 
+     * /var/www/gitmyprojects/product/project1.git
+     * /var/www/gitmyprojects/product/project2.git
+     *
+     * Configuring your paths
+     * 
+     * gitwebhooks  => /var/www/gitmyprojects
+     *
+     * yourprojetc1 => /var/www/gitmyprojects
+     *
+     * yourproject2 => /var/www/gitmyprojects
+     *
+     *  OR
+     *  
+     * gitwebhooks  => ../../../../../
+     *
+     * yourprojetc1 => ../../../../../
+     *
+     * yourproject2 => ../../../../../
+     * 
+     */
+    
+    "gitwebhooks"      => "../../../",
 
-    "gitwebhooks"        => "../../../",
-    "s3archiviobrasil"     => "../../../../",
-    "s3rafaelmendonca"    => "../../../../",
+    "yourprojetc1"     => "../../../../",
+
+    "yourproject2"    => "../../../../",
+
+    "yourproject3"    => "../../../../",
+
+    "yourproject4"    => "../../../../",
+
+    "yourproject5"    => "../../../../",
+
+    "yourproject6"    => "../../../../",
+
+    "yourproject7"    => "../../../../",
 
     ]
 );
-
 
 
 // 
@@ -139,14 +200,14 @@ $apifunc2 = function ($namespace) {
     //
     //
     
-    $path_n = PATH_LOCAL.$path_n . ".php";
+    $path_n = ROOT_DIR.$path_n . ".php";
 
 
     if(is_file($path_n)) {
 
-    	//
-    	//
-    	//
+        //
+        //
+        //
 
         include_once $path_n;
 
@@ -173,7 +234,70 @@ $apifunc2 = function ($namespace) {
 //
 //
 
-$api = $apifunc2("web\src\Hooks\Api");
+$api = $apifunc2(PATH_CLASS_NAMESPACE. "\AutoLoading");
+
+
+
+// 
+// 
+// 
+
+$loader = function ($namespace, $class="") {
+    
+    //
+    //
+    //
+
+    $path_n = str_replace(array("\\\"), array("/"), $namespace);
+
+    //
+    //
+    //
+    
+    $path_n = ROOT_DIR.$path_n . ".php";
+
+
+    if(is_file($path_n)) {
+
+        //
+        //
+        //
+
+        include_once $path_n;
+
+        // 
+        // 
+        // 
+        if($class) {
+
+
+            $classApi = new $class;
+
+        } else {
+
+            $classApi = new $namespace;
+        }
+
+        //
+        //
+        //
+
+        return $classApi;
+
+    } else {
+
+        exit("\nFile not exist! [{$path_n}]");
+
+    }
+};
+
+
+//
+//
+//
+
+$LoaderAuto = $loader(PATH_CLASS . "/ClassAutoLoading", "ClassAutoLoading");
+
 ';
 	
 	//
@@ -185,6 +309,7 @@ $api = $apifunc2("web\src\Hooks\Api");
 	require_once $PATH_SETCONF;
 
 } else {
+
 
 	//
 	//

@@ -1,16 +1,5 @@
 <?php
-/***********
-
- ▄▄▄██▀▀▀▓█████   █████▒ █████▒▒█████  ▄▄▄█████▓ ▒█████   ███▄    █  ██▓
-   ▒██   ▓█   ▀ ▓██   ▒▓██   ▒▒██▒  ██▒▓  ██▒ ▓▒▒██▒  ██▒ ██ ▀█   █ ▓██▒
-   ░██   ▒███   ▒████ ░▒████ ░▒██░  ██▒▒ ▓██░ ▒░▒██░  ██▒▓██  ▀█ ██▒▒██▒
-▓██▄██▓  ▒▓█  ▄ ░▓█▒  ░░▓█▒  ░▒██   ██░░ ▓██▓ ░ ▒██   ██░▓██▒  ▐▌██▒░██░
- ▓███▒   ░▒████▒░▒█░   ░▒█░   ░ ████▓▒░  ▒██▒ ░ ░ ████▓▒░▒██░   ▓██░░██░
- ▒▓▒▒░   ░░ ▒░ ░ ▒ ░    ▒ ░   ░ ▒░▒░▒░   ▒ ░░   ░ ▒░▒░▒░ ░ ▒░   ▒ ▒ ░▓
- ▒ ░▒░    ░ ░  ░ ░      ░       ░ ▒ ▒░     ░      ░ ▒ ▒░ ░ ░░   ░ ▒░ ▒ ░
- ░ ░ ░      ░    ░ ░    ░ ░   ░ ░ ░ ▒    ░      ░ ░ ░ ▒     ░   ░ ░  ▒ ░
- ░   ░      ░  ░                  ░ ░               ░ ░           ░  ░
-
+/**
 *
 * @about 	project GitHub Webhooks, 
 * Application responsible 
@@ -101,11 +90,12 @@ class WScript
     public function LoadTemplate($_ARRAY, $modelo = "beta") 
     {
 
+
         // 
         // 
         // 
 
-        $path = PATH_LOCAL;
+        $path = ROOT_DIR;
 
         // 
         // 
@@ -117,7 +107,8 @@ class WScript
         // 
         // 
 
-        $file_template = "{$path}/" . PATH_TEMPLATE . "{$modeloName}.sh.php";
+        $file_template = "{$path}" . PATH_TEMPLATE . "{$modeloName}.sh.php";
+
 
         // 
         // 
@@ -235,7 +226,7 @@ class WScript
             // 
             // 
 
-            $PATH_SCRIPT = PATH_LOCAL . self::$pathScript;
+            $PATH_SCRIPT = ROOT_DIR . self::$pathScript;
 
             //
             //

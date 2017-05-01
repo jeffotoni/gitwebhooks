@@ -1,16 +1,53 @@
 # gitwebhooks
 
-The program that runs on the server, to deploy applications, we are using php, but can be done with any deploy language.
+Gitwebhooks is a service for receiving GHub WebHooks.
 
-The program receives a POST from github's WebHooks, so you can generate your script from a template and run it as you need it.
+Gitwebhooks is a microservice, it receives Http requests to be configured in addition to receiving requests from WebHooks.
 
-Our example shows the call of the class executing all its methods: Treat the rules of WeHooks, Generate script.sh, save the script to disk, execute it, remove server script or not and generate log of all execution.
+Gitwebhooks receives a POST from WebHooks coming from Github, and it automatically generates a script from a template and runs it on the server.
+
+Our example shows the class call executing all its methods: Handle the rules of WeHooks, generate script.sh, save the script to the disk, run it, remove the server script or not and generate log of the entire execution .
+
+Our microservice has its own route controller and dynamic classes ie you will not need to make new there is an object that will dynamically mount them, using namespace and several other techniques to make it light and thin.
+
+You can extend the entire application, just create your classes to apply them in your need.
+
+When creating a class in web/src/MyControler/MyControlerClass.php for example, you can use it for example as follows:
+
+
+```php
+
+/**
+ * 
+ * $api->MyControlerClass()->MyMethod();
+ *
+ *              OR
+ *
+ * Use web\src\MyControler\MyControlerClass as MyCC;
+ * 
+ * $myobj = new MyCC();
+ *
+ *              OR
+ *
+ * $objMycc = new web\src\MyControler\MyControlerClass();
+ *
+ * // dependency injection
+ * $objMycc->MyMethod($api);
+ * 
+ */
+
+```
+
+If you want to access any class of the system just pass $ api as a parameter and with it you can access any class and method available on the platform.
+
+This way it is easier for you to create your own classes and apply them to the system
+
 
 ## Does not use library
 
 The server is written in php and we do not use any library, the code is simple and very light, we know we can improve and extend the application even more and this is our goal.
 
-We use psr2, autoloading, namespaces to write our server, our model instantiates class execution time with this technique we can instantiate classes and their methods in a light and practical way and with the possibility of doing Injection.
+We use psr2, autoloading, namespaces to write our server, our model instantiates class execution time with this technique we can instantiate classes and their methods in a light and practical way and with the possibility of doing dependency injection.
 
 ## Git Server Environment
 
@@ -67,6 +104,7 @@ $ sudo -u www-data mkdir /var/www/.ssh
 
 $ sudo -u www-data ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
+
 ```
 
 If you want a good reference of a checked here
@@ -104,39 +142,131 @@ $ sudo -u www-data -H chmod 755  -R Your directory
 
 ```
 
+### If you are using apache, do not forget to enable in your virtualhosts [ AllowOverride All ]
+
+```
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ test_index.php [QSA,L]
+
+```
+
+### If you are using nginx
+
+```
+server {
+    listen 80;
+    server_name yoursite.com;
+    index index.php;
+    error_log /path/to/yoursite.error.log;
+    access_log /path/to/yoursite.access.log;
+    root /path/to/public;
+
+    location / {
+        try_files $uri /index.php$is_args$args;
+    }
+
+    location ~ \.php {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+        fastcgi_index index.php;
+        fastcgi_pass 127.0.0.1:9000;
+    }
+}
+
+```
+
+### If you are using PHP built-in server in production
+
+```
+$ php -S localhost:9001 -t public
+
+```
+
+### If you are using PHP built-in server in Locally
+
+```
+$ cd public
+$ php -S localhost:9001 test_index.php
+
+```
+
+### Now just run "generate-config.php" so that your config is generated and you can configure it.
+
+```
+$ cd config
+$ php -q generate-config.php
+
+```
+
 ### The program will always check for the POST 
 ### received by GitHub to determine how it will deploy.
 
 ## System structure
 
 ```
- - config/
-    setenv.conf.php
-    setconfig.conf.php (Generated in real time)
  
- - test/
-    curl-test.sh
-    github.webhooks.json
-    hello.go
-    teste-template-deploy-golang.sh
-    
- - web/src/Hooks/
-    Api.php
-    WScript.php
-    
+ - public
+    index.php
+    test_index.php
+
+ - config/
+    generate-config.php (Run as soon as you put it on your server)
+
+    setenv.conf.php
+
+    setconfig.conf.php (Generated in real time by the program "generate-config.php")
+
+    apache-rewritengine
+
+    nginx-rewritengine
+ 
+ - simulation/
+    curl-test.sh (Executes the curl calls to test and simulate the production environment)
+
+    github.webhooks.json (Json format)
+
+    github.webhooks.form (x-www-form-urlencoded format)
+
+    server-http.go (example to test a deploy using go)
+
+    teste-template-deploy-golang.sh (A deploy to golang)
+ 
  - templates/
-    simulation-example.sh.php
-    template-script-deploy.sh.php
+    simulation-example.sh.php (To perform the tests without actually executing)
+
+    template-script-deploy.sh.php (This script we are using to deploy our applications in php)
+
     template-script-golang-deploy.sh.php
+
+  - web/src/
+        Hooks/
+            Handlers/
+            Hooks/
+            Http/
+            Interfaces/
+            Message/
+                Logs
+
 ```
 
-## CURL to perform the tests Locally
+## cURL to perform the tests Locally
 
 First under the application with php just to test as follows
 
 ```php
 
+$ cd public
 $ php -S localhost:9001 test_index.php
+$ 
+$ OR
+$ 
+$ php -S localhost:9001 -t public
+$
 
 ```
 
@@ -144,36 +274,76 @@ Now we can run local tests with curl
 
 ```sh
 
-$ cd test
+$ cd simulation
 $ sh curl-test.sh
 
 ```
 
-## curl-test.sh source
+## curl-test.sh Source
+
+You can simulate the submissions to your local machine as if it were github.
 
 
-```sh
-#!/bin/bash
+Sending post as if it were github, content type json, we made a file github.webhooks.json, 
+which is in the same directory, to simulate the sending.
 
-#
-# autor: @jeffotoni
-# about: Script to deploy our applications
-# date:  25/04/2017
-# since: Version 0.1
-#
-#
+We are using in this shipment the secret "X-Hub-Signature"
 
-# -d @github.webhooks.json \
-# -v \
-# -H "Content-Type: application/x-www-form-urlencoded" \
-# -H 'Content-Type: application/json' \
+```bash
 
 curl -X POST \
-     -H "Content-Type: application/x-www-form-urlencoded" \
-     localhost:9001/\?key=b118eda467d926d003f9b4af9c203994 \
+     -H "Content-Type: application/json" \
+     -H "X-Hub-Signature: sha1=9c714dcc8f1f4ba829c88fef184ccd0d090f019d" \
+     -H "X-GitHub-Event: push" \
+     -H "X-GitHub-Delivery: e4cd4180-2c67-11e7-8099-87e86dbb4105" \
+     http://localhost.gitwebhooks/github/webhooks \
      -d @github.webhooks.json
 
 ```
+
+Sending post as if it were github, content type x-www-form-urlencoded, we made a 
+file github.webhooks.form, which is in the same directory, to simulate the sending.
+
+In this submission we are using a parameter in the url itself, "key"
+
+```bash
+
+ curl -X POST \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -H "X-GitHub-Event: push" \
+    -H "X-GitHub-Delivery: e4cd4180-2c67-11e7-8099-87e86dbb4105" \
+    http://localhost.gitwebhooks/github/webhooks\?key=b118eda467d926d003f9b4af9c203994 \
+    -d @github.webhooks.form
+
+```
+
+Gitwebhooks is a service so we made a call to another url we created, to return the status of our server.
+
+It is using an md5 "GitWebHoos-Authentication" authentication, but we can implement any of the "hash_hmac".
+
+```bash
+
+curl -X GET \
+     -H "Content-Type: application/json" \
+     -H "GitWebHoos-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
+     http://localhost.gitwebhooks/gitwebhooks/status
+
+```
+
+When using the PHP built-in server the call can be made so
+
+```bash
+
+curl -X POST \
+     -H "Content-Type: application/json" \
+     -H "GitWebHoos-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
+     -H "X-GitHub-Event: push" \
+     -H "X-GitHub-Delivery: e4cd4180-2c67-11e7-8099-87e86dbb4105" \
+     http://localhost:9001/github/webhooks \
+     -d @github.webhooks.json
+
+```
+
 
 ## System Settings
 
@@ -198,18 +368,49 @@ It is responsible for generating your config once, setconfig.conf.php
 * 
 */
 
+//
+//
+//
+$PATH_CLEN = str_replace(array("public/",
+                                "simulation/",
+                                "config/", 
+                                "templates/"), array(), getcwd() . "/");
+
+//
+//
+//
+
+define("PATHSET_LOCAL", $PATH_CLEN);
+
+//
+//
+//
+chdir(PATHSET_LOCAL);
+
+//
+//
+//
+
+define("GITHUB_SECRET", "12345");
+
+
+//
+//
+//
+
+define("KEY", "b118eda467d926d003f9b4af9c203994");
+
+//
+//
+//
+
+define("GITWEBHOOKS_SECRET", "827ccb0eea8a706c4c34a16891f84e7b");
+
 // 
 // 
 // 
 
-define("PATH_LOCAL", getcwd() . "/");
-
-
-// 
-// 
-// 
-
-define("PATH_LOG", PATH_LOCAL. "log/github-webooks.log");
+define("PATH_LOG", ROOT_DIR. "log/github-webooks.log");
 
 // 
 // 
@@ -223,9 +424,19 @@ define("PATH_TEMPLATE", "templates/");
 
 define("PATH_SCRIPT", "scripts/");
 
+
 // 
 // 
 // 
+
+define("PATH_CLASS", "web/src");
+
+
+// 
+// 
+// 
+
+define("PATH_CLASS_NAMESPACE", "web\src");
 
 //
 //
@@ -241,11 +452,61 @@ define("TEMPLATE_DEPLOY", [
     ]
    );
 
-define("ARRAY_PROJECT_GIT", [
+// 
+// 
+// 
 
-    "gitwebhooks"        => "../../../",
-    "s3archiviobrasil"     => "../../../../",
-    "s3rafaelmendonca"    => "../../../../",
+define("ARRAY_PROJECT_GIT", [
+    
+    /** 
+     *
+     * or /var/www/gitmyprojects/
+     *
+     * example:
+     * 
+     * /var/www/gitmyprojects/beta
+     * /var/www/gitmyprojects/product
+     * /var/www/gitmyprojects/test
+     *
+     * /var/www/gitmyprojects/beta/project1.git
+     * /var/www/gitmyprojects/beta/project2.git
+     * 
+     * /var/www/gitmyprojects/product/project1.git
+     * /var/www/gitmyprojects/product/project2.git
+     *
+     * Configuring your paths
+     * 
+     * gitwebhooks  => /var/www/gitmyprojects
+     *
+     * yourprojetc1 => /var/www/gitmyprojects
+     *
+     * yourproject2 => /var/www/gitmyprojects
+     *
+     *  OR
+     *  
+     * gitwebhooks  => ../../../../../
+     *
+     * yourprojetc1 => ../../../../../
+     *
+     * yourproject2 => ../../../../../
+     * 
+     */
+    
+    "gitwebhooks"      => "/var/www/gitmyprojects",
+
+    "yourprojetc1"     => "/var/www/gitmyprojects",
+
+    "yourproject2"    => "/var/www/gitmyprojects",
+
+    "yourproject3"    => "/var/www/gitmyprojects",
+
+    "yourproject4"    => "/var/www/gitmyprojects",
+
+    "yourproject5"    => "/var/www/gitmyprojects",
+
+    "yourproject6"    => "/var/www/gitmyprojects",
+
+    "yourproject7"    => "/var/www/gitmyprojects",
 
     ]
 );
@@ -257,48 +518,216 @@ define("ARRAY_PROJECT_GIT", [
 The $api object is special it can create and instantiate any class that is in the web/src/Hooks structure, so: $api = special object, WScript() = Class, LoadTemplate() == class method.
 
 ```php
-        // 
+
+/**
+*
+* @about    project GitHub Webhooks, 
+* Application responsible 
+* for receiving posts from github webhooks, and automating 
+* our production environment by deploying
+* 
+* @autor    @jeffotoni
+* @date     25/04/2017
+* @since  Version 0.1
+* 
+*/
+
+// 
+// cd public
+// php -S localhost:9001 index.php
+// 
+// OR
+// 
+// php -S localhost:9001 test_index.php 
+// 
+// Apache .htaccess
+// 
+// OR
+// 
+// Ngnix
+// 
+
+require_once "../config/setenv.conf.php";
+
+/** 
+ *
+ * Various ways of instantiating objects
+ *
+ * Way one:
+ * 
+ * use web\src\Http\NewRouter;
+ * $NewRouter = new NewRouter();
+ *
+ * Way two:
+ *
+ * $NewRouter = $api->NewRouter();
+ * 
+ */
+
+//
+// Class responsible for handling the responses
+//
+
+use web\src\Http\Response as Response;
+
+
+//
+// Class responsible for handling request 
+//
+
+use web\src\Http\Request as Request;
+
+//
+// Instantiating routes
+//
+
+$api->NewRouter()
+
+    //
+    //
+    //
+
+    ->Methods("POST")
+
+    //
+    //
+    //
+
+    ->HandleFunc('/github/webhooks', function (Response $response, Request $request) use ($api) {
+
+      //
+      // Class responsible for handling requests coming from github
+      //
+
+      $GitHub = $api->GitHub();
+
+      $api->GitHub()
+
+        //
+        //
+        // Authentication coming from github secret
+        // For security reasons we suggest you use this option
         // 
         //
 
-        $api->WScript()->LoadTemplate(
-            [
+        ->AuthenticateSecretToken()
 
-            "REPOSITORY" => $REPOSITORY,
-            "PATH"       => $ARRAY_PROJECT_GIT[$REPOSITORY],
-            "BRANCH"     => $BRANCH,
-            ]
-        )
+
+        //
+        // Authentication of your key, coming from the URL, a GET
+        //
+
+        //->AuthenticateSecretKey()
+
+        //
+        // Setting the event
+        //
+
+        ->Event("push")
+
+        //
+        // Making the call to run the deploy scripts
+        //
+
+        ->WScript($api)
+
+        // 
+        // Loading and running updates
+        // 
         
-        // 
-        // Generate script from template
-        //
+        ->LoadTemplate(
+                [
 
-        ->LoadFileScript()
+                "REPOSITORY" => $GitHub::$REPOSITORY,
 
-        // 
-        // Prepares to run, saves script to disk
-        //
+                "PATH"       => ARRAY_PROJECT_GIT[$GitHub::$REPOSITORY],
 
-        ->Save()
+                "BRANCH"     => $GitHub::$BRANCH,
 
-        // 
-        // It runs the script
-        //
-        	
-        ->Execute(false) // false => simule | true execute your script template
+                ]
+          )
 
-        // 
-        // Possibility to delete file, it is not mandatory
-        //
+          // 
+          // Generate script from template
+          //
+          
+          ->LoadFileScript()
+
+          // 
+          // Prepares to run, saves script to disk
+          //
+          ->Save()
+
+          // 
+          // It runs the script
+          //
+          //
+          ->Execute()
+
+          // 
+          // Possibility to delete file, it is not mandatory
+          //
 
           ->DelFile()
 
-        // 
-        // Generates log on disk so you can keep track of all executions
+          // 
+          // Generates log on disk so you can keep track of all executions
+          //
+          //
+          ->LoadLog();
+
+    })
+
+    //
+    // It will execute the methods
+    //
+
+    ->Run();
+
+
+//
+// 
+//
+
+$api->NewRouter()
+
+    //
+    //
+    //
+
+    ->Methods("GET")
+
+    //
+    //
+    //
+
+    ->HandleFunc('/gitwebhooks/status', function (Response $response, Request $request) use ($api) {
+
+        //
+        //
         //
 
-        ->LoadLog();
+        $api->GitWebHooks()
+
+        //
+        //
+        //
+
+        ->AuthenticateMd5();
+
+        //
+        //
+        //
+
+        $arrayJson = [
+            
+            "status" => "online",
+        ];
+
+        $response->WriteJson($arrayJson);
+
+    })->Run();
+
     
 ```
 
@@ -308,7 +737,7 @@ The $api object is special it can create and instantiate any class that is in th
 
 /*
 *
-* @about    project GitHub Webhooks, 
+* @about project GitHub Webhooks, 
 * Application responsible 
 * for receiving posts from github webhooks, and automating 
 * our production environment by deploying
@@ -745,9 +1174,11 @@ The template you can create your own, the way you want, you can assemble your ve
 Standard Model:
 ```php
   [
-    "REPOSITORY" => $ REPOSITORY,
-    "PATH" => $ ARRAY_PROJECT_GIT [$ REPOSITORY],
-    "BRANCH" => $ BRANCH,
+     "REPOSITORY" => $GitHub::$REPOSITORY,
+
+     "PATH"       => ARRAY_PROJECT_GIT[$GitHub::$REPOSITORY],
+
+     "BRANCH"     => $GitHub::$BRANCH,
 ]
 
 ```
@@ -755,17 +1186,23 @@ But you can extend exactly here what you want for your scripts
 
 ```php
 [
-   "REPOSITORY" => $REPOSITORY,
-   "PATH" => $ARRAY_PROJECT_GIT [$ REPOSITORY],
-   "BRANCH" => $BRANCH,
+   "REPOSITORY" => $GitHub::$REPOSITORY,
+
+   "PATH" => $ARRAY_PROJECT_GIT [$GitHub::$REPOSITORY],
+
+   "BRANCH" => $GitHub::$BRANCH,
+
    "CMD1" => "git checkout deploy",
+
    "CMD2" => "git merge master",
+
    "CMD3" => 'echo "Executing merge!"'
 ]
 
 ```
 
-This is our template, but you can create it the way you want it, confore your real need
+This is our template, but you can create it the way you want it, confore your real need.
+We leave some examples.
 
 ```sh
 #!/bin/bash
@@ -916,6 +1353,5 @@ exec ./{PROGRAM}
 
 echo "\End deploy!!"
 echo " ------------ "
-
 
 ```
