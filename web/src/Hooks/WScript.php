@@ -1,15 +1,14 @@
 <?php
 /**
 *
-* @about 	project GitHub Webhooks, 
+* @about     project GitHub Webhooks, 
 * Application responsible 
 * for receiving posts from github webhooks, and automating 
 * our production environment by deploying
 * 
-* @autor 	@jeffotoni
-* @date 	25/04/2017
+* @autor     @jeffotoni
+* @date     25/04/2017
 * @since    Version 0.1
-* 
 */
 
 // 
@@ -116,9 +115,9 @@ class WScript
 
         if (is_file($file_template)) {
 
-        	//
-        	//
-        	//
+            //
+            //
+            //
 
             self::$msgconcat .= "{$modelo} {$modeloName}";
 
@@ -188,14 +187,14 @@ class WScript
                 // 
             } else {
 
-            	exit("erro, not found array LoadTemplate..");
+                exit("erro, not found array LoadTemplate..");
             }
 
             return $this;
 
         } else {
 
-        	exit("erro, not found file [{$file_template}]..");
+            exit("erro, not found file [{$file_template}]..");
         }
     }
 
@@ -303,30 +302,30 @@ class WScript
 
             if($exec) {
 
-            	// 
-	            // 
-	            // 
+                // 
+                // 
+                // 
 
-	            $COMANDO = "/bin/sh ".self::$pathScript." 2>&1";
+                $COMANDO = "/bin/sh ".self::$pathScript." 2>&1";
 
-	            // 
-	            // Executes even the generated template
-	            // 
+                // 
+                // Executes even the generated template
+                // 
 
-	            $LAST_LINE = shell_exec($COMANDO);
+                $LAST_LINE = shell_exec($COMANDO);
 
 
-            	//
-            	// 
-            	//
+                //
+                // 
+                //
 
-            	self::$msgconcat .= " {".$LAST_LINE."}";
+                self::$msgconcat .= " {".$LAST_LINE."}";
 
-            	// 
-	            // 
-    	        // 
+                // 
+                // 
+                // 
 
-        	    print "\n{$LAST_LINE}\n";
+                print "\n{$LAST_LINE}\n";
             }
 
             
@@ -342,41 +341,42 @@ class WScript
     //
     //
 
-    public function DelFile(){
+    public function DelFile()
+    {
 
-    	//
-    	//
-    	//
+        //
+        //
+        //
 
-    	if(self::$pathScript && is_file(self::$pathScript)) {
+        if(self::$pathScript && is_file(self::$pathScript)) {
 
-    		if(@unlink(self::$pathScript)) {
+            if(@unlink(self::$pathScript)) {
 
-    			$filescriptTmp = explode("/", self::$pathScript);
-    			$filescript = end($filescriptTmp);
+                $filescriptTmp = explode("/", self::$pathScript);
+                $filescript = end($filescriptTmp);
 
-    			//
-    			//
-    			//
+                //
+                //
+                //
 
-    			self::$msgconcat .= " File removed [{$filescript}]!";
+                self::$msgconcat .= " File removed [{$filescript}]!";
 
-    		} else {
+            } else {
 
 
-    			$filescriptTmp = explode("/", self::$pathScript);
-    			$filescript = end($filescriptTmp);
+                $filescriptTmp = explode("/", self::$pathScript);
+                $filescript = end($filescriptTmp);
 
-    			//
-    			//
-    			//
+                //
+                //
+                //
 
-    			self::$msgconcat .= " Error while trying to remove file:[{$filescript}]";
+                self::$msgconcat .= " Error while trying to remove file:[{$filescript}]";
 
-    		}
-    	}
+            }
+        }
 
-    	return $this;
+        return $this;
     }
 
 
@@ -387,9 +387,9 @@ class WScript
     public function LoadLog()
     {
 
-    	//
-    	//
-    	//
+        //
+        //
+        //
 
         self::$show_msg_load = date("Y-m-d [H:i]") . " - " . self::$msgconcat . PHP_EOL;
 
@@ -413,15 +413,15 @@ class WScript
     public function Show()
     {
 
-    	//
-    	//
-    	//
+        //
+        //
+        //
 
         if(self::$show_msg_load) {
 
-        	//
-        	//
-        	//
+            //
+            //
+            //
 
             print "\n";
             print self::$show_msg_load;

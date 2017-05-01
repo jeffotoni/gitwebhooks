@@ -1,15 +1,14 @@
 <?php
 /**
 *
-* @about 	project GitHub Webhooks, 
+* @about     project GitHub Webhooks, 
 * Application responsible 
 * for receiving posts from github webhooks, and automating 
 * our production environment by deploying
 * 
-* @autor 	@jeffotoni
-* @date 	25/04/2017
+* @autor     @jeffotoni
+* @date     25/04/2017
 * @since  Version 0.1
-* 
 */
 
 // 
@@ -29,7 +28,6 @@
 require_once "../config/setenv.conf.php";
 
 /** 
- *
  * Various ways of instantiating objects
  *
  * Way one:
@@ -40,7 +38,6 @@ require_once "../config/setenv.conf.php";
  * Way two:
  *
  * $NewRouter = $api->NewRouter();
- * 
  */
 
 //
@@ -70,96 +67,98 @@ $api->NewRouter()
     //
     //
 
-    ->HandleFunc('/github/webhooks', function (Response $response, Request $request) use ($api) {
+    ->HandleFunc(
+        '/github/webhooks', function (Response $response, Request $request) use ($api) {
 
-      //
-      // Class responsible for handling requests coming from github
-      //
+            //
+            // Class responsible for handling requests coming from github
+            //
 
-      $GitHub = $api->GitHub();
+            $GitHub = $api->GitHub();
 
-      $api->GitHub()
+            $api->GitHub()
 
-        //
-        //
-        // Authentication coming from github secret
-        // For security reasons we suggest you use this option
-        // 
-        //
+                //
+                //
+                // Authentication coming from github secret
+                // For security reasons we suggest you use this option
+                // 
+                //
 
-        // ->AuthenticateSecretToken()
+                // ->AuthenticateSecretToken()
 
 
-        //
-        // Authentication of your key, coming from the URL, a GET
-        //
+                //
+                // Authentication of your key, coming from the URL, a GET
+                //
 
-        //->AuthenticateSecretKey()
-        
-        //
-        // Authentication using md5, header
-        //
+                //->AuthenticateSecretKey()
+            
+                //
+                // Authentication using md5, header
+                //
 
-        ->AuthenticateMd5()
+                ->AuthenticateMd5()
 
-        //
-        // Setting the event
-        //
+                //
+                // Setting the event
+                //
 
-        ->Event("push")
+                ->Event("push")
 
-        //
-        // Making the call to run the deploy scripts
-        //
+                //
+                // Making the call to run the deploy scripts
+                //
 
-        ->WScript($api)
+                ->WScript($api)
 
-        // 
-        // Loading and running updates
-        // 
-        
-        ->LoadTemplate(
-                [
+                // 
+                // Loading and running updates
+                // 
+            
+                ->LoadTemplate(
+                    [
 
-                "REPOSITORY" => $GitHub::$REPOSITORY,
+                    "REPOSITORY" => $GitHub::$REPOSITORY,
 
-                "PATH"       => ARRAY_PROJECT_GIT[$GitHub::$REPOSITORY],
+                    "PATH"       => ARRAY_PROJECT_GIT[$GitHub::$REPOSITORY],
 
-                "BRANCH"     => $GitHub::$BRANCH,
+                    "BRANCH"     => $GitHub::$BRANCH,
 
-                ]
-          ,  "simulation")
+                    ],  "simulation"
+                )
 
-          // 
-          // Generate script from template
-          //
+                // 
+                // Generate script from template
+                //
           
-          ->LoadFileScript(true)
+                ->LoadFileScript(true)
 
-          // 
-          // Prepares to run, saves script to disk
-          //
-          ->Save()
+                // 
+                // Prepares to run, saves script to disk
+                //
+                ->Save()
 
-          // 
-          // It runs the script
-          //
-          //
-          ->Execute(true)
+                // 
+                // It runs the script
+                //
+                //
+                ->Execute(true)
 
-          // 
-          // Possibility to delete file, it is not mandatory
-          //
+                // 
+                // Possibility to delete file, it is not mandatory
+                //
 
-          //->DelFile()
+                //->DelFile()
 
-          // 
-          // Generates log on disk so you can keep track of all executions
-          //
-          //
-          ->LoadLog();
+                // 
+                // Generates log on disk so you can keep track of all executions
+                //
+                //
+                ->LoadLog();
 
-    })
+        }
+    )
 
     //
     // It will execute the methods
@@ -184,29 +183,31 @@ $api->NewRouter()
     //
     //
 
-    ->HandleFunc('/webhooks/status', function (Response $response, Request $request) use ($api) {
+    ->HandleFunc(
+        '/webhooks/status', function (Response $response, Request $request) use ($api) {
 
-        //
-        //
-        //
+            //
+            //
+            //
 
-        $api->GitWebHooks()
+            $api->GitWebHooks()
 
-        //
-        //
-        //
+            //
+            //
+            //
 
-        ->AuthenticateMd5();
+                ->AuthenticateMd5();
 
-        //
-        //
-        //
+            //
+            //
+            //
 
-        $arrayJson = [
+            $arrayJson = [
             
             "status" => "online",
-        ];
+            ];
 
-        $response->WriteJson($arrayJson);
+            $response->WriteJson($arrayJson);
 
-    })->Run();
+        }
+    )->Run();

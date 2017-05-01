@@ -9,16 +9,17 @@
 * @autor    @jeffotoni
 * @date     25/04/2017
 * @since    Version 0.1
-* 
 */
 
-final class ClassAutoLoading {
+final class ClassAutoLoading
+{
 
     //
     //
     //
     
-    public function __construct() {
+    public function __construct() 
+    {
 
         //
         //
@@ -32,7 +33,8 @@ final class ClassAutoLoading {
     //
     //
 
-    private function autoloader($className) {
+    private function autoloader($className) 
+    {
 
         //echo "\n",'Trying to load ', $className, ' via ', __METHOD__, "()\n\n";
 

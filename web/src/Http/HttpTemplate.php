@@ -9,7 +9,6 @@
 * @autor    @jeffotoni
 * @date     25/04/2017
 * @since    Version 0.1
-* 
 */
 
 namespace web\src\Http;

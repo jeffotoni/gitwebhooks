@@ -1,15 +1,14 @@
 <?php
 /**
 *
-* @about 	project GitHub Webhooks, 
+* @about     project GitHub Webhooks, 
 * Application responsible 
 * for receiving posts from github webhooks, and automating 
 * our production environment by deploying
 * 
-* @autor 	@jeffotoni
-* @date 	25/04/2017
+* @autor     @jeffotoni
+* @date     25/04/2017
 * @since    Version 0.1
-* 
 */
 
 // 
@@ -182,8 +181,7 @@ final class AutoLoading
         //
         //
 
-        if(is_file($NEW_PATH_CLASS))
-        {
+        if(is_file($NEW_PATH_CLASS)) {
                 
             //
             // 
@@ -213,7 +211,7 @@ final class AutoLoading
             //
             //
 
-            require_once $NEW_PATH_CLASS;
+            include_once $NEW_PATH_CLASS;
 
             // echo "\nautoload \n";
 
@@ -302,9 +300,12 @@ final class AutoLoading
     }
 
     
-    /** [Destroy description] */
+    /**
+ * [Destroy description] 
+*/
 
-    private static function Destroy() {
+    private static function Destroy() 
+    {
 
 
         //
@@ -333,12 +334,16 @@ final class AutoLoading
     }
     
     
-    /** [FindDirClass description] */
+    /**
+ * [FindDirClass description] 
+*/
 
-    private static function FindDirClass($className, $dirclass = "") {
+    private static function FindDirClass($className, $dirclass = "") 
+    {
 
-        if(empty($dirclass))
-            $dirclass = self::$PATH_APIS;
+        if(empty($dirclass)) {
+            $dirclass = self::$PATH_APIS; 
+        }
         
         //
         //
@@ -366,7 +371,8 @@ final class AutoLoading
         // Returns the first one you find
         //
 
-        if(file_exists(ROOT_DIR.$dirclass.'/'.$className.'.php')) return $dirclass;
+        if(file_exists(ROOT_DIR.$dirclass.'/'.$className.'.php')) { return $dirclass; 
+        }
 
         else {
 
@@ -400,7 +406,8 @@ final class AutoLoading
 
                         self::$collectionClass[$checkclass] = $className;
 
-                        if(file_exists(ROOT_DIR.$checkclass.'/'.$className.'.php')) return $checkclass;
+                        if(file_exists(ROOT_DIR.$checkclass.'/'.$className.'.php')) { return $checkclass; 
+                        }
 
                         else {
 
@@ -408,13 +415,14 @@ final class AutoLoading
                             //
                             //
 
-                            $subdirclass=self::FindDirClass($className,$checkclass);
+                            $subdirclass=self::FindDirClass($className, $checkclass);
 
                             //
                             //
                             //
 
-                            if($subdirclass) return $subdirclass;
+                            if($subdirclass) { return $subdirclass; 
+                            }
                         }
                     }
                 }
@@ -429,9 +437,12 @@ final class AutoLoading
         return 0;
     }
 
-    /** [ShowClassColection description] */
+    /**
+ * [ShowClassColection description] 
+*/
 
-    public function ShowClassColection() {
+    public function ShowClassColection() 
+    {
 
         
 
@@ -442,9 +453,12 @@ final class AutoLoading
     }
 
 
-    /** [Show description] */
+    /**
+ * [Show description] 
+*/
 
-    public function Show($string) {
+    public function Show($string) 
+    {
 
         print "\n";
         echo $string;

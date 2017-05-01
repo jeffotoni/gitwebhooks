@@ -1,15 +1,14 @@
 <?php
 /**
 *
-* @about 	project GitHub Webhooks, 
+* @about     project GitHub Webhooks, 
 * Application responsible 
 * for receiving posts from github webhooks, and automating 
 * our production environment by deploying
 * 
-* @autor 	@jeffotoni
-* @date 	25/04/2017
+* @autor     @jeffotoni
+* @date     25/04/2017
 * @since    Version 0.1
-* 
 */
 
 // 
@@ -25,20 +24,22 @@ namespace web\src\Message;
 class HandlerMsg
 {
 
-	public function __construct() {
+    public function __construct() 
+    {
 
 
-	}
+    }
 
-	public function createEnvironment() {
+    public function createEnvironment() 
+    {
 
 
-		//$method = $_SERVER['REQUEST_METHOD'];
+        //$method = $_SERVER['REQUEST_METHOD'];
 
-		print "\n";
+        print "\n";
 
-		print "I'm in Message()->HandlerMsg()->". __METHOD__;
+        print "I'm in Message()->HandlerMsg()->". __METHOD__;
 
-		print "\n";
-	}
+        print "\n";
+    }
 }

@@ -1,17 +1,16 @@
 <?php
 /**
 *
-* @about 	project GitHub Webhooks, 
+* @about     project GitHub Webhooks, 
 * Application responsible 
 * for receiving posts from github webhooks, and automating 
 * our production environment by deploying
 * 
-* @autor 	@jeffotoni
-* @date 	25/04/2017
+* @autor     @jeffotoni
+* @date     25/04/2017
 * @since    Version 0.1
-* 
 */
-	
+    
 // 
 // 
 // 
@@ -26,45 +25,49 @@ namespace web\src\Http;
 class Response
 {
 
-	//
-	//
-	//
+    //
+    //
+    //
 
-	public function __construct() {
+    public function __construct() 
+    {
 
 
-	}
+    }
 
-	//
-	//
-	//
+    //
+    //
+    //
 
-	public function WriteJson($msg) {
+    public function WriteJson($msg) 
+    {
 
-		
-		print json_encode($msg);
-	}
+        
+        print json_encode($msg);
+    }
 
-	//
-	//
-	//
+    //
+    //
+    //
 
-	public function Write($msg) {
+    public function Write($msg) 
+    {
 
-		print "\n";
-		print ($msg);
-		print "\n";
-	}
+        print "\n";
+        print ($msg);
+        print "\n";
+    }
 
-	//
-	//
-	//
+    //
+    //
+    //
 
-	public function getBody() {
+    public function getBody() 
+    {
 
-	
-		print "I'm in Http()->Response()->". __METHOD__;
+    
+        print "I'm in Http()->Response()->". __METHOD__;
 
-		return $this;
-	}
+        return $this;
+    }
 }

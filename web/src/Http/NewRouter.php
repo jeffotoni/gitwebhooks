@@ -9,7 +9,6 @@
 * @autor    @jeffotoni
 * @date     25/04/2017
 * @since    Version 0.1
-* 
 */
     
 // 
@@ -76,7 +75,8 @@ class NewRouter
     private static $_METHOD = "GET";
 
 
-    function __construct() {
+    function __construct() 
+    {
 
         self::$runing = false;
 
@@ -90,7 +90,8 @@ class NewRouter
     //
     //
 
-    public function Methods($method) {
+    public function Methods($method) 
+    {
 
         //
         //
@@ -199,9 +200,12 @@ class NewRouter
 
     
 
-    /** [Run description] */
+    /**
+ * [Run description] 
+*/
 
-    public function Run() {
+    public function Run() 
+    {
 
         self::$runing = true;
 
@@ -217,7 +221,7 @@ class NewRouter
             //
             //
 
-            if(self::RequestMethod()){
+            if(self::RequestMethod()) {
 
                 //
                 //

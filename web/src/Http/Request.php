@@ -1,17 +1,16 @@
 <?php
 /**
 *
-* @about 	project GitHub Webhooks, 
+* @about     project GitHub Webhooks, 
 * Application responsible 
 * for receiving posts from github webhooks, and automating 
 * our production environment by deploying
 * 
-* @autor 	@jeffotoni
-* @date 	25/04/2017
+* @autor     @jeffotoni
+* @date     25/04/2017
 * @since    Version 0.1
-* 
 */
-	
+    
 // 
 // 
 // 
@@ -26,33 +25,36 @@ namespace web\src\Http;
 class Request
 {
 
-	//
-	//
-	//
+    //
+    //
+    //
 
-	private $parameters_url = null;
+    private $parameters_url = null;
 
-	//
-	//
-	//
+    //
+    //
+    //
 
-	public function __construct($parameters="") {
+    public function __construct($parameters="") 
+    {
 
-		//get parameters
-		if($parameters)
-		self::$parameters_url = $parameters;
+        //get parameters
+        if($parameters) {
+            self::$parameters_url = $parameters; 
+        }
 
-	}
+    }
 
-	public function getAttribute() {
+    public function getAttribute() 
+    {
 
 
-		//$method = $_SERVER['REQUEST_METHOD'];
+        //$method = $_SERVER['REQUEST_METHOD'];
 
-		print "\n";
+        print "\n";
 
-		print "I'm in Http()->Request()->". __METHOD__;
+        print "I'm in Http()->Request()->". __METHOD__;
 
-		print "\n";
-	}
+        print "\n";
+    }
 }
