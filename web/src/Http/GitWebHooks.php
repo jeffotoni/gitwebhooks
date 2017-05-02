@@ -231,7 +231,7 @@ class GitWebHooks
         // You can prevent by agent the shipments
         // 
 
-        self::$HTTP_USER_AGENT         = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
+        self::$HTTP_USER_AGENT = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
 
         // 
         // 

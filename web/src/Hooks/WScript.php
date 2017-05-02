@@ -118,7 +118,25 @@ class WScript
 
         } else {
 
+            
+
+            //
+            //
+            // 
+            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
             $msg = '{"msg":"Repository, branch and PATH Are mandatory, can not be empty"}';
+            self::$msgconcat .= $msg;
+
+            //
+            //
+            //
+
+            $this->LoadLog();
+
+            //
+            //
+            //
+
             die($msg);
         }
 
@@ -132,7 +150,7 @@ class WScript
             //
             //
 
-            self::$msgconcat .= "{$modelo} {$modeloName}";
+            self::$msgconcat .= "Template Deploy: {$modelo}".PHP_EOL."Name Template: {$modeloName}" . PHP_EOL;
 
             // 
             // 
@@ -145,7 +163,7 @@ class WScript
             //
             //
 
-            self::$msgconcat .= " {$_ARRAY["REPOSITORY"]}";
+            self::$msgconcat .= "Repository: {$_ARRAY["REPOSITORY"]}".PHP_EOL;
             
 
             // 
@@ -164,7 +182,7 @@ class WScript
             // 
             // 
 
-            self::$msgconcat .= " File empty create: [{$file_template}]!";
+            self::$msgconcat .= "File empty create: [{$file_template}]!".PHP_EOL;
 
             $content = file_get_contents($file_template);
 
@@ -200,14 +218,49 @@ class WScript
                 // 
             } else {
 
-                die("erro, not found array LoadTemplate..");
+                //
+                //
+                // 
+                self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+                $msg = '{"msg":"erro, not found array LoadTemplate.."}';
+                self::$msgconcat .= $msg;
+
+                //
+                //
+                //
+
+                $this->LoadLog();
+
+                //
+                //
+                //
+
+                die($msg);
+
             }
 
             return $this;
 
         } else {
 
-            die("erro, not found file [{$file_template}]..");
+            //
+            //
+            // 
+            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+            $msg = '{"msg":"erro, not found file [' . $file_template . '].."}';
+            self::$msgconcat .= $msg;
+
+            //
+            //
+            //
+
+            $this->LoadLog();
+
+            //
+            //
+            //
+
+            die($msg);
         }
     }
 
@@ -250,11 +303,29 @@ class WScript
             //
             //
 
-            self::$msgconcat .= " {".self::$pathScript."}";
+            self::$msgconcat .= "Path script: {".self::$pathScript."}".PHP_EOL;
 
         } else {
 
-            die("erro, not found file [{".self::$pathTemplate."}]..");
+            //
+            //
+            // 
+            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+            $msg = '{"msg":"erro, not found file ['.self::$pathTemplate.']"}';
+            self::$msgconcat .= $msg;
+
+            //
+            //
+            //
+
+            $this->LoadLog();
+
+            //
+            //
+            //
+
+            die($msg);
+
         }
 
         return $this;
@@ -283,7 +354,7 @@ class WScript
             //
             //
 
-            self::$msgconcat .= " {".self::$msg."}";
+            self::$msgconcat .= "Save():: {".self::$msg."}".PHP_EOL;
 
         } else {
 
@@ -291,9 +362,9 @@ class WScript
             // 
             // 
 
-            self::$msg = "Error while saving!";
+            self::$msg = "Save() ::: Error while saving!";
 
-            self::$msgconcat .= " {".self::$msg."}";
+            self::$msgconcat .= " {".self::$msg."}".PHP_EOL;
         }
 
         return $this;
@@ -331,8 +402,9 @@ class WScript
                 //
                 // 
                 //
-
-                self::$msgconcat .= " {".$LAST_LINE."}";
+                self::$msgconcat .= "------------------------------ Execute shell script ------------------------------" . PHP_EOL;
+                self::$msgconcat .= "----------------------------------------------------------------------------------" . PHP_EOL;
+                self::$msgconcat .= "{".$LAST_LINE."}".PHP_EOL;
 
                 // 
                 // 
@@ -344,7 +416,19 @@ class WScript
             
         } else {
 
-            die("erro, not found file [".self::$pathScript."]..");
+
+            $msg = '{"msg":"erro, not found file [' . self::$pathScript . ']"}' . PHP_EOL;
+
+            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+            self::$msgconcat .= $msg;
+
+            //
+            // save log
+            //
+
+            $this->LoadLog();
+
+            die($msg);
         }
 
         return $this;
@@ -372,7 +456,7 @@ class WScript
                 //
                 //
 
-                self::$msgconcat .= " File removed [{$filescript}]!";
+                self::$msgconcat .= "File Script: Removed [{$filescript}]!" . PHP_EOL;
 
             } else {
 
@@ -383,8 +467,8 @@ class WScript
                 //
                 //
                 //
-
-                self::$msgconcat .= " Error while trying to remove file:[{$filescript}]";
+                self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+                self::$msgconcat .= "Error while trying to remove file:[{$filescript}]" . PHP_EOL;
 
             }
         }
@@ -407,18 +491,43 @@ class WScript
 
             //
             //
+            // 
+            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+            $msg = '{"msg":"Repository, branch and gitUser Are mandatory, can not be empty"}';
+            self::$msgconcat .= $msg;
+
+            //
+            //
             //
 
-            $msg = '{"msg":"Repository, branch and gitUser Are mandatory, can not be empty"}';
+            $this->LoadLog();
+
+            //
+            //
+            //
+
             die($msg);
+
 
         } else if($branch == "master") {
 
             //
             //
-            //
-            
+            // 
+            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
             $msg = '{"msg":"The branch can not be the master"}';
+            self::$msgconcat .= $msg;
+
+            //
+            //
+            //
+
+            $this->LoadLog();
+
+            //
+            //
+            //
+
             die($msg);
 
         } else {
@@ -435,7 +544,23 @@ class WScript
 
             if(!$path_projects) {
 
+                //
+                //
+                // 
+                self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
                 $msg = '{"msg":"Directory not found, check the git.repositories file!!!"}';
+                self::$msgconcat .= $msg;
+
+                //
+                //
+                //
+
+                $this->LoadLog();
+
+                //
+                //
+                //
+                
                 die($msg);
             }
 
@@ -448,7 +573,7 @@ class WScript
 
             if(file_put_contents(PATH_REPOSITORY , PHP_EOL . PHP_EOL. $content_config, FILE_APPEND)) {
 
-                self::$msgconcat .= " Successfully created content in config git.repositories [$repository]";
+                self::$msgconcat .= "Successfully created content in config git.repositories [$repository]" . PHP_EOL;
 
                 // 
                 // load file again
@@ -466,9 +591,13 @@ class WScript
 
                 //
                 //
-                //
+                // 
+                self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+                $msg = '{"msg":"Error while creating directory ['.$path_projects.']"}' . PHP_EOL;
+                self::$msgconcat .= $msg;
 
-                $msg = '{"msg":"Error while creating directory ['.$path_projects.']"}';
+                $this->LoadLog();
+
                 die($msg);
             }
 
@@ -510,7 +639,24 @@ class WScript
 
                 ->LoadLog();
 
-        die('{"msg":"Repository successfully created [' . $branch . "/" . $repository . ']"}');
+        //
+        //
+        // 
+        self::$msgconcat .= "------------------------------ created ------------------------------" . PHP_EOL;
+        $msg = '{"msg":"Repository successfully created [' . $branch . "/" . $repository . ']"}';
+        self::$msgconcat .= $msg;
+
+        //
+        //
+        //
+
+        $this->LoadLog();
+
+        //
+        //
+        //
+        
+        die($msg);
 
     }
 
@@ -541,17 +687,48 @@ class WScript
 
             if(is_dir($is_repository_exist)) {
 
-                die('{"msg":"Repository '.$is_repository_exist.' already exists!"}');
-            }    
+                //
+                //
+                // 
+                self::$msgconcat .= "------------------------------ created ------------------------------" . PHP_EOL;
+                $msg = '{"msg":"Repository '.$is_repository_exist.' already exists!"}';
+                self::$msgconcat .= $msg;
+
+                //
+                //
+                //
+
+                $this->LoadLog();
+
+                //
+                //
+                //
+                
+                die($msg);                
+            }
 
         } else {
 
             if(!is_dir($is_repository_exist)) {
 
+                //
+                //
+                // 
+                self::$msgconcat .= "------------------------------ created ------------------------------" . PHP_EOL;
                 $msg = '{"msg":"Repository '.$is_repository_exist.' does not exist!"}';
-                print ($msg);
+                self::$msgconcat .= $msg;
 
-                return null;
+                //
+                //
+                //
+
+                $this->LoadLog();
+
+                //
+                //
+                //
+                
+                die($msg);
             }
         }
         
@@ -570,7 +747,19 @@ class WScript
         //
         //
 
-        self::$show_msg_load = date("Y-m-d [H:i]") . " - " . self::$msgconcat . PHP_EOL;
+        $IP = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
+
+        //
+        //
+        //
+
+        $HTTP_USER_AGENT = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
+
+        //
+        //
+        //
+
+        self::$show_msg_load = date("Y-m-d [H:i]") . " [{$IP}] [{$HTTP_USER_AGENT}]" . PHP_EOL . self::$msgconcat . PHP_EOL;
 
         //
         //
@@ -578,9 +767,24 @@ class WScript
 
         if(!file_put_contents(PATH_LOG, self::$show_msg_load, FILE_APPEND)) {
 
-            
-            die('{"msg":"Error writing log [' . PATH_LOG . ']"}');
+            //
+            //
+            // 
+            self::$msgconcat .= "------------------------------ Error ------------------------------" . PHP_EOL;
+            $msg = '{"msg":"Error writing log [' . PATH_LOG . ']"}';
+            self::$msgconcat .= $msg;
 
+            //
+            //
+            //
+
+            $this->LoadLog();
+
+            //
+            //
+            //
+            
+            die($msg);
         }
 
         //
