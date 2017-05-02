@@ -534,7 +534,12 @@ class WScript
         //
         //
 
-        file_put_contents(PATH_LOG, self::$show_msg_load, FILE_APPEND);
+        if(!file_put_contents(PATH_LOG, self::$show_msg_load, FILE_APPEND)) {
+
+            
+            die('{"msg":"Error writing log [' . PATH_LOG . ']"}');
+
+        }
 
         //
         //
