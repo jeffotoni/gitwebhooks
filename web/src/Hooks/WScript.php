@@ -489,10 +489,10 @@ class WScript
         $_ARRAY["PATH"]         = isset(ARRAY_PROJECT_GIT[$repository]) ? ARRAY_PROJECT_GIT[$repository] : "Erro, I did not find the repository in the git.repositories.conf.php file";
 
        //
-       //
+       // Repository can not exist
        //
 
-       self::IsValidBranch($_ARRAY);
+       self::IsValidBranch($_ARRAY, true);
 
        //
        //
@@ -518,8 +518,12 @@ class WScript
     //
     //
 
-    public function IsValidBranch($_ARRAY, $valid=true) {
+    public function IsValidBranch($_ARRAY, $valid=false) {
 
+        //
+        //
+        //
+        
         $lastpos = strlen($_ARRAY["PATH"]) - 1;
         
         if($_ARRAY["PATH"]{$lastpos} != "/") {
