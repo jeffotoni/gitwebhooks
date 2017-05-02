@@ -211,20 +211,35 @@ class NewRouter
     public function Run() 
     {
 
-
-        //
-        //
-        //
-
-        self::$runing = true;
-
         if(self::$END_POINT && self::$CALLBACK) {
 
             //
             //
             //
 
+            self::$runing = true;
+
+            // echo "\n End point: ";
+            // echo self::$END_POINT;
+            // echo "\n";
+
+            //
+            // Endpoints must be the same
+            //
+
+
+            //
+            //
+            //
+
             $this->HandleFunc(self::$END_POINT, self::$CALLBACK);
+
+            //
+            //
+            //
+
+            self::$END_POINT = null;
+            self::$CALLBACK = null;
 
             //
             //
@@ -238,9 +253,11 @@ class NewRouter
 
                 if (!isset(self::$routeCollection[self::RequestMethod()])) {
 
+
                     //
                     //
                     //
+                    self::$routeCollection = [];
 
                     return null;
                 }
@@ -309,6 +326,13 @@ class NewRouter
 
                         $parameters['$request'] = new Request("name", $value_name);
 
+
+                        //
+                        //
+                        //
+
+                        self::$routeCollection = [];
+                        
                         //
                         //
                         //

@@ -399,7 +399,7 @@ class WScript
             $msg = '{"msg":"Repository, branch and gitUser Are mandatory, can not be empty"}';
             die($msg);
 
-        } else if($branch != "master") {
+        } else if($branch == "master") {
 
             //
             //
