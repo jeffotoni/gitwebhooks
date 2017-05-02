@@ -221,6 +221,8 @@ $ php -q generate-config.php
 
     setconfig.conf.php (Generated in real time by the program "generate-config.php")
 
+    git.repositories.conf.php (In this file is where the paths of your git projects will be configured on your server)
+
     apache-rewritengine
 
     nginx-rewritengine
@@ -241,7 +243,12 @@ $ php -q generate-config.php
 
     template-script-deploy.sh.php (This script we are using to deploy our applications in php)
 
+    template-script-add-repository.sh.php (Template responsible for adding repository to your server)
+
     template-script-golang-deploy.sh.php
+
+  - log/
+     github-webooks.log (All actions done on gitwebhooks saved here)
 
   - web/src/
         Hooks/
@@ -299,7 +306,7 @@ curl -X POST \
 Sending post as if it were github, content type x-www-form-urlencoded, we made a 
 file github.webhooks.form, which is in the same directory, to simulate the sending.
 
-In this submission we are using a parameter in the url itself, "key"
+In this submission we are using a parameter in the url itself, "key", Discontinued use of the key
 
 ```bash
 
@@ -339,6 +346,17 @@ curl -X POST \
 
 ```
 
+Adding repository on server, it git clone on server.
+
+```bash
+curl -X GET \
+     -H "Content-Type: application/json" \
+     -H "GitWebHooks-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
+     -H "GitWebHooks-Branch: master" \
+     -H "GitWebHooks-GitUser: jeffotoni" \
+     http://localhost:9001/webhooks/repository/add/s3designmania
+
+```
 
 ## System Settings
 
@@ -350,9 +368,9 @@ We made an abstraction of our config, now we have a new file setenv.conf.php, it
 It is responsible for generating your config once, setconfig.conf.php
 
 ```php
-/*
+/**
 *
-* @about project GitHub Webhooks, 
+* @about    project GitHub Webhooks, 
 * Application responsible 
 * for receiving posts from github webhooks, and automating 
 * our production environment by deploying
@@ -363,24 +381,17 @@ It is responsible for generating your config once, setconfig.conf.php
 * 
 */
 
-//
-//
-//
-$PATH_CLEN = str_replace(array("public/",
-                                "simulation/",
-                                "config/", 
-                                "templates/"), array(), getcwd() . "/");
 
 //
 //
 //
 
-define("PATHSET_LOCAL", $PATH_CLEN);
+define("ROOT_DIR", PATHSET_LOCAL);
 
 //
 //
 //
-chdir(PATHSET_LOCAL);
+chdir(ROOT_DIR);
 
 //
 //
@@ -440,71 +451,65 @@ define("PATH_CLASS_NAMESPACE", "web\src");
 define("TEMPLATE_DEPLOY", [
 
     "beta"        => "template-script-deploy",
+
     "test"        => "template-script-deploy",
+
     "product"     => "template-script-deploy",
+
+    "repository"  => "template-script-add-repository",
+
     "simulation"  => "simulation-example",
 
     ]
    );
 
-// 
-// 
-// 
+//
+//
+//
 
-define("ARRAY_PROJECT_GIT", [
-    
-    /** 
-     *
-     * or /var/www/gitmyprojects/
-     *
-     * example:
-     * 
-     * /var/www/gitmyprojects/beta
-     * /var/www/gitmyprojects/product
-     * /var/www/gitmyprojects/test
-     *
-     * /var/www/gitmyprojects/beta/project1.git
-     * /var/www/gitmyprojects/beta/project2.git
-     * 
-     * /var/www/gitmyprojects/product/project1.git
-     * /var/www/gitmyprojects/product/project2.git
-     *
-     * Configuring your paths
-     * 
-     * gitwebhooks  => /var/www/gitmyprojects
-     *
-     * yourprojetc1 => /var/www/gitmyprojects
-     *
-     * yourproject2 => /var/www/gitmyprojects
-     *
-     *  OR
-     *  
-     * gitwebhooks  => ../../../../../
-     *
-     * yourprojetc1 => ../../../../../
-     *
-     * yourproject2 => ../../../../../
-     * 
-     */
-    
-    "gitwebhooks"      => "/var/www/gitmyprojects",
+define("PATH_REPOSITORY", PATH_REPOSITORY_CREATE);
 
-    "yourprojetc1"     => "/var/www/gitmyprojects",
+/** 
+ *
+ * or /var/www/gitmyprojects/
+ *
+ * example:
+ * 
+ * /var/www/gitmyprojects/beta
+ * /var/www/gitmyprojects/product
+ * /var/www/gitmyprojects/test
+ *
+ * /var/www/gitmyprojects/beta/gitproject1.git
+ * /var/www/gitmyprojects/beta/gitproject2.git
+ * 
+ * /var/www/gitmyprojects/product/gitproject1.git
+ * /var/www/gitmyprojects/product/gitproject2.git
+ *
+ * Configuring your paths
+ * 
+ * gitwebhooks      => /var/www/gitmyprojects
+ *
+ * gitproject1      => /var/www/gitmyprojects
+ *
+ * gitproject2      => /var/www/gitmyprojects
+ *
+ *  OR
+ *  
+ * gitwebhooks      => ../../../../../
+ *
+ * gitproject1      => ../../../../../
+ *
+ * gitproject2      => ../../../../../
+ * 
+ */
 
-    "yourproject2"    => "/var/www/gitmyprojects",
+$ARRAY_PROJECT_GIT = parse_ini_file(PATH_REPOSITORY);
 
-    "yourproject3"    => "/var/www/gitmyprojects",
+//
+//
+//
 
-    "yourproject4"    => "/var/www/gitmyprojects",
-
-    "yourproject5"    => "/var/www/gitmyprojects",
-
-    "yourproject6"    => "/var/www/gitmyprojects",
-
-    "yourproject7"    => "/var/www/gitmyprojects",
-
-    ]
-);
+define("ARRAY_PROJECT_GIT", $ARRAY_PROJECT_GIT, true);
 
 ```
 
@@ -513,10 +518,9 @@ define("ARRAY_PROJECT_GIT", [
 The $api object is special it can create and instantiate any class that is in the web/src/Hooks structure, so: $api = special object, WScript() = Class, LoadTemplate() == class method.
 
 ```php
-
 /**
 *
-* @about    project GitHub Webhooks, 
+* @about project GitHub Webhooks, 
 * Application responsible 
 * for receiving posts from github webhooks, and automating 
 * our production environment by deploying
@@ -524,16 +528,14 @@ The $api object is special it can create and instantiate any class that is in th
 * @autor    @jeffotoni
 * @date     25/04/2017
 * @since  Version 0.1
-* 
 */
 
 // 
-// cd public
-// php -S localhost:9001 index.php
+// php -S localhost:9001 -t index.php
 // 
 // OR
 // 
-// php -S localhost:9001 test_index.php 
+// php -S localhost:9001 -t test_index.php 
 // 
 // Apache .htaccess
 // 
@@ -545,7 +547,6 @@ The $api object is special it can create and instantiate any class that is in th
 require_once "../config/setenv.conf.php";
 
 /** 
- *
  * Various ways of instantiating objects
  *
  * Way one:
@@ -556,7 +557,6 @@ require_once "../config/setenv.conf.php";
  * Way two:
  *
  * $NewRouter = $api->NewRouter();
- * 
  */
 
 //
@@ -588,90 +588,103 @@ $api->NewRouter()
     //
     //
 
-    ->HandleFunc('/github/webhooks', function (Response $response, Request $request) use ($api) {
-
-      //
-      // Class responsible for handling requests coming from github
-      //
-
-      $GitHub = $api->GitHub();
-
-      $api->GitHub()
-
-        //
-        //
-        // Authentication coming from github secret
-        // For security reasons we suggest you use this option
-        // 
-        //
-
-        ->AuthenticateSecretToken()
-
-
-        //
-        // Authentication of your key, coming from the URL, a GET
-        //
-
-        //->AuthenticateSecretKey()
-
-        //
-        // Setting the event
-        //
-
-        ->Event("push")
-
-        //
-        // Making the call to run the deploy scripts
-        //
-
-        ->WScript($api)
-
-        // 
-        // Loading and running updates
-        // 
+    ->HandleFunc(
         
-        ->LoadTemplate(
-                [
+        //
+        // Defining your routes
+        //
 
-                "REPOSITORY" => $GitHub::$REPOSITORY,
+        '/github/webhooks', function (Response $response, Request $request) use ($api) {
 
-                "PATH"       => ARRAY_PROJECT_GIT[$GitHub::$REPOSITORY],
+            //
+            // Class responsible for handling requests coming from github
+            //
 
-                "BRANCH"     => $GitHub::$BRANCH,
+            $GitHub = $api->GitHub();
 
-                ]
-          )
+            $api->GitHub()
 
-          // 
-          // Generate script from template
-          //
+                //
+                //
+                // Authentication coming from github secret
+                // For security reasons we suggest you use this option
+                // 
+                //
+
+                ->AuthenticateSecretToken()
+
+
+                //
+                // Authentication of your key, coming from the URL, a GET
+                //
+
+                //->AuthenticateSecretKey()
+
+                //
+                // Authentication using md5, header
+                //
+
+                //->AuthenticateMd5()
+
+                //
+                // Setting the event
+                //
+
+                ->Event("push")
+
+                //
+                // Making the call to run the deploy scripts
+                //
+
+                ->WScript($api)
+
+                // 
+                // Loading and running updates
+                // 
+        
+                ->LoadTemplate(
+                    [
+
+                    "REPOSITORY" => $GitHub::$REPOSITORY,
+
+                    "PATH"       => ARRAY_PROJECT_GIT[$GitHub::$REPOSITORY],
+
+                    "BRANCH"     => $GitHub::$BRANCH,
+
+                    ]
+                )
+
+                // 
+                // Generate script from template
+                //
           
-          ->LoadFileScript()
+                ->LoadFileScript()
 
-          // 
-          // Prepares to run, saves script to disk
-          //
-          ->Save()
+                // 
+                // Prepares to run, saves script to disk
+                //
+                ->Save()
 
-          // 
-          // It runs the script
-          //
-          //
-          ->Execute()
+                // 
+                // It runs the script
+                //
+                //
+                ->Execute()
 
-          // 
-          // Possibility to delete file, it is not mandatory
-          //
+                // 
+                // Possibility to delete file, it is not mandatory
+                //
 
-          ->DelFile()
+                ->DelFile()
 
-          // 
-          // Generates log on disk so you can keep track of all executions
-          //
-          //
-          ->LoadLog();
+                // 
+                // Generates log on disk so you can keep track of all executions
+                //
+                //
+                ->LoadLog();
 
-    })
+        }
+    )
 
     //
     // It will execute the methods
@@ -696,33 +709,88 @@ $api->NewRouter()
     //
     //
 
-    ->HandleFunc('/gitwebhooks/status', function (Response $response, Request $request) use ($api) {
+    ->HandleFunc(
+        '/webhooks/status', function (Response $response, Request $request) use ($api) {
 
-        //
-        //
-        //
+            //
+            //
+            //
 
-        $api->GitWebHooks()
+            $api->GitWebHooks()
 
-        //
-        //
-        //
+            //
+            //
+            //
 
-        ->AuthenticateMd5();
+                ->AuthenticateMd5();
 
-        //
-        //
-        //
+            //
+            //
+            //
 
-        $arrayJson = [
+            $arrayJson = [
             
             "status" => "online",
-        ];
+            ];
 
-        $response->WriteJson($arrayJson);
+            $response->WriteJson($arrayJson);
 
-    })->Run();
+        }
 
+    )->Run();
+
+
+
+//
+// 
+//
+
+$api->NewRouter()
+
+    //
+    //
+    //
+
+    ->Methods("GET")
+
+    //
+    //
+    //
+
+    ->HandleFunc(
+        '/webhooks/repository/add/{name}', function (Response $response, Request $request) use ($api) {
+
+
+            //
+            // Authentication
+            // 
+
+            $api->GitWebHooks()
+
+                //
+                //
+                //
+                ->AuthenticateMd5();
+
+            //
+            //
+            //
+            
+            $branch     = $request->GetBranch();
+            
+            $repository = $request->GetName();
+
+            $gitUser    = $request->GitUser();
+
+            //
+            //
+            //
+            
+            $api->WScript()->AddRepository($gitUser, $repository, $branch);
+
+        }
+        
+    )->Run();
     
 ```
 
