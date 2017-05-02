@@ -81,4 +81,4 @@ curl -X GET \
 	 -H "GitWebHooks-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
 	 -H "GitWebHooks-Branch: beta" \
 	 -H "GitWebHooks-GitUser: jeffotoni" \
-	 http://localhost:9001/webhooks/repository/add/s3designmania
+	 http://localhost:9001/webhooks/repository/add/yourprojectgit
