@@ -55,26 +55,7 @@ echo "checkout -b {BRANCH}"
 git checkout -b {BRANCH}
 
 
-echo "git reset --hard HEAD";
-
-#
-#
-#
-git reset --hard HEAD
-
-
-#
-#
-#
-
-echo "git pull origin {BRANCH}";
-#
-#
-#
-git pull origin {BRANCH}
-
-
-echo "\End GIT CLONE {REPOSITORY}!!"
+echo "\End GIT CLONE {REPOSITORY} SUCCESS!!"
 
 echo " @@@@@@@@@@@@@@@@ "
 
