@@ -726,6 +726,51 @@ $api->NewRouter()
     
 ```
 
+## Riding our route, the method without comments
+
+
+```php
+$api->NewRouter()
+
+    ->Methods("POST")
+
+    ->HandleFunc("/github/webhooks", function (Response $response, Request $request) use ($api) {
+            
+            $GitHub = $api->GitHub();
+
+            $api->GitHub()
+
+                >AuthenticateSecretKey()
+
+                ->Event("push")
+
+                ->WScript($api)       
+
+                ->LoadTemplate(
+                    [
+
+                    "REPOSITORY" => $GitHub::$REPOSITORY,
+
+                    "PATH"       => ARRAY_PROJECT_GIT[$GitHub::$REPOSITORY],
+
+                    "BRANCH"     => $GitHub::$BRANCH,
+
+                    ]
+                )          
+                ->LoadFileScript()
+
+                ->Save()
+
+                ->Execute()
+
+                ->DelFile()
+
+                ->LoadLog();
+        }
+    )->Run();
+
+```
+
 ## Structure of the Class WScript
 
 ```php

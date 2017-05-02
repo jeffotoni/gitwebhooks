@@ -186,7 +186,6 @@ class NewRouter
             //
             //
             
-
             self::$routeCollection[self::$_METHOD][$route] = $callback;
         }
 
@@ -206,6 +205,11 @@ class NewRouter
 
     public function Run() 
     {
+
+
+        //
+        //
+        //
 
         self::$runing = true;
 
@@ -243,20 +247,51 @@ class NewRouter
 
                 $parameters['$response'] = new Response();
 
+                // print_r(self::$routeCollection);
+                // exit("aqui...");
 
                 //
                 //
                 //
 
                 foreach (self::$routeCollection[self::RequestMethod()] as $route => $callback) {
+
+                    // /^\/webhooks\/repository\/add\/{name}$/% 
+                    // 
+                    // ^\/webhooks\/repository\/add\/project1$\/\/
+                    // 
+
+                    $endPosition = explode("/", $route);
+                    array_shift($endPosition);
+                    array_pop($endPosition);
+                    $last = sizeof($endPosition) - 1;
+
+                    if($endPosition[$last] == '{name}$') {
+
+                        $tmp_lasturipos = explode("/", self::RequestUri());
+                        $lasturipos = end($tmp_lasturipos);
+
+                        $endPosition[$last] = $lasturipos;
+
+                        $routeNew = implode("/", $endPosition);
+                        $routeNew = str_replace(array("/"), array("/"), $routeNew);
+                        $routeNew = "/{$routeNew}$/";
+
+                        //
+                        // request
+                        //
+
+                        $value_name = $lasturipos;
+
+                    } else {
+
+                        $value_name = "";
+                        $routeNew = $route;
+                    }
+
+
+                    if (preg_match($routeNew, self::RequestUri(), $arguments)) {
                     
-                    //
-                    //
-                    //
-
-                    if (preg_match($route, self::RequestUri(), $arguments)) {
-
-                  
                         //
                         // 
                         //
@@ -266,14 +301,13 @@ class NewRouter
                         //
                         //
                         //
+
+                        $parameters['$request'] = new Request("name", $value_name);
+
+                        //
+                        //
+                        //
                         
-
-                        $parameters['$request'] = new Request($arguments);
-
-                        //
-                        //
-                        //
-
                         return $this->callFunc($callback, $parameters);
                     }
                 }

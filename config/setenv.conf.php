@@ -29,15 +29,57 @@ define("PATHSET_LOCAL", $PATH_CLEN);
 //
 //
 //
+
+define("PATH_SETENV", PATHSET_LOCAL . "config/setenv.conf.php");
+
+//
+//
+//
+
+define("PATH_SETCONFIG", PATHSET_LOCAL . "config/setconfig.conf.php");
+
+
+//
+//
+//
 chdir(PATHSET_LOCAL);
 
 //
 //
 //
 
-$PATH_SETCONF = PATHSET_LOCAL . "config/setconfig.conf.php" ;
+if(!is_file(PATH_SETCONFIG)) {
 
-if(!is_file($PATH_SETCONF)) {
+$SETCONF_PHP_GITREPO = '[application]
+
+gitwebhooks  = "/var/www/gitproject/"
+
+gitprojeto1  = "/var/www/gitproject/"
+
+gitprojeto2  = "/var/www/gitproject/"
+
+gitprojeto3  = "/var/www/gitproject/"
+
+gitprojeto4  = "/var/www/gitproject/"
+
+gitprojeto5  = "/var/www/gitproject/"
+
+gitprojeto6  = "/var/www/gitproject/"
+';
+
+    
+    //
+    //
+    //
+
+    file_put_contents(PATH_SETCONFIG, $SETCONF_PHP_GITREPO . PHP_EOL);
+}
+
+//
+//
+//
+
+if(!is_file(PATH_SETCONFIG)) {
 
 $SETCONF_PHP = '<?php
 /**
@@ -123,72 +165,65 @@ define("PATH_CLASS_NAMESPACE", "web\src");
 define("TEMPLATE_DEPLOY", [
 
     "beta"        => "template-script-deploy",
+
     "test"        => "template-script-deploy",
+
     "product"     => "template-script-deploy",
+
+    "repository"  => "template-script-add-repository",
+
     "simulation"  => "simulation-example",
 
     ]
    );
 
-// 
-// 
-// 
+//
+//
+//
 
-define("ARRAY_PROJECT_GIT", [
-    
-    /** 
-     *
-     * or /var/www/gitmyprojects/
-     *
-     * example:
-     * 
-     * /var/www/gitmyprojects/beta
-     * /var/www/gitmyprojects/product
-     * /var/www/gitmyprojects/test
-     *
-     * /var/www/gitmyprojects/beta/project1.git
-     * /var/www/gitmyprojects/beta/project2.git
-     * 
-     * /var/www/gitmyprojects/product/project1.git
-     * /var/www/gitmyprojects/product/project2.git
-     *
-     * Configuring your paths
-     * 
-     * gitwebhooks  => /var/www/gitmyprojects
-     *
-     * yourprojetc1 => /var/www/gitmyprojects
-     *
-     * yourproject2 => /var/www/gitmyprojects
-     *
-     *  OR
-     *  
-     * gitwebhooks  => ../../../../../
-     *
-     * yourprojetc1 => ../../../../../
-     *
-     * yourproject2 => ../../../../../
-     * 
-     */
-    
-    "gitwebhooks"      => "../../../",
+define("PATH_REPOSITORY", ROOT_DIR. "config/git.repositories.conf.php");
 
-    "yourprojetc1"     => "../../../../",
+/** 
+ *
+ * or /var/www/gitmyprojects/
+ *
+ * example:
+ * 
+ * /var/www/gitmyprojects/beta
+ * /var/www/gitmyprojects/product
+ * /var/www/gitmyprojects/test
+ *
+ * /var/www/gitmyprojects/beta/gitproject1.git
+ * /var/www/gitmyprojects/beta/gitproject2.git
+ * 
+ * /var/www/gitmyprojects/product/gitproject1.git
+ * /var/www/gitmyprojects/product/gitproject2.git
+ *
+ * Configuring your paths
+ * 
+ * gitwebhooks      => /var/www/gitmyprojects
+ *
+ * gitproject1      => /var/www/gitmyprojects
+ *
+ * gitproject2      => /var/www/gitmyprojects
+ *
+ *  OR
+ *  
+ * gitwebhooks      => ../../../../../
+ *
+ * gitproject1      => ../../../../../
+ *
+ * gitproject2      => ../../../../../
+ * 
+ */
 
-    "yourproject2"    => "../../../../",
+$ARRAY_PROJECT_GIT = parse_ini_file(PATH_REPOSITORY);
 
-    "yourproject3"    => "../../../../",
+//
+//
+//
 
-    "yourproject4"    => "../../../../",
-
-    "yourproject5"    => "../../../../",
-
-    "yourproject6"    => "../../../../",
-
-    "yourproject7"    => "../../../../",
-
-    ]
-);
-
+define("ARRAY_PROJECT_GIT", $ARRAY_PROJECT_GIT);
 
 // 
 // 
@@ -305,14 +340,15 @@ $loader = function ($namespace, $class="") {
 $LoaderAuto = $loader(PATH_CLASS . "/ClassAutoLoading", "ClassAutoLoading");
 
 ';
+
+
+	//
+	//
+	//
+
+	file_put_contents(PATH_SETCONFIG, $SETCONF_PHP . PHP_EOL);    
 	
-	//
-	//
-	//
-
-	file_put_contents($PATH_SETCONF, $SETCONF_PHP . PHP_EOL);
-
-	require_once $PATH_SETCONF;
+    require_once PATH_SETCONFIG;
 
 } else {
 
@@ -321,5 +357,6 @@ $LoaderAuto = $loader(PATH_CLASS . "/ClassAutoLoading", "ClassAutoLoading");
 	//
 	//
 
-	require_once $PATH_SETCONF;
+    echo "\n\nStart....\n\n";
+	require_once PATH_SETCONFIG;
 }

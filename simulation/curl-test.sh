@@ -67,10 +67,18 @@
 
 #sleep 2
 
-curl -X POST \
+# curl -X POST \
+# 	 -H "Content-Type: application/json" \
+# 	 -H "GitWebHoos-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
+# 	 -H "X-GitHub-Event: push" \
+# 	 -H "X-GitHub-Delivery: e4cd4180-2c67-11e7-8099-87e86dbb4105" \
+# 	 http://localhost:9001/github/webhooks \
+# 	 -d @github.webhooks.json
+# 	
+
+curl -X GET \
 	 -H "Content-Type: application/json" \
-	 -H "GitWebHoos-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
-	 -H "X-GitHub-Event: push" \
-	 -H "X-GitHub-Delivery: e4cd4180-2c67-11e7-8099-87e86dbb4105" \
-	 http://localhost:9001/github/webhooks \
-	 -d @github.webhooks.json
+	 -H "GitWebHooks-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
+	 -H "GitWebHooks-Branch: beta" \
+	 -H "GitWebHooks-GitUser: jeffotoni" \
+	 http://localhost:9001/webhooks/repository/add/s3designmania

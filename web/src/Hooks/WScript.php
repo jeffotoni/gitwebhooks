@@ -66,7 +66,7 @@ class WScript
 
     function __construct()
     {
-        // code...
+        # code
     }
 
     //
@@ -377,6 +377,143 @@ class WScript
         }
 
         return $this;
+    }
+
+    // 
+    // 
+    // 
+
+    public function AddRepository($gitUser, $repository, $branch, $exec = true)
+    {
+
+        //
+        //
+        //
+
+        if(empty($repository) || empty($branch) || empty($gitUser)) {
+
+            //
+            //
+            //
+
+            $msg = '{"msg":"Repository, branch and gitUser Are mandatory, can not be empty"}';
+            die($msg);
+
+        } else if($branch != "master") {
+
+            //
+            //
+            //
+            
+            $msg = '{"msg":"The branch can not be the master"}';
+            die($msg);
+
+        } else {
+
+            //
+            //
+            //
+
+            $path_projects = isset(ARRAY_PROJECT_GIT["gitwebhooks"]) ? ARRAY_PROJECT_GIT["gitwebhooks"] : "";
+
+            //
+            //
+            //
+
+            if(!$path_projects) {
+
+                $msg = '{"msg":"Directory not found, check the git.repositories file!!!"}';
+                die($msg);
+            }
+
+            //
+            //
+            //
+
+            $content_config = $repository. ' = '.$path_projects.'';
+
+
+            if(file_put_contents(PATH_REPOSITORY , PHP_EOL . PHP_EOL. $content_config, FILE_APPEND)) {
+
+                self::$msgconcat .= " Successfully created content in config git.repositories [$repository]";
+
+                // 
+                // load file again
+                // 
+
+                $ARRAY_PROJECT_GIT = parse_ini_file(PATH_REPOSITORY); // replace again
+             
+                //
+                //
+                //
+
+                define("ARRAY_PROJECT_GIT", $ARRAY_PROJECT_GIT);
+
+            } else {
+
+                //
+                //
+                //
+
+                $msg = '{"msg":"Error while creating directory ['.$path_projects].'"}';
+                die($msg);
+            }
+
+            // 
+            // create line in file conf
+            // 
+
+            $path_repository = "{$path_projects}/{$branch}/{$repository}";
+        }
+
+
+        $_ARRAY["REPOSITORY"]   = $repository;
+
+        $_ARRAY["BRANCH"]       = $branch;
+        
+        $_ARRAY["GITUSER"]       = $gitUser;
+
+        $_ARRAY["PATH"]         = isset(ARRAY_PROJECT_GIT[$repository]) ? ARRAY_PROJECT_GIT[$repository] : "Erro, I did not find the repository in the git.repositories.conf.php file";
+
+        //
+        //
+        //
+
+        $lastpos = strlen($_ARRAY["PATH"]) - 1;
+        
+        if($_ARRAY["PATH"]{$lastpos} != "/") {
+
+            $_ARRAY["PATH"] .= "/";
+        }
+
+        //
+        //
+        //
+
+        $is_repository_exist = $_ARRAY["PATH"] . "{$branch}/{$repository}";
+
+        if(is_dir($is_repository_exist)) {
+
+            die('{"msg":"Repository '.$is_repository_exist.' already exists!"}');
+        }
+
+        //
+        //
+        //
+        $modelo = "repository";
+
+        $this->LoadTemplate($_ARRAY, $modelo)
+         
+                ->LoadFileScript() 
+
+                ->Save()
+
+                ->Execute()
+
+                ->LoadLog();
+
+        die('{"msg":"Repository successfully created [' . $branch . "/" . $repository . ']"}');
+
     }
 
 

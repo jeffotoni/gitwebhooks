@@ -217,4 +217,58 @@ $api->NewRouter()
             $response->WriteJson($arrayJson);
 
         }
+
+    )->Run();
+
+
+    
+//
+// 
+//
+
+$api->NewRouter()
+
+    //
+    //
+    //
+
+    ->Methods("GET")
+
+    //
+    //
+    //
+
+    ->HandleFunc(
+        '/webhooks/repository/add/{name}', function (Response $response, Request $request) use ($api) {
+
+
+            //
+            // Authentication
+            // 
+
+            $api->GitWebHooks()
+
+                //
+                //
+                //
+                ->AuthenticateMd5();
+
+            //
+            //
+            //
+            
+            $branch     = $request->GetBranch();
+            
+            $repository = $request->GetName();
+
+            $gitUser    = $request->GitUser();
+
+            //
+            //
+            //
+            
+            $api->WScript()->AddRepository($gitUser, $repository, $branch);
+
+        }
+        
     )->Run();

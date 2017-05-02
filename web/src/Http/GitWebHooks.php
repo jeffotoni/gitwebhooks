@@ -54,6 +54,12 @@ class GitWebHooks
     //
     //
 
+    private static $GITWEBHOOS_BRANCH;
+
+    //
+    //
+    //
+    
     public function AuthenticateMd5() 
     {
 
@@ -232,5 +238,13 @@ class GitWebHooks
         // 
 
         self::$GITWEBHOOS_AUTHENTICATION = isset($_SERVER['HTTP_GITWEBHOOS_AUTHENTICATION']) ? $_SERVER['HTTP_GITWEBHOOS_AUTHENTICATION'] : "";
+
+
+        //
+        //
+        //
+
+        self::$GITWEBHOOS_BRANCH = isset($_SERVER['HTTP_GITWEBHOOS_BRANCH']) ? $_SERVER['HTTP_GITWEBHOOS_BRANCH'] : "";
+        
     }
 }
