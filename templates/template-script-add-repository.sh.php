@@ -41,18 +41,18 @@ echo "git clone ssh://git@github.com/{GITUSER}/{REPOSITORY}.git";
 #
 #
 #
-git clone ssh://git@github.com/{GITUSER}/{REPOSITORY}.git
+sudo -u www-data -H git clone ssh://git@github.com/{GITUSER}/{REPOSITORY}.git
 
 #
 #
 #
-echo "checkout -b {BRANCH}"
+echo "git checkout -b {BRANCH}"
 
 
 #
 #
 #
-git checkout -b {BRANCH}
+sudo -u www-data -H git checkout -b {BRANCH}
 
 
 echo "\End GIT CLONE {REPOSITORY} SUCCESS!!"
