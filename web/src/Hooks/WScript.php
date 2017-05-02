@@ -200,14 +200,14 @@ class WScript
                 // 
             } else {
 
-                exit("erro, not found array LoadTemplate..");
+                die("erro, not found array LoadTemplate..");
             }
 
             return $this;
 
         } else {
 
-            exit("erro, not found file [{$file_template}]..");
+            die("erro, not found file [{$file_template}]..");
         }
     }
 
@@ -254,7 +254,7 @@ class WScript
 
         } else {
 
-            exit("erro, not found file [{".self::$pathTemplate."}]..");
+            die("erro, not found file [{".self::$pathTemplate."}]..");
         }
 
         return $this;
@@ -344,7 +344,7 @@ class WScript
             
         } else {
 
-            exit("erro, not found file [".self::$pathScript."]..");
+            die("erro, not found file [".self::$pathScript."]..");
         }
 
         return $this;
@@ -548,7 +548,10 @@ class WScript
 
             if(!is_dir($is_repository_exist)) {
 
-                die('{"msg":"Repository '.$is_repository_exist.' does not exist!"}');
+                $msg = '{"msg":"Repository '.$is_repository_exist.' does not exist!"}';
+                print ($msg);
+
+                return null;
             }
         }
         
