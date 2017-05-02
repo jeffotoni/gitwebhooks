@@ -455,7 +455,7 @@ class WScript
                 //
                 //
 
-                $msg = '{"msg":"Error while creating directory ['.$path_projects].'"}';
+                $msg = '{"msg":"Error while creating directory ['.$path_projects.']"}';
                 die($msg);
             }
 
