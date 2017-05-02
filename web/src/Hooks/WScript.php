@@ -108,6 +108,19 @@ class WScript
 
         $file_template = "{$path}" . PATH_TEMPLATE . "{$modeloName}.sh.php";
 
+        //
+        //
+        //
+
+        if(isset($_ARRAY['BRANCH'], $_ARRAY['PATH']) && $_ARRAY['BRANCH'] && $_ARRAY['PATH']) {
+
+            self::IsValidBranch($_ARRAY);
+
+        } else {
+
+            $msg = '{"msg":"Repository, branch and PATH Are mandatory, can not be empty"}';
+            die($msg);
+        }
 
         // 
         // 
@@ -471,38 +484,23 @@ class WScript
 
         $_ARRAY["BRANCH"]       = $branch;
         
-        $_ARRAY["GITUSER"]       = $gitUser;
+        $_ARRAY["GITUSER"]      = $gitUser;
 
         $_ARRAY["PATH"]         = isset(ARRAY_PROJECT_GIT[$repository]) ? ARRAY_PROJECT_GIT[$repository] : "Erro, I did not find the repository in the git.repositories.conf.php file";
 
-        //
-        //
-        //
+       //
+       //
+       //
 
-        $lastpos = strlen($_ARRAY["PATH"]) - 1;
-        
-        if($_ARRAY["PATH"]{$lastpos} != "/") {
+       self::IsValidBranch($_ARRAY);
 
-            $_ARRAY["PATH"] .= "/";
-        }
+       //
+       //
+       //
 
-        //
-        //
-        //
+       $modelo = "repository";
 
-        $is_repository_exist = $_ARRAY["PATH"] . "{$branch}/{$repository}";
-
-        if(is_dir($is_repository_exist)) {
-
-            die('{"msg":"Repository '.$is_repository_exist.' already exists!"}');
-        }
-
-        //
-        //
-        //
-        $modelo = "repository";
-
-        $this->LoadTemplate($_ARRAY, $modelo)
+       $this->LoadTemplate($_ARRAY, $modelo)
          
                 ->LoadFileScript() 
 
@@ -516,6 +514,43 @@ class WScript
 
     }
 
+    //
+    //
+    //
+
+    public function IsValidBranch($_ARRAY, $valid=true) {
+
+        $lastpos = strlen($_ARRAY["PATH"]) - 1;
+        
+        if($_ARRAY["PATH"]{$lastpos} != "/") {
+
+            $_ARRAY["PATH"] .= "/";
+        }
+
+        //
+        //
+        //
+
+        $is_repository_exist = $_ARRAY["PATH"] . "{$_ARRAY["BRANCH"]}/{$_ARRAY["REPOSITORY"]}";
+
+        if($valid) {
+
+            if(is_dir($is_repository_exist)) {
+
+                die('{"msg":"Repository '.$is_repository_exist.' already exists!"}');
+            }    
+
+        } else {
+
+            if(!is_dir($is_repository_exist)) {
+
+                die('{"msg":"Repository '.$is_repository_exist.' does not exist!"}');
+            }
+        }
+        
+
+        return null;
+    }
 
     // 
     // 
