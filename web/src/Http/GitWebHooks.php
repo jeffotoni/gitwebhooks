@@ -35,7 +35,7 @@ class GitWebHooks
     //
     //
 
-    private static $GITWEBHOOS_AUTHENTICATION;
+    private static $GITWEBHOOKS_AUTHENTICATION;
 
 
     //
@@ -54,7 +54,7 @@ class GitWebHooks
     //
     //
 
-    private static $GITWEBHOOS_BRANCH;
+    private static $GITWEBHOOKS_BRANCH;
 
     //
     //
@@ -80,7 +80,7 @@ class GitWebHooks
             //
             //
 
-            if (!self::$GITWEBHOOS_AUTHENTICATION) {
+            if (!self::$GITWEBHOOKS_AUTHENTICATION) {
 
                 die("HTTP header 'GitWebHooks-Authentication' is missing.");
 
@@ -93,7 +93,7 @@ class GitWebHooks
             //
             //
 
-            list($hash_algos, $hash) = explode('=', self::$GITWEBHOOS_AUTHENTICATION, 2) + array('', '');
+            list($hash_algos, $hash) = explode('=', self::$GITWEBHOOKS_AUTHENTICATION, 2) + array('', '');
 
             //
             //
@@ -152,7 +152,7 @@ class GitWebHooks
             //
             //
 
-            if (!self::$GITWEBHOOS_AUTHENTICATION) {
+            if (!self::$GITWEBHOOKS_AUTHENTICATION) {
 
                 die("HTTP header 'X-Hub-Signature' is missing.");
 
@@ -165,7 +165,7 @@ class GitWebHooks
             //
             //
 
-            list($hash_algos, $hash) = explode('=', self::$GITWEBHOOS_AUTHENTICATION, 2) + array('', '');
+            list($hash_algos, $hash) = explode('=', self::$GITWEBHOOKS_AUTHENTICATION, 2) + array('', '');
 
             //
             //
@@ -237,14 +237,14 @@ class GitWebHooks
         // 
         // 
 
-        self::$GITWEBHOOS_AUTHENTICATION = isset($_SERVER['HTTP_GITWEBHOOS_AUTHENTICATION']) ? $_SERVER['HTTP_GITWEBHOOS_AUTHENTICATION'] : "";
+        self::$GITWEBHOOKS_AUTHENTICATION = isset($_SERVER['HTTP_GITWEBHOOKS_AUTHENTICATION']) ? $_SERVER['HTTP_GITWEBHOOKS_AUTHENTICATION'] : "";
 
 
         //
         //
         //
 
-        self::$GITWEBHOOS_BRANCH = isset($_SERVER['HTTP_GITWEBHOOS_BRANCH']) ? $_SERVER['HTTP_GITWEBHOOS_BRANCH'] : "";
+        self::$GITWEBHOOKS_BRANCH = isset($_SERVER['HTTP_GITWEBHOOKS_BRANCH']) ? $_SERVER['HTTP_GITWEBHOOKS_BRANCH'] : "";
         
     }
 }
