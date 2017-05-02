@@ -7,18 +7,10 @@
 # since: Version 0.1
 #
 
-echo "cd beta";
-echo "sudo -u www-data -H git clone ssh://git@github.com/jeffotoni/{REPOSITORY}.git\n";
-echo "sudo -u www-data -H git checkout beta\n";
-
-echo "cd producao";
-echo "sudo -u www-data -H git clone ssh://git@github.com/jeffotoni/{REPOSITORY}.git\n";
-echo "sudo -u www-data -H git checkout product\n";
-
-
-echo "\nClone Repository!!"
-
+echo "Clone Repository!!"
+echo "----------------------------------------------"
 echo $(pwd)
+echo "----------------------------------------------"
 
 #
 #
@@ -28,32 +20,24 @@ cd $(pwd)
 #
 #
 #
-echo "{PATH}{BRANCH}/{REPOSITORY}"
-
-#
-#
-#
 cd {PATH}{BRANCH}
 
-
+#
+#
+#
 echo "git clone ssh://git@github.com/{GITUSER}/{REPOSITORY}.git";
+git clone ssh://git@github.com/{GITUSER}/{REPOSITORY}.git
 
-#
-#
-#
-sudo -u www-data -H git clone ssh://git@github.com/{GITUSER}/{REPOSITORY}.git
+
+echo "Entering the repository: {REPOSITORY}"
+
+cd {PATH}{BRANCH}/{REPOSITORY}
 
 #
 #
 #
 echo "git checkout -b {BRANCH}"
-
-
-#
-#
-#
-sudo -u www-data -H git checkout -b {BRANCH}
-
+git checkout -b {BRANCH}
 
 echo "\End GIT CLONE {REPOSITORY} SUCCESS!!"
 
