@@ -25,6 +25,10 @@ namespace web\src\Http;
 class HttpConfig
 {
     
+    //
+    //
+    //
+    
     public function Generate() 
     {
 

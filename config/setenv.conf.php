@@ -38,6 +38,11 @@ define("PATH_SETENV", PATHSET_LOCAL . "config/setenv.conf.php");
 
 define("PATH_SETCONFIG", PATHSET_LOCAL . "config/setconfig.conf.php");
 
+//
+//
+//
+
+define("PATH_REPOSITORY_CREATE", PATHSET_LOCAL. "config/git.repositories.conf.php");
 
 //
 //
@@ -48,7 +53,7 @@ chdir(PATHSET_LOCAL);
 //
 //
 
-if(!is_file(PATH_SETCONFIG)) {
+if(!is_file(PATH_REPOSITORY_CREATE)) {
 
 $SETCONF_PHP_GITREPO = '[application]
 
@@ -72,7 +77,7 @@ gitprojeto6  = "/var/www/gitproject/"
     //
     //
 
-    file_put_contents(PATH_SETCONFIG, $SETCONF_PHP_GITREPO . PHP_EOL);
+    file_put_contents(PATH_REPOSITORY_CREATE, $SETCONF_PHP_GITREPO . PHP_EOL);
 }
 
 //
@@ -124,7 +129,7 @@ define("KEY", "b118eda467d926d003f9b4af9c203994");
 //
 //
 
-define("GITWEBHOOKS_SECRET", "827ccb0eea8a706c4c34a16891f84e7b");
+define("GITWEBHOOKS_SECRET", "827ccb0bbe8a706c4c65a16891f84e7b");
 
 // 
 // 
@@ -181,7 +186,7 @@ define("TEMPLATE_DEPLOY", [
 //
 //
 
-define("PATH_REPOSITORY", ROOT_DIR. "config/git.repositories.conf.php");
+define("PATH_REPOSITORY", PATH_REPOSITORY_CREATE);
 
 /** 
  *
@@ -223,7 +228,32 @@ $ARRAY_PROJECT_GIT = parse_ini_file(PATH_REPOSITORY);
 //
 //
 
-define("ARRAY_PROJECT_GIT", $ARRAY_PROJECT_GIT);
+define("ARRAY_PROJECT_GIT", $ARRAY_PROJECT_GIT, true);
+
+';
+
+	//
+	//
+	//
+
+	file_put_contents(PATH_SETCONFIG, $SETCONF_PHP . PHP_EOL);    
+	    
+    //
+    //
+    //
+
+    require_once PATH_SETCONFIG;
+
+} else {
+
+
+	//
+	//
+	//
+
+    //echo "\n\nStart....\n\n";
+	require_once PATH_SETCONFIG;
+}
 
 // 
 // 
@@ -235,7 +265,7 @@ $apifunc2 = function ($namespace) {
     //
     //
 
-    $path_n = str_replace(array("\\\"), array("/"), $namespace);
+    $path_n = str_replace(array("\\"), array("/"), $namespace);
 
     //
     //
@@ -284,52 +314,52 @@ $api = $apifunc2(PATH_CLASS_NAMESPACE. "\AutoLoading");
 // 
 
 $loader = function ($namespace, $class="") {
-    
+
+//
+//
+//
+
+$path_n = str_replace(array("\\"), array("/"), $namespace);
+
+//
+//
+//
+
+$path_n = ROOT_DIR.$path_n . ".php";
+
+
+if(is_file($path_n)) {
+
     //
     //
     //
 
-    $path_n = str_replace(array("\\\"), array("/"), $namespace);
+    include_once $path_n;
 
-    //
-    //
-    //
-    
-    $path_n = ROOT_DIR.$path_n . ".php";
-
-
-    if(is_file($path_n)) {
-
-        //
-        //
-        //
-
-        include_once $path_n;
-
-        // 
-        // 
-        // 
-        if($class) {
+    // 
+    // 
+    // 
+    if($class) {
 
 
-            $classApi = new $class;
-
-        } else {
-
-            $classApi = new $namespace;
-        }
-
-        //
-        //
-        //
-
-        return $classApi;
+        $classApi = new $class;
 
     } else {
 
-        exit("\nFile not exist! [{$path_n}]");
-
+        $classApi = new $namespace;
     }
+
+    //
+    //
+    //
+
+    return $classApi;
+
+} else {
+
+    exit("\nFile not exist! [{$path_n}]");
+
+  }
 };
 
 
@@ -338,25 +368,3 @@ $loader = function ($namespace, $class="") {
 //
 
 $LoaderAuto = $loader(PATH_CLASS . "/ClassAutoLoading", "ClassAutoLoading");
-
-';
-
-
-	//
-	//
-	//
-
-	file_put_contents(PATH_SETCONFIG, $SETCONF_PHP . PHP_EOL);    
-	
-    require_once PATH_SETCONFIG;
-
-} else {
-
-
-	//
-	//
-	//
-
-    //echo "\n\nStart....\n\n";
-	require_once PATH_SETCONFIG;
-}
