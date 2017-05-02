@@ -29,7 +29,11 @@ echo "{BRANCH}/{REPOSITORY}"
 cd {PATH}{BRANCH}/{REPOSITORY}
 
 echo "-----------------------------------------------------"
+
 echo "Entering the repository"
+echo {PATH}{BRANCH}/{REPOSITORY}
+echo ""
+echo "Path Local"
 echo $(pwd)
 echo "-----------------------------------------------------"
 
