@@ -103,7 +103,7 @@ class Request
             
         } else {
 
-            die('"msg":"Value of name has not been set!"')
+            die('"msg":"Value of name has not been set!"');
         }
     }
 
@@ -120,7 +120,7 @@ class Request
             
         } else {
 
-            die('"msg":"Value of GitWebHooks-GitUser has not been set!"')
+            die('"msg":"Value of GitWebHooks-GitUser has not been set!"');
             
         }
 
@@ -139,7 +139,7 @@ class Request
             
         } else {
 
-            die('"msg":"Value of GitWebHooks-Branch has not been set!"')
+            die('"msg":"Value of GitWebHooks-Branch has not been set!"');
             
         }
     }
@@ -157,7 +157,7 @@ class Request
             
         } else {
 
-            die('"msg":"Value of Content-Type has not been set!"')
+            die('"msg":"Value of Content-Type has not been set!"');
             
         }
     }

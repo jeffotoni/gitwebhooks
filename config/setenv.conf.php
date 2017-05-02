@@ -57,19 +57,19 @@ if(!is_file(PATH_REPOSITORY_CREATE)) {
 
 $SETCONF_PHP_GITREPO = '[application]
 
-gitwebhooks  = "/var/www/gitproject/"
+gitwebhooks  = /var/www/gitproject/
 
-gitprojeto1  = "/var/www/gitproject/"
+gitprojeto1  = /var/www/gitproject/
 
-gitprojeto2  = "/var/www/gitproject/"
+gitprojeto2  = /var/www/gitproject/
 
-gitprojeto3  = "/var/www/gitproject/"
+gitprojeto3  = /var/www/gitproject/
 
-gitprojeto4  = "/var/www/gitproject/"
+gitprojeto4  = /var/www/gitproject/
 
-gitprojeto5  = "/var/www/gitproject/"
+gitprojeto5  = /var/www/gitproject/
 
-gitprojeto6  = "/var/www/gitproject/"
+gitprojeto6  = /var/www/gitproject/
 ';
 
     
