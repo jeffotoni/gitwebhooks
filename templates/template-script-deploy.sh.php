@@ -28,12 +28,15 @@ echo "{BRANCH}/{REPOSITORY}"
 #
 cd {PATH}{BRANCH}/{REPOSITORY}
 
+echo "---------------------------"
+echo "Entering the repository"
+echo $(pwd)
+echo "---------------------------"
 
 #
 #
 #
 echo "checkout {BRANCH}"
-
 
 #
 #
