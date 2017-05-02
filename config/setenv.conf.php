@@ -357,6 +357,6 @@ $LoaderAuto = $loader(PATH_CLASS . "/ClassAutoLoading", "ClassAutoLoading");
 	//
 	//
 
-    echo "\n\nStart....\n\n";
+    //echo "\n\nStart....\n\n";
 	require_once PATH_SETCONFIG;
 }

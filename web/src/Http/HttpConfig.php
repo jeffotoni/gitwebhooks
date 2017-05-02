@@ -72,9 +72,10 @@ class HttpConfig
         //
         //
         
-        if(is_file(ROOT_DIR . "/config/setconfig.conf.php")) {
+        if(is_file(PATH_REPOSITORY)) {
 
             print "\n\033[32m Generated Config successfully!!";
+            print "\n";
 
         } else {
 

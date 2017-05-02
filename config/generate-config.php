@@ -20,7 +20,7 @@
  *  
  */
 
-require_once "../config/setenv.conf.php";
+require_once "setenv.conf.php";
 
 /** 
  * 
