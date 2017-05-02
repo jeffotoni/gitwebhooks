@@ -1,3 +1,4 @@
 log/**/*
 script/**/*
 config/setconfig.conf.php
+config/git.repositories.conf.php
