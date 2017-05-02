@@ -96,7 +96,12 @@ class NewRouter
         //
         //
         //
+        self::$runing = false;
 
+        //
+        //
+        //
+        
         $method = trim(strtoupper($method));
 
         //
