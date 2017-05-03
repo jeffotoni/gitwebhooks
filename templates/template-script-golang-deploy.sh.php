@@ -7,7 +7,7 @@
 # since: Version 0.1
 #
 
-echo "\nDeploy Go(Golang) .. Being done!!"
+echo "Deploy Go(Golang) .. Being done!!"
 
 #
 #
@@ -26,6 +26,7 @@ echo "Path does not exist!"
 echo ""
 exit 0
 fi
+
 cd {PATH}{REPOSITORY}
 
 #
@@ -38,11 +39,13 @@ echo "checkout $BRANCH"
 
 #
 #
+echo "git reset --hard HEAD"
+
 git reset --hard HEAD
 
 #
 #
-echo "Starting pull.."
+echo "git pull origin {BRANCH}"
 
 #
 #
@@ -51,7 +54,7 @@ git pull origin {BRANCH}
 #
 # stop process, id kill of program
 #
-echo "\nKill all Process program!!"
+echo "Kill all Process program!!"
 
 #
 #
@@ -62,7 +65,7 @@ for pid in $(ps -fe | grep {PROGRAM} | grep -v grep | awk '{print $2}'); do
 		then
 
 		kill -9 "$pid"
-    	echo "\nKill [$pid]" 
+    	echo "Kill [$pid]" 
 	fi
 done
 
@@ -75,11 +78,11 @@ for pid2 in $(ps -C {PROGRAM} -o pid 2>/dev/null); do
 if [ "$(echo $pid2 | grep "^[ [:digit:] ]*$")" ]
 	then
 	kill -9 $pid2
-	echo "\nkill [$pid2]"
+	echo "kill [$pid2]"
 fi
 done
 
-echo "\nDone!!!"
+echo "Done!!!"
 
 echo "go build {PROGRAM}.go"
 go build "{PROGRAM}.go"
@@ -87,7 +90,7 @@ go build "{PROGRAM}.go"
 #echo "go install {PROGRAM}"
 #go install "{PROGRAM}.go"
 
-echo "\nExecute {PROGRAM}"
+echo "Execute {PROGRAM}"
 exec ./{PROGRAM}
 
 echo "\End deploy!!"
