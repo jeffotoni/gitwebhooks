@@ -40,7 +40,7 @@ echo ""
 #
 #
 #
-echo ""
+
 echo "checkout {BRANCH}"
 echo ""
 
@@ -60,7 +60,6 @@ git reset --hard HEAD
 #
 #
 #
-echo ""
 echo "Starting pull !"
 echo ""
 #
