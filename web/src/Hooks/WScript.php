@@ -872,23 +872,9 @@ class WScript
             $msg = '{"msg":"Error writing log [' . PATH_LOG . ']"}';
             self::$msgconcat .= $msg;
             self::$msgconcat .= "".PHP_EOL;
-
-            //
-            //
-            //
-
-            //$this->LoadLog();
-
-            //
-            //
-            //
             
             die($msg);
         }
-
-        //
-        //
-        //
 
         return $this;
     }
@@ -900,21 +886,11 @@ class WScript
     public function Show()
     {
 
-        //
-        //
-        //
-
-        if(self::$show_msg_load) {
-
-            //
-            //
-            //
+       if(self::$show_msg_load) {
 
             print "\n";
             print self::$show_msg_load;
             print "\n";
-            
         }
-        
     }
 }
