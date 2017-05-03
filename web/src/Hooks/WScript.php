@@ -86,7 +86,7 @@ class WScript
     // 
     // 
 
-    public function LoadTemplate($_ARRAY, $modelo = "beta") 
+    public function LoadTemplate($_ARRAY, $modelo = "beta", $created = false) 
     {
 
 
@@ -114,7 +114,7 @@ class WScript
 
         if(isset($_ARRAY['BRANCH'], $_ARRAY['PATH']) && $_ARRAY['BRANCH'] && $_ARRAY['PATH']) {
 
-            self::IsValidBranch($_ARRAY);
+            self::IsValidRepository($_ARRAY, true, $created);
 
         } else {
 
@@ -585,41 +585,55 @@ class WScript
             //
             //
 
-            $content_config = $repository. ' = '.$path_projects.'';
+            $path_repository = "{$path_projects}/{$branch}/{$repository}";
+            
 
+            // 
+            // check repository
+            // 
 
-            if(file_put_contents(PATH_REPOSITORY , PHP_EOL . PHP_EOL. $content_config, FILE_APPEND)) {
+            $ARRAY_PROJECT_GIT = parse_ini_file(PATH_REPOSITORY); // replace again
 
-                self::$msgconcat .= "Successfully: " . PHP_EOL;
-                self::$msgconcat .= "Successfully created content in config git.repositories [$repository]" . PHP_EOL;
-                self::$msgconcat .= "".PHP_EOL;
+            if(!array_key_exists($repository, $ARRAY_PROJECT_GIT)) {
 
-                // 
-                // load file again
-                // 
+                // If there is no need to record
 
-                $ARRAY_PROJECT_GIT = parse_ini_file(PATH_REPOSITORY); // replace again
-             
-                //
-                //
-                //
+                if(file_put_contents(PATH_REPOSITORY , PHP_EOL . PHP_EOL. $content_config, FILE_APPEND)) {
 
-                define("ARRAY_PROJECT_GIT", $ARRAY_PROJECT_GIT);
+                    self::$msgconcat .= "Successfully: " . PHP_EOL;
+                    self::$msgconcat .= "Successfully created content in config git.repositories [$repository]" . PHP_EOL;
+                    self::$msgconcat .= "".PHP_EOL;
 
-            } else {
+                    // 
+                    // load file again
+                    // 
 
-                //
-                //
-                // 
-                self::$msgconcat .= "error " . PHP_EOL;
-                $msg = '{"msg":"Error while creating directory ['.$path_projects.']"}' . PHP_EOL;
-                self::$msgconcat .= $msg;
-                self::$msgconcat .= "".PHP_EOL;
+                    $ARRAY_PROJECT_GIT = parse_ini_file(PATH_REPOSITORY); // replace again
+                 
+                    //
+                    //
+                    //
 
-                $this->LoadLog();
+                    define("ARRAY_PROJECT_GIT", $ARRAY_PROJECT_GIT);
 
-                die($msg);
+                } else {
+
+                    //
+                    //
+                    // 
+                    self::$msgconcat .= "error " . PHP_EOL;
+                    $msg = '{"msg":"Error while creating directory ['.$path_projects.']"}' . PHP_EOL;
+                    self::$msgconcat .= $msg;
+                    self::$msgconcat .= "".PHP_EOL;
+
+                    $this->LoadLog();
+
+                    die($msg);
+                }
+
             }
+
+            $content_config = $repository. ' = '.$path_projects.'';
 
             // 
             // create line in file conf
@@ -641,7 +655,7 @@ class WScript
        // Repository can not exist
        //
 
-       self::IsValidBranch($_ARRAY, true);
+       self::IsValidRepository($_ARRAY, true, true);
 
        //
        //
@@ -649,7 +663,7 @@ class WScript
 
        $modelo = "repository";
 
-       $this->LoadTemplate($_ARRAY, $modelo)
+       $this->LoadTemplate($_ARRAY, $modelo, true)
          
                 ->LoadFileScript() 
 
@@ -685,7 +699,7 @@ class WScript
     //
     //
 
-    public function IsValidBranch($_ARRAY, $valid=false) {
+    public function IsValidRepository($_ARRAY, $valid=false, $created = true) {
 
         //
         //
@@ -704,13 +718,18 @@ class WScript
 
         $is_repository_exist = $_ARRAY["PATH"] . "{$_ARRAY["BRANCH"]}/{$_ARRAY["REPOSITORY"]}";
 
+        //
+        // When it is valid true to check if the repository exists to be created
+        //
+
         if($valid) {
 
             if(is_dir($is_repository_exist)) {
 
                 //
                 //
-                // 
+                //
+
                 self::$msgconcat .= "Created:" . PHP_EOL;
                 $msg = '{"msg":"Repository '.$is_repository_exist.' already exists!"}';
                 self::$msgconcat .= $msg;
@@ -726,36 +745,51 @@ class WScript
                 //
                 //
                 
-                die($msg);                
+                die($msg);
+
+            } else {
+
+                // 
+                // Only the branch exists?
+                // 
+
+                $is_repository_exist = $_ARRAY["PATH"] . "{$_ARRAY["BRANCH"]}";
+
             }
 
         } else {
 
-            if(!is_dir($is_repository_exist)) {
+            //
+            // When valid check if the repository exists otherwise can not give git pull
+            //
+            
+            if(!$created) {
 
-                //
-                //
-                // 
-                self::$msgconcat .= "Created:" . PHP_EOL;
-                $msg = '{"msg":"Repository '.$is_repository_exist.' does not exist!"}';
-                self::$msgconcat .= $msg;
-                self::$msgconcat .= "".PHP_EOL;
+                if(!is_dir($is_repository_exist)) {
 
-                //
-                //
-                //
+                    //
+                    //
+                    // 
+                    self::$msgconcat .= "Created:" . PHP_EOL;
+                    $msg = '{"msg":"Repository '.$is_repository_exist.' does not exist!"}';
+                    self::$msgconcat .= $msg;
+                    self::$msgconcat .= "".PHP_EOL;
 
-                $this->LoadLog();
+                    //
+                    //
+                    //
 
-                //
-                //
-                //
-                
-                die($msg);
+                    $this->LoadLog();
+
+                    //
+                    //
+                    //
+                    
+                    die($msg);
+                }
             }
         }
         
-
         return null;
     }
 
