@@ -70,7 +70,7 @@ class GitHub
     //
     //
     //
-    
+
     private static $HEAD_COMMIT_AUTOR_EMAIL = "";
 
 
@@ -179,14 +179,14 @@ class GitHub
                 if (!self::$HTTP_X_HUB_SIGNATURE) {
 
                     $msg = '{"msg":"HTTP header X-Hub-Signature is missing.!!"}';
-                    self::$msgconcat .= $msg . PHP;
+                    self::$msgconcat .= $msg . PHP_EOL;
                     $this->LoadLog();
                     die($msg);
 
                 } elseif (!extension_loaded('hash')) {
 
                     $msg = '{"msg":"Missing hash extension to check the secret code validity!"}';
-                    self::$msgconcat .= $msg . PHP;
+                    self::$msgconcat .= $msg . PHP_EOL;
                     $this->LoadLog();
                     die($msg);
                 }
@@ -204,7 +204,7 @@ class GitHub
                 if (!in_array($hash_algos, hash_algos(), true)) {
 
                     $msg = '{"msg":"Hash algorithm ' . $hash_algos . ' is not supported !!!"}';
-                    self::$msgconcat .= $msg . PHP;
+                    self::$msgconcat .= $msg . PHP_EOL;
                     $this->LoadLog();
                     die($msg);
                 }
@@ -216,7 +216,7 @@ class GitHub
                 if ($hash !== hash_hmac($hash_algos, self::$payload, GITHUB_SECRET)) {
                     
                     $msg = '{"msg":"Hook Secret does not match!!!"}';
-                    self::$msgconcat .= $msg . PHP;
+                    self::$msgconcat .= $msg . PHP_EOL;
                     $this->LoadLog();
                     die($msg);
 
@@ -241,7 +241,7 @@ class GitHub
             } else {
 
                 $msg = '{"msg":"Error payload failed, does not exist "}';
-                self::$msgconcat .= $msg . PHP;
+                self::$msgconcat .= $msg . PHP_EOL;
 
                 $this->LoadLog();
                 
@@ -259,7 +259,7 @@ class GitHub
         } else {
 
             $msg = '{"msg":"You need GITHUB_SECRET which is in your setconfig.conf.php"}';
-            self::$msgconcat .= $msg . PHP;
+            self::$msgconcat .= $msg . PHP_EOL;
             $this->LoadLog();
             die($msg);
         }
@@ -309,7 +309,7 @@ class GitHub
             } else {
 
                 $msg = '{"msg":"Error Authentication failed! Your [Key] empty !!"}';
-                self::$msgconcat .= $msg . PHP;
+                self::$msgconcat .= $msg . PHP_EOL;
 
                 $this->LoadLog();
                 
@@ -320,7 +320,7 @@ class GitHub
 
 
                 $msg = '{"msg":"Error payload failed, does not exist!!"}';
-                self::$msgconcat .= $msg . PHP;
+                self::$msgconcat .= $msg . PHP_EOL;
                 $this->LoadLog();
                 die($msg);
 
@@ -366,14 +366,14 @@ class GitHub
             if (!self::$GITWEBHOOKS_AUTHENTICATION) {
 
                 $msg = '{"msg":"HTTP header GitWebHooks-Authentication is missing."}';
-                self::$msgconcat .= $msg . PHP;
+                self::$msgconcat .= $msg . PHP_EOL;
                 $this->LoadLog();
                 die($msg);
 
             } elseif (!extension_loaded('hash')) {
 
                 $msg = '{"msg":"Missing hash extension to check the secret code validity!!!"}';
-                self::$msgconcat .= $msg . PHP;
+                self::$msgconcat .= $msg . PHP_EOL;
                 $this->LoadLog();
                 die($msg);
             }
@@ -391,7 +391,7 @@ class GitHub
             if($hash != GITWEBHOOKS_SECRET) {
 
                 $msg = '{"msg":"GitWebHook Secret does not match!!!"}';
-                self::$msgconcat .= $msg . PHP;
+                self::$msgconcat .= $msg . PHP_EOL;
                 $this->LoadLog();
                 die($msg);
 
@@ -430,7 +430,7 @@ class GitHub
             //
             //
             $msg = '{"msg":"You need GITHUB_SECRET which is in your setconfig.conf.php!!"}';
-            self::$msgconcat .= $msg . PHP;
+            self::$msgconcat .= $msg . PHP_EOL;
             $this->LoadLog();
             die($msg);
         }
@@ -442,7 +442,8 @@ class GitHub
     //
 
     private static function SetDataServer() 
-    {
+    {  
+
 
         self::$REMOTE_ADDR = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
         //
@@ -510,7 +511,7 @@ class GitHub
 
         $rep_name       = $json->repository->name;
 
-        self::$msgconcat .= "Rep Name: " . self::$rep_name  . PHP_EOL;
+        self::$msgconcat .= "Rep Name: " . $rep_name  . PHP_EOL;
         self::$msgconcat .= "" . PHP_EOL;
 
         // 
@@ -570,28 +571,28 @@ class GitHub
         if(!self::$REPOSITORY) {
 
             $msg = '{"msg":"Error repository empty!!"}';
-            self::$msgconcat .= $msg . PHP;
+            self::$msgconcat .= $msg . PHP_EOL;
             $this->LoadLog();
             die($msg);
 
         } else if(!self::$BRANCH) {
 
             $msg = '{"msg":"Error BRANCH empty!!"}';
-            self::$msgconcat .= $msg . PHP;
+            self::$msgconcat .= $msg . PHP_EOL;
             $this->LoadLog();
             die($msg);
 
         } else if(!self::$REP_ID) {
 
             $msg = '{"msg":"Error repository[name] empty!!"}';
-            self::$msgconcat .= $msg . PHP;
+            self::$msgconcat .= $msg . PHP_EOL;
             $this->LoadLog();
             die($msg);
 
         } else if(!self::$CONTENT_TYPE) {
     
             $msg = '{"msg":"Error CONTENT_TYPE empty!!"}';
-            self::$msgconcat .= $msg . PHP;
+            self::$msgconcat .= $msg . PHP_EOL;
             $this->LoadLog();
             die($msg);
 
@@ -721,7 +722,7 @@ class GitHub
                 } else {
 
                     $msg = '{"msg":"Fatal error, event not allowed [' . self::$HTTP_X_GITHUB_EVENT . " !=" . $EVENT . ']"}';
-                    self::$msgconcat .= $msg . PHP;
+                    self::$msgconcat .= $msg . PHP_EOL;
 
                     $this->LoadLog();
 
@@ -738,7 +739,7 @@ class GitHub
             default:
 
                     $msg = '{"msg":"Fatal error, event not Event not allowed [' . self::$HTTP_X_GITHUB_EVENT . ']"}';
-                    self::$msgconcat .= $msg . PHP;
+                    self::$msgconcat .= $msg . PHP_EOL;
 
                     $this->LoadLog();
                     
@@ -751,7 +752,7 @@ class GitHub
 
 
             $msg = '{"msg":"HTTP_X_GITHUB_EVENT empty , fatal error"}';
-            self::$msgconcat .= $msg . PHP;
+            self::$msgconcat .= $msg . PHP_EOL;
 
             $this->LoadLog();
             

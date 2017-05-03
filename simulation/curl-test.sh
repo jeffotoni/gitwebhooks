@@ -36,12 +36,12 @@
 	 
 # curl -X GET \
 # 	 -H "Content-Type: application/json" \
-# 	 -H "GitWebHoos-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
+# 	 -H "GitWebHooks-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
 # 	 http://localhost:9001/gitwebhooks/status
 
 # curl -X GET \
 # 	 -H "Content-Type: application/json" \
-# 	 -H "GitWebHoos-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
+# 	 -H "GitWebHooks-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
 # 	 http://localhost/gitwebhooks/webhooks/status
 
 # We suggest that you take the test directly from github, because 
@@ -54,7 +54,7 @@
 # curl -X POST \
 # 	 -H "Content-Type: application/json" \
 # 	 -H "X-Hub-Signature: sha1=9c714dcc8f1f4ba829c88fef184ccd0d090f019d" \
-# 	 -H "GitWebHoos-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
+# 	 -H "GitWebHooks-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
 # 	 -H "X-GitHub-Event: push" \
 # 	 -H "X-GitHub-Delivery: e4cd4180-2c67-11e7-8099-87e86dbb4105" \
 # 	 http://localhost/gitwebhooks/github/webhooks \
@@ -62,14 +62,14 @@
 	
 # curl -X GET \
 # 	 -H "Content-Type: application/json" \
-# 	 -H "GitWebHoos-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
+# 	 -H "GitWebHooks-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
 # 	 http://localhost:9001/webhooks/status
 
 #sleep 2
 
 # curl -X POST \
 # 	 -H "Content-Type: application/json" \
-# 	 -H "GitWebHoos-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
+# 	 -H "GitWebHooks-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
 # 	 -H "X-GitHub-Event: push" \
 # 	 -H "X-GitHub-Delivery: e4cd4180-2c67-11e7-8099-87e86dbb4105" \
 # 	 http://localhost:9001/github/webhooks \
