@@ -108,6 +108,7 @@ class GitWebHooks
                 self::$msgconcat .= "------------------------------ Error ------------------------------" . PHP_EOL;
                 $msg = '{"msg":"GitWebHook Secret does not match!!!"}';
                 self::$msgconcat .= $msg;
+                self::$msgconcat .= "".PHP_EOL;
 
                 $this->LoadLog();
 
@@ -120,6 +121,7 @@ class GitWebHooks
                 // 
 
                 self::$msgconcat .= 'connect sucess! Logged in!';
+                self::$msgconcat .= "".PHP_EOL;
             }
 
             //
@@ -201,6 +203,7 @@ class GitWebHooks
                 // 
 
                 self::$msgconcat .= 'connect sucess! Logged in!';
+                self::$msgconcat .= "".PHP_EOL;
             }
 
         
@@ -291,6 +294,7 @@ class GitWebHooks
             self::$msgconcat .= "------------------------------ Error ------------------------------" . PHP_EOL;
             $msg = '{"msg":"Error writing log [' . PATH_LOG . ']"}';
             self::$msgconcat .= $msg;
+            self::$msgconcat .= "".PHP_EOL;
 
             //
             //
