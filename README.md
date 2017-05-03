@@ -31,7 +31,9 @@ Check out how the calls are made just below, it receives WebHooks coming from gi
 ```php
 
 $api->NewRouter()
-    ->Methods("POST")->HandleFunc("/github/webhooks", function (Response $response, Request $request) use ($api) {
+    ->Methods("POST")
+    ->HandleFunc("/github/webhooks", function (Response $response, Request $request) use ($api) 
+    {
     
         $GitHub = $api->GitHub();
         $api->GitHub()
