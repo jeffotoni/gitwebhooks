@@ -7,6 +7,7 @@
 # since: Version 0.1
 #
 
+echo ""
 echo "#################################### start deploy #################################### "
 echo ""
 echo "\nDeploy being done!!"
@@ -41,7 +42,7 @@ echo ""
 #
 #
 
-echo "checkout {BRANCH}"
+echo "git checkout {BRANCH}"
 echo ""
 
 #
