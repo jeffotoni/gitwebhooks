@@ -778,7 +778,7 @@ class WScript
             //
             //
 
-            $this->LoadLog();
+            //$this->LoadLog();
 
             //
             //

@@ -101,7 +101,17 @@ class GitWebHooks
 
             if($hash != GITWEBHOOKS_SECRET) {
 
-                die('GitWebHook Secret does not match!!!');
+                //
+                //
+                // 
+                
+                self::$msgconcat .= "------------------------------ Error ------------------------------" . PHP_EOL;
+                $msg = '{"msg":"GitWebHook Secret does not match!!!"}';
+                self::$msgconcat .= $msg;
+
+                $this->LoadLog();
+
+                die($msg);
 
             } else {
 
@@ -246,5 +256,59 @@ class GitWebHooks
 
         self::$GITWEBHOOKS_BRANCH = isset($_SERVER['HTTP_GITWEBHOOKS_BRANCH']) ? $_SERVER['HTTP_GITWEBHOOKS_BRANCH'] : "";
         
+    }
+
+    public function LoadLog()
+    {
+
+        //
+        //
+        //
+
+        $IP = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
+
+        //
+        //
+        //
+
+        $HTTP_USER_AGENT = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
+
+        //
+        //
+        //
+
+        self::$show_msg_load = date("Y-m-d [H:i]") . " [{$IP}] [{$HTTP_USER_AGENT}]" . PHP_EOL . self::$msgconcat . PHP_EOL;
+
+        //
+        //
+        //
+
+        if(!file_put_contents(PATH_LOG, self::$show_msg_load, FILE_APPEND)) {
+
+            //
+            //
+            // 
+            self::$msgconcat .= "------------------------------ Error ------------------------------" . PHP_EOL;
+            $msg = '{"msg":"Error writing log [' . PATH_LOG . ']"}';
+            self::$msgconcat .= $msg;
+
+            //
+            //
+            //
+
+            //$this->LoadLog();
+
+            //
+            //
+            //
+            
+            die($msg);
+        }
+
+        //
+        //
+        //
+
+        return $this;
     }
 }
