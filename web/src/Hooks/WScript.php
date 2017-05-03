@@ -781,9 +781,8 @@ class WScript
         //
         //
         //
-        $msgtmp = "--------------------------------------------------- START HERE --------------------------------------------------- " . PHP_EOL;
+        $msgtmp = PHP_EOL . "--------------------------------------------------- START HERE --------------------------------------------------- " . PHP_EOL;
         $msgtmp .= date("Y-m-d [H:i]") . " [{$IP}] [{$HTTP_USER_AGENT}]" . PHP_EOL;
-        $msgtmp .= "" . PHP_EOL;
         $msgtmp .= "" . PHP_EOL;
         self::$show_msg_load = $msgtmp . self::$msgconcat . PHP_EOL;
 
