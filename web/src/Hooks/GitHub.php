@@ -751,7 +751,8 @@ class GitHub
     {
 
         //
-        //
+        // By writing the logs, this method does not return 
+        // this so you will not be able to access it after the method call
         //
 
         $this->LoadLog();
@@ -837,7 +838,5 @@ class GitHub
         print "I'm in Hooks()->GitHub()->". __METHOD__;
 
         print "\n";
-
-        //return md5(uniqid(rand(), true));
     }
 }
