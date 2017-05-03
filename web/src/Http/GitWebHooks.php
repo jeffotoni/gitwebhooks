@@ -297,16 +297,6 @@ class GitWebHooks
             $msg = '{"msg":"Error writing log [' . PATH_LOG . ']"}';
             self::$msgconcat .= $msg;
             self::$msgconcat .= "".PHP_EOL;
-
-            //
-            //
-            //
-
-            //$this->LoadLog();
-
-            //
-            //
-            //
             
             die($msg);
         }
