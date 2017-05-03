@@ -11,7 +11,8 @@ echo "\nDeploy Go(Golang) .. Being done!!"
 
 #
 #
-cd `pwd`
+echo $(pwd)
+cd $(pwd)
 
 #
 #
@@ -19,6 +20,12 @@ echo "{REPOSITORY}"
 
 #
 #
+if [ ! -d "{PATH}/{REPOSITORY}" ]; then
+echo "[Error Path]"
+echo "Path does not exist!"
+echo ""
+exit 0
+fi
 cd {PATH}{REPOSITORY}
 
 #

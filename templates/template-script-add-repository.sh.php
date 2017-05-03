@@ -21,6 +21,13 @@ cd $(pwd)
 #
 #
 #
+if [ ! -d "{PATH}{BRANCH}" ]; then
+echo "[Error Path]"
+echo "Path {PATH}{BRANCH} does not exist!"
+echo ""
+exit 0
+fi
+
 echo "Entering: {PATH}{BRANCH}"
 cd {PATH}{BRANCH}
 
@@ -33,6 +40,13 @@ git clone ssh://git@github.com/{GITUSER}/{REPOSITORY}.git
 echo ""
 
 echo "Entering the repository: {REPOSITORY}"
+
+if [ ! -d "{PATH}{BRANCH}/{REPOSITORY}" ]; then
+echo "[Error Path]"
+echo "Path {PATH}{BRANCH}/{REPOSITORY} does not exist!"
+echo ""
+exit 0
+fi
 
 cd {PATH}{BRANCH}/{REPOSITORY}
 

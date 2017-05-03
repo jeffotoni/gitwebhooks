@@ -7,12 +7,12 @@
 # since: Version 0.1
 #
 
-echo "\nWe're just pretending"
-
+echo "We're just pretending"
+echo ""
 #
 #
 #
-cd `pwd`
+cd $(pwd)
 
 #
 #
@@ -22,7 +22,7 @@ echo "You are in"
 #
 #
 #
-echo `pwd`
+echo $(pwd)
 
 #
 #
@@ -32,6 +32,14 @@ echo "{REPOSITORY}"
 #
 #
 #
+
+if [ ! -d "{PATH}{REPOSITORY}" ]; then
+echo "[Error Path]"
+echo "Path {PATH}{REPOSITORY} does not exist!"
+echo ""
+exit 0
+fi
+
 cd {PATH}{REPOSITORY}
 
 #

@@ -10,9 +10,9 @@
 echo ""
 echo "#################################### start deploy #################################### "
 echo ""
-echo "\nDeploy being done!!"
+echo "Deploy being done!!"
 
-echo "\nYou are in:"
+echo "You are in:"
 echo $(pwd)
 
 #
@@ -23,7 +23,14 @@ cd $(pwd)
 #
 #
 #
-echo "{BRANCH}/{REPOSITORY}"
+echo "{PATH}{BRANCH}/{REPOSITORY}"
+
+if [ ! -d "{PATH}{BRANCH}/{REPOSITORY}" ]; then
+echo "[Error Path]"
+echo "Path {PATH}{BRANCH}/{REPOSITORY} does not exist!"
+echo ""
+exit 0
+fi
 
 #
 #
