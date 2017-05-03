@@ -114,7 +114,7 @@ class WScript
 
         if(isset($_ARRAY['BRANCH'], $_ARRAY['PATH']) && $_ARRAY['BRANCH'] && $_ARRAY['PATH']) {
 
-            self::IsValidRepository($_ARRAY, true, $created);
+            self::IsValidRepository($_ARRAY);
 
         } else {
 
@@ -124,7 +124,7 @@ class WScript
             //
             // 
             self::$msgconcat .= "Error: " . PHP_EOL;
-            $msg = '{"msg":"Repository, branch and PATH Are mandatory, can not be empty"}';
+            $msg = '{"msg":"Repository, branch and PATH are mandatory, can not be empty"}';
             self::$msgconcat .= $msg;
 
             //
@@ -655,7 +655,7 @@ class WScript
        // Repository can not exist
        //
 
-       self::IsValidRepository($_ARRAY, true, true);
+       self::IsValidBranch($_ARRAY);
 
        //
        //
@@ -699,7 +699,7 @@ class WScript
     //
     //
 
-    public function IsValidRepository($_ARRAY, $valid=false, $created = true) {
+    public function IsValidRepository($_ARRAY) {
 
         //
         //
@@ -719,19 +719,97 @@ class WScript
         $is_repository_exist = $_ARRAY["PATH"] . "{$_ARRAY["BRANCH"]}/{$_ARRAY["REPOSITORY"]}";
 
         //
-        // When it is valid true to check if the repository exists to be created
+        //
+        //
+        
+       if(!is_dir($is_repository_exist)) {
+
+            //
+            //
+            // 
+            self::$msgconcat .= "does not exist repository:" . PHP_EOL;
+            $msg = '{"msg":"Repository '.$is_repository_exist.' does not exist, we can not update!"}';
+            self::$msgconcat .= $msg;
+            self::$msgconcat .= "".PHP_EOL;
+
+            //
+            //
+            //
+
+            $this->LoadLog();
+
+            //
+            //
+            //
+            
+            die($msg);
+        }
+        
+        return null;
+    }
+
+    //
+    //
+    //
+
+    public function IsValidBranch($_ARRAY) {
+
+        //
+        //
+        //
+        
+        $lastpos = strlen($_ARRAY["PATH"]) - 1;
+        
+        if($_ARRAY["PATH"]{$lastpos} != "/") {
+
+            $_ARRAY["PATH"] .= "/";
+        }
+
+        //
+        //
         //
 
-        if($valid) {
+        $is_repository_exist = $_ARRAY["PATH"] . "{$_ARRAY["BRANCH"]}/{$_ARRAY["REPOSITORY"]}";
 
-            if(is_dir($is_repository_exist)) {
+        if(is_dir($is_repository_exist)) {
 
+            //
+            //
+            //
+
+            self::$msgconcat .= "Trying to add new repository:" . PHP_EOL;
+            $msg = '{"msg":"Repository '.$is_repository_exist.' already exists!"}';
+            self::$msgconcat .= $msg;
+            self::$msgconcat .= "".PHP_EOL;
+
+            //
+            //
+            //
+
+            $this->LoadLog();
+
+            //
+            //
+            //
+            
+            die($msg);
+
+        } else {
+
+            // 
+            // Only the branch exists?
+            // 
+
+            $is_branch_exist = $_ARRAY["PATH"] . "{$_ARRAY["BRANCH"]}";
+
+            if(!is_dir($is_branch_exist)) {
+
+                 //
                 //
                 //
-                //
 
-                self::$msgconcat .= "Created:" . PHP_EOL;
-                $msg = '{"msg":"Repository '.$is_repository_exist.' already exists!"}';
+                self::$msgconcat .= "Erro trying to add new branch/repository :" . PHP_EOL;
+                $msg = '{"msg":"Branch '.$is_branch_exist.' does not exist, can not create new repository!"}';
                 self::$msgconcat .= $msg;
                 self::$msgconcat .= "".PHP_EOL;
 
@@ -746,48 +824,9 @@ class WScript
                 //
                 
                 die($msg);
-
-            } else {
-
-                // 
-                // Only the branch exists?
-                // 
-
-                $is_repository_exist = $_ARRAY["PATH"] . "{$_ARRAY["BRANCH"]}";
-
             }
 
-        } else {
 
-            //
-            // When valid check if the repository exists otherwise can not give git pull
-            //
-            
-            if(!$created) {
-
-                if(!is_dir($is_repository_exist)) {
-
-                    //
-                    //
-                    // 
-                    self::$msgconcat .= "Created:" . PHP_EOL;
-                    $msg = '{"msg":"Repository '.$is_repository_exist.' does not exist!"}';
-                    self::$msgconcat .= $msg;
-                    self::$msgconcat .= "".PHP_EOL;
-
-                    //
-                    //
-                    //
-
-                    $this->LoadLog();
-
-                    //
-                    //
-                    //
-                    
-                    die($msg);
-                }
-            }
         }
         
         return null;
@@ -815,7 +854,7 @@ class WScript
         //
         //
         //
-        $msgtmp = PHP_EOL . "--------------------------------------------------- START HERE --------------------------------------------------- " . PHP_EOL;
+        $msgtmp = PHP_EOL . "-------------------------------------------------- START WScript -------------------------------------------------- " . PHP_EOL;
         $msgtmp .= date("Y-m-d [H:i]") . " [{$IP}] [{$HTTP_USER_AGENT}]" . PHP_EOL;
         $msgtmp .= "" . PHP_EOL;
         self::$show_msg_load = $msgtmp . self::$msgconcat . PHP_EOL;
