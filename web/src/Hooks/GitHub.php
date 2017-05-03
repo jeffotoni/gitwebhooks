@@ -49,11 +49,27 @@ class GitHub
 
     private static $HEAD_COMMIT_ID = "";
     
+    //
+    //
+    //
+
     private static $HEAD_COMMIT_MSG = "";
+
+    //
+    //
+    //
 
     private static $HEAD_COMMIT_AUTOR_NAME = "";
     
+    //
+    //
+    //
+
     private static $HEAD_COMMIT_AUTOR_USERNAME = "";
+    
+    //
+    //
+    //
     
     private static $HEAD_COMMIT_AUTOR_EMAIL = "";
 
