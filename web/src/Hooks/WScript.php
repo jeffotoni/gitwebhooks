@@ -123,7 +123,7 @@ class WScript
             //
             //
             // 
-            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+            self::$msgconcat .= "Error: " . PHP_EOL;
             $msg = '{"msg":"Repository, branch and PATH Are mandatory, can not be empty"}';
             self::$msgconcat .= $msg;
 
@@ -149,8 +149,8 @@ class WScript
             //
             //
             //
-            self::$msgconcat .= "-------------------------------------- Template -------------------------------------" . PHP_EOL;
-            self::$msgconcat .= "Template Deploy: {$modelo}".PHP_EOL."Name Template: {$modeloName}" . PHP_EOL;
+            self::$msgconcat .= "Template Deploy:" . PHP_EOL;
+            self::$msgconcat .= "{$modelo}".PHP_EOL."Name Template: {$modeloName}" . PHP_EOL;
             self::$msgconcat .= "" . PHP_EOL;
 
             // 
@@ -163,7 +163,7 @@ class WScript
             //
             //
             //
-            self::$msgconcat .= "-------------------------------------- Repository -------------------------------------" . PHP_EOL;
+            self::$msgconcat .= "Repository:" . PHP_EOL;
             self::$msgconcat .= "{$_ARRAY["REPOSITORY"]}".PHP_EOL;
             self::$msgconcat .= "" . PHP_EOL;
             
@@ -183,7 +183,7 @@ class WScript
             // 
             // 
             // 
-            self::$msgconcat .= "-------------------------------------- Create -------------------------------------" . PHP_EOL;
+            self::$msgconcat .= "Create:" . PHP_EOL;
             self::$msgconcat .= "File empty create: [{$file_template}]!".PHP_EOL;
             self::$msgconcat .= "" . PHP_EOL;
 
@@ -224,7 +224,7 @@ class WScript
                 //
                 //
                 // 
-                self::$msgconcat .= "------------------------------ Error ------------------------------" . PHP_EOL;
+                self::$msgconcat .= "Error: " . PHP_EOL;
                 $msg = '{"msg":"erro, not found array LoadTemplate.."}';
                 self::$msgconcat .= $msg;
                 self::$msgconcat .= "" . PHP_EOL;
@@ -250,7 +250,7 @@ class WScript
             //
             //
             // 
-            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+            self::$msgconcat .= "Error: " . PHP_EOL;
             $msg = '{"msg":"erro, not found file [' . $file_template . '].."}';
             self::$msgconcat .= $msg;
             self::$msgconcat .= "" . PHP_EOL;
@@ -308,8 +308,8 @@ class WScript
             //
             //
 
-            self::$msgconcat .= "------------------------------ Script ------------------------------" . PHP_EOL;
-            self::$msgconcat .= "Path script: {".self::$pathScript."}".PHP_EOL;
+            self::$msgconcat .= "Script Path: " . PHP_EOL;
+            self::$msgconcat .= "{".self::$pathScript."}".PHP_EOL;
             self::$msgconcat .= "" . PHP_EOL;
 
         } else {
@@ -317,7 +317,7 @@ class WScript
             //
             //
             // 
-            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+            self::$msgconcat .= "Error: " . PHP_EOL;
             $msg = '{"msg":"erro, not found file ['.self::$pathTemplate.']"}';
             self::$msgconcat .= $msg;
             self::$msgconcat .= "" . PHP_EOL;
@@ -361,7 +361,7 @@ class WScript
             //
             //
             //
-            self::$msgconcat .= "------------------------------ Save ------------------------------" . PHP_EOL;
+            self::$msgconcat .= "Save: " . PHP_EOL;
             self::$msgconcat .= '{"msg":"'.self::$msg.'""}'.PHP_EOL;
             self::$msgconcat .= "".PHP_EOL;
 
@@ -373,7 +373,7 @@ class WScript
 
             self::$msg = "Error while saving!";
 
-            self::$msgconcat .= "------------------------------ Error Save ------------------------------" . PHP_EOL;
+            self::$msgconcat .= "Error Save:" . PHP_EOL;
             self::$msgconcat .= '{"msg":"'.self::$msg.'"}'.PHP_EOL;
             self::$msgconcat .= "".PHP_EOL;
         }
@@ -413,8 +413,8 @@ class WScript
                 //
                 // 
                 //
-                self::$msgconcat .= "----------------------------------------------------------------------------------" . PHP_EOL;
-                self::$msgconcat .= "------------------------------ Execute shell script ------------------------------" . PHP_EOL;
+                self::$msgconcat .= "SHELL SCRIPT: " . PHP_EOL;
+                self::$msgconcat .= "Execute shell script " . PHP_EOL;
                 self::$msgconcat .= "".$LAST_LINE."".PHP_EOL;
 
                 // 
@@ -430,7 +430,7 @@ class WScript
 
             $msg = '{"msg":"erro, not found file [' . self::$pathScript . ']"}' . PHP_EOL;
 
-            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+            self::$msgconcat .= "Error:" . PHP_EOL;
             self::$msgconcat .= $msg;
             self::$msgconcat .= "".PHP_EOL;
 
@@ -467,7 +467,7 @@ class WScript
                 //
                 //
                 //
-                self::$msgconcat .= "------------------------------ Script ------------------------------" . PHP_EOL;
+                self::$msgconcat .= "Script:" . PHP_EOL;
                 self::$msgconcat .= "Removed [{$filescript}]!" . PHP_EOL;
                 self::$msgconcat .= "".PHP_EOL;
 
@@ -480,7 +480,7 @@ class WScript
                 //
                 //
                 //
-                self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+                self::$msgconcat .= "Error:" . PHP_EOL;
                 self::$msgconcat .= "Error while trying to remove file:[{$filescript}]" . PHP_EOL;
                 self::$msgconcat .= "".PHP_EOL;
 
@@ -506,7 +506,7 @@ class WScript
             //
             //
             // 
-            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+            self::$msgconcat .= "Error: " . PHP_EOL;
             $msg = '{"msg":"Repository, branch and gitUser Are mandatory, can not be empty"}';
             self::$msgconcat .= $msg;
             self::$msgconcat .= "".PHP_EOL;
@@ -529,7 +529,7 @@ class WScript
             //
             //
             // 
-            self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+            self::$msgconcat .= "Error: " . PHP_EOL;
             $msg = '{"msg":"The branch can not be the master"}';
             self::$msgconcat .= $msg;
             self::$msgconcat .= "".PHP_EOL;
@@ -563,7 +563,7 @@ class WScript
                 //
                 //
                 // 
-                self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+                self::$msgconcat .= "Error: " . PHP_EOL;
                 $msg = '{"msg":"Directory not found, check the git.repositories file!!!"}';
                 self::$msgconcat .= $msg;
                 self::$msgconcat .= "".PHP_EOL;
@@ -590,7 +590,7 @@ class WScript
 
             if(file_put_contents(PATH_REPOSITORY , PHP_EOL . PHP_EOL. $content_config, FILE_APPEND)) {
 
-                self::$msgconcat .= "------------------------------ Successfully ------------------------------" . PHP_EOL;
+                self::$msgconcat .= "Successfully: " . PHP_EOL;
                 self::$msgconcat .= "Successfully created content in config git.repositories [$repository]" . PHP_EOL;
                 self::$msgconcat .= "".PHP_EOL;
 
@@ -611,7 +611,7 @@ class WScript
                 //
                 //
                 // 
-                self::$msgconcat .= "------------------------------ error ------------------------------" . PHP_EOL;
+                self::$msgconcat .= "error " . PHP_EOL;
                 $msg = '{"msg":"Error while creating directory ['.$path_projects.']"}' . PHP_EOL;
                 self::$msgconcat .= $msg;
                 self::$msgconcat .= "".PHP_EOL;
@@ -662,7 +662,7 @@ class WScript
         //
         //
         // 
-        self::$msgconcat .= "------------------------------ Created ------------------------------" . PHP_EOL;
+        self::$msgconcat .= "Created:" . PHP_EOL;
         $msg = '{"msg":"Repository successfully created [' . $branch . "/" . $repository . ']"}';
         self::$msgconcat .= $msg;
         self::$msgconcat .= "".PHP_EOL;
@@ -711,7 +711,7 @@ class WScript
                 //
                 //
                 // 
-                self::$msgconcat .= "------------------------------ created ------------------------------" . PHP_EOL;
+                self::$msgconcat .= "Created:" . PHP_EOL;
                 $msg = '{"msg":"Repository '.$is_repository_exist.' already exists!"}';
                 self::$msgconcat .= $msg;
                 self::$msgconcat .= "".PHP_EOL;
@@ -736,7 +736,7 @@ class WScript
                 //
                 //
                 // 
-                self::$msgconcat .= "------------------------------ created ------------------------------" . PHP_EOL;
+                self::$msgconcat .= "Created:" . PHP_EOL;
                 $msg = '{"msg":"Repository '.$is_repository_exist.' does not exist!"}';
                 self::$msgconcat .= $msg;
                 self::$msgconcat .= "".PHP_EOL;
@@ -781,8 +781,9 @@ class WScript
         //
         //
         //
-
+        self::$msgconcat .= "--------------------------------------------------- START HERE --------------------------------------------------- " . PHP_EOL;
         self::$show_msg_load = date("Y-m-d [H:i]") . " [{$IP}] [{$HTTP_USER_AGENT}]" . PHP_EOL . self::$msgconcat . PHP_EOL;
+        self::$msgconcat .= "" . PHP_EOL;
 
         //
         //
@@ -793,7 +794,7 @@ class WScript
             //
             //
             // 
-            self::$msgconcat .= "------------------------------ Error ------------------------------" . PHP_EOL;
+            self::$msgconcat .= "Error:" . PHP_EOL;
             $msg = '{"msg":"Error writing log [' . PATH_LOG . ']"}';
             self::$msgconcat .= $msg;
             self::$msgconcat .= "".PHP_EOL;
