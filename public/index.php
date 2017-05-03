@@ -156,7 +156,7 @@ $api->NewRouter()
                 // Possibility to delete file, it is not mandatory
                 //
 
-                ->DelFile()
+                //->DelFile()
 
                 // 
                 // Generates log on disk so you can keep track of all executions
