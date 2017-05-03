@@ -41,9 +41,7 @@ echo ""
 #
 #
 echo ""
-echo ""
 echo "checkout {BRANCH}"
-echo ""
 echo ""
 
 #
@@ -54,18 +52,22 @@ git checkout {BRANCH}
 #
 #
 #
+echo ""
+echo "git reset --hard HEAD"
 git reset --hard HEAD
 
 
 #
 #
 #
+echo ""
 echo "Starting pull !"
-
+echo ""
 #
 #
 #
 git pull origin {BRANCH}
 
+echo ""
 echo "End deploy!!"
 echo ""
