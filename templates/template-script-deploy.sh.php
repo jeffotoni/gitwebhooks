@@ -7,7 +7,6 @@
 # since: Version 0.1
 #
 
-echo ""
 echo "#################################### start #################################### "
 echo ""
 echo "\nDeploy being done!!"

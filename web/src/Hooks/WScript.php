@@ -782,8 +782,9 @@ class WScript
         //
         //
         self::$msgconcat .= "--------------------------------------------------- START HERE --------------------------------------------------- " . PHP_EOL;
+        self::$msgconcat .= date("Y-m-d [H:i]") . " [{$IP}] [{$HTTP_USER_AGENT}]" . PHP_EOL;
         self::$msgconcat .= "" . PHP_EOL;
-        self::$show_msg_load = date("Y-m-d [H:i]") . " [{$IP}] [{$HTTP_USER_AGENT}]" . PHP_EOL . self::$msgconcat . PHP_EOL;
+        self::$show_msg_load = self::$msgconcat . PHP_EOL;
 
         //
         //
