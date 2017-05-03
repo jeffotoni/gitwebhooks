@@ -29,21 +29,21 @@ echo "{BRANCH}/{REPOSITORY}"
 #
 cd {PATH}{BRANCH}/{REPOSITORY}
 
-echo "-----------------------------------------------------"
+echo ""
 echo "Entering the repository"
 echo {PATH}{BRANCH}/{REPOSITORY}
 echo ""
 echo "Path Local"
 echo $(pwd)
-echo "-----------------------------------------------------"
+echo ""
 
 #
 #
 #
 echo ""
-echo "-----------------------------------------------------"
+echo ""
 echo "checkout {BRANCH}"
-echo "-----------------------------------------------------"
+echo ""
 echo ""
 
 #
@@ -60,7 +60,7 @@ git reset --hard HEAD
 #
 #
 #
-echo "Starting pull.."
+echo "Starting pull !"
 
 #
 #
