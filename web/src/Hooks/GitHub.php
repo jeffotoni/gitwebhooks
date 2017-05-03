@@ -25,6 +25,38 @@ namespace web\src\Hooks;
 class GitHub
 {
     
+    //
+    //
+    //
+
+    private static $show_msg_load = "";
+
+    //
+    //
+    //
+
+    private static $COMMITS = "";
+
+    //
+    //
+    //
+
+    private static $REMOTE_ADDR = "";
+    
+    //
+    //
+    //
+
+    private static $HEAD_COMMIT_ID = "";
+    
+    private static $HEAD_COMMIT_MSG = "";
+
+    private static $HEAD_COMMIT_AUTOR_NAME = "";
+    
+    private static $HEAD_COMMIT_AUTOR_USERNAME = "";
+    
+    private static $HEAD_COMMIT_AUTOR_EMAIL = "";
+
 
     //
     //
@@ -130,11 +162,17 @@ class GitHub
 
                 if (!self::$HTTP_X_HUB_SIGNATURE) {
 
-                    die("\nHTTP header 'X-Hub-Signature' is missing.\n");
+                    $msg = '{"msg":"HTTP header X-Hub-Signature is missing.!!"}';
+                    self::$msgconcat .= $msg . PHP;
+                    $this->LoadLog();
+                    die($msg);
 
                 } elseif (!extension_loaded('hash')) {
 
-                    die("\nMissing 'hash' extension to check the secret code validity.\n");
+                    $msg = '{"msg":"Missing hash extension to check the secret code validity!"}';
+                    self::$msgconcat .= $msg . PHP;
+                    $this->LoadLog();
+                    die($msg);
                 }
 
                 //
@@ -149,7 +187,10 @@ class GitHub
 
                 if (!in_array($hash_algos, hash_algos(), true)) {
 
-                    die("\nHash algorithm '$hash_algos' is not supported !!!\n");
+                    $msg = '{"msg":"Hash algorithm ' . $hash_algos . ' is not supported !!!"}';
+                    self::$msgconcat .= $msg . PHP;
+                    $this->LoadLog();
+                    die($msg);
                 }
 
                 //
@@ -158,7 +199,10 @@ class GitHub
 
                 if ($hash !== hash_hmac($hash_algos, self::$payload, GITHUB_SECRET)) {
                     
-                    die("\nHook Secret does not match!!!\n");
+                    $msg = '{"msg":"Hook Secret does not match!!!"}';
+                    self::$msgconcat .= $msg . PHP;
+                    $this->LoadLog();
+                    die($msg);
 
                 } else {
 
@@ -172,12 +216,22 @@ class GitHub
                     // 
                     // 
 
-                    self::$msgconcat .= 'connect sucess! Logged in!';
+                    self::$msgconcat .= 'Connect sucess! Logged in!' . PHP_EOL;
+                    self::$msgconcat .= "" . PHP_EOL;
+
+
                 }
 
             } else {
 
-                die("\nError payload failed, does not exist !!!\n");
+                $msg = '{"msg":"Error payload failed, does not exist "}';
+                self::$msgconcat .= $msg . PHP;
+
+                $this->LoadLog();
+                
+                die($msg);
+
+                
             }
             
             //
@@ -188,7 +242,10 @@ class GitHub
 
         } else {
 
-            die("\nYou need GITHUB_SECRET which is in your setconfig.conf.php\n");
+            $msg = '{"msg":"You need GITHUB_SECRET which is in your setconfig.conf.php"}';
+            self::$msgconcat .= $msg . PHP;
+            $this->LoadLog();
+            die($msg);
         }
     }
 
@@ -223,8 +280,9 @@ class GitHub
                 //
                 //
 
-                self::$msgconcat .= "Mount Data payload success! ";    
-
+                self::$msgconcat .= "Mount Data payload success! " . PHP_EOL;
+                self::$msgconcat .= "" . PHP_EOL;
+                
                 //
                 //
                 //
@@ -234,12 +292,23 @@ class GitHub
 
             } else {
 
-                die("\nError Authentication failed! Your [Key] empty !!\n");
+                $msg = '{"msg":"Error Authentication failed! Your [Key] empty !!"}';
+                self::$msgconcat .= $msg . PHP;
+
+                $this->LoadLog();
+                
+                die($msg);
             }
 
         } else {
 
-            die("\nError payload failed, does not exist !!!\n");
+
+                $msg = '{"msg":"Error payload failed, does not exist!!"}';
+                self::$msgconcat .= $msg . PHP;
+                $this->LoadLog();
+                die($msg);
+
+            
         }
         
         //
@@ -280,11 +349,17 @@ class GitHub
 
             if (!self::$GITWEBHOOKS_AUTHENTICATION) {
 
-                die("HTTP header 'GitWebHooks-Authentication' is missing.");
+                $msg = '{"msg":"HTTP header GitWebHooks-Authentication is missing."}';
+                self::$msgconcat .= $msg . PHP;
+                $this->LoadLog();
+                die($msg);
 
             } elseif (!extension_loaded('hash')) {
 
-                die("Missing 'hash' extension to check the secret code validity!!!");
+                $msg = '{"msg":"Missing hash extension to check the secret code validity!!!"}';
+                self::$msgconcat .= $msg . PHP;
+                $this->LoadLog();
+                die($msg);
             }
 
             //
@@ -299,7 +374,10 @@ class GitHub
 
             if($hash != GITWEBHOOKS_SECRET) {
 
-                die('GitWebHook Secret does not match!!!');
+                $msg = '{"msg":"GitWebHook Secret does not match!!!"}';
+                self::$msgconcat .= $msg . PHP;
+                $this->LoadLog();
+                die($msg);
 
             } else {
 
@@ -319,7 +397,9 @@ class GitHub
                 //
                 //
 
-                self::$msgconcat .= 'connect sucess! Logged in!';
+                self::$msgconcat .= 'connect sucess! Logged in!' . PHP_EOL;
+                self::$msgconcat .= "" . PHP_EOL;
+
             }
 
             //
@@ -333,8 +413,10 @@ class GitHub
             //
             //
             //
-
-            die("\nYou need GITHUB_SECRET which is in your setconfig.conf.php\n");
+            $msg = '{"msg":"You need GITHUB_SECRET which is in your setconfig.conf.php!!"}';
+            self::$msgconcat .= $msg . PHP;
+            $this->LoadLog();
+            die($msg);
         }
     }
 
@@ -346,6 +428,7 @@ class GitHub
     private static function SetDataServer() 
     {
 
+        self::$REMOTE_ADDR = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
         //
         //
         //
@@ -384,11 +467,17 @@ class GitHub
     {
 
 
+        self::$msgconcat .= '------------------------------------------------ SetDataWebHooks ------------------------------------------------' . PHP_EOL;
+        self::$msgconcat .= "" . PHP_EOL;
         //
         // Coming from github
         //
 
         self::$REF           = $json->ref;
+
+        self::$msgconcat .= "Ref: " . self::$REF  . PHP_EOL;
+        self::$msgconcat .= "" . PHP_EOL;
+        
 
         //
         //
@@ -396,11 +485,17 @@ class GitHub
 
         self::$REP_ID        = $json->repository->id;
 
+        self::$msgconcat .= "Rep Id: " . self::$REP_ID  . PHP_EOL;
+        self::$msgconcat .= "" . PHP_EOL;
+
         //
         // Coming from github
         //
 
         $rep_name       = $json->repository->name;
+
+        self::$msgconcat .= "Rep Name: " . self::$rep_name  . PHP_EOL;
+        self::$msgconcat .= "" . PHP_EOL;
 
         // 
         // Coming from github
@@ -422,30 +517,70 @@ class GitHub
         self::$BRANCH     = $ref_branch;
 
 
+        self::$msgconcat .= "Branch: " . self::$BRANCH  . PHP_EOL;
+        self::$msgconcat .= "" . PHP_EOL;
+
+        self::$HEAD_COMMIT_ID               = $json->head_commit->id;
+
+        self::$HEAD_COMMIT_MSG              = $json->head_commit->message;
+        
+        self::$HEAD_COMMIT_AUTOR_NAME       = $json->head_commit->author->name;
+
+        self::$HEAD_COMMIT_AUTOR_USERNAME   = $json->head_commit->author->username;
+        
+        self::$HEAD_COMMIT_AUTOR_EMAIL      = $json->head_commit->author->email;
+
+
+
+        self::$msgconcat .= "Commit Id: " . self::$HEAD_COMMIT_ID  . PHP_EOL;
+        self::$msgconcat .= "" . PHP_EOL;
+
+        self::$msgconcat .= "Commit message: " . self::$HEAD_COMMIT_MSG  . PHP_EOL;
+        self::$msgconcat .= "" . PHP_EOL;
+
+        self::$msgconcat .= "Autor name: " . self::$HEAD_COMMIT_AUTOR_NAME  . PHP_EOL;
+        self::$msgconcat .= "" . PHP_EOL;
+
+        self::$msgconcat .= "Autor username: " . self::$HEAD_COMMIT_AUTOR_USERNAME  . PHP_EOL;
+        self::$msgconcat .= "" . PHP_EOL;
+
+        self::$msgconcat .= "Autor email: " . self::$HEAD_COMMIT_AUTOR_EMAIL  . PHP_EOL;
+        self::$msgconcat .= "" . PHP_EOL;
+
         //
         // Validating
         //
 
         if(!self::$REPOSITORY) {
 
-            die("\nError repository empty!!!\n");
+            $msg = '{"msg":"Error repository empty!!"}';
+            self::$msgconcat .= $msg . PHP;
+            $this->LoadLog();
+            die($msg);
 
         } else if(!self::$BRANCH) {
 
-            die("\nError BRANCH empty!!!\n");
+            $msg = '{"msg":"Error BRANCH empty!!"}';
+            self::$msgconcat .= $msg . PHP;
+            $this->LoadLog();
+            die($msg);
 
         } else if(!self::$REP_ID) {
 
-            die("\nError repository[name] empty!!!\n");
+            $msg = '{"msg":"Error repository[name] empty!!"}';
+            self::$msgconcat .= $msg . PHP;
+            $this->LoadLog();
+            die($msg);
 
         } else if(!self::$CONTENT_TYPE) {
-        
-            die("\nError CONTENT_TYPE empty!!!\n");
+    
+            $msg = '{"msg":"Error CONTENT_TYPE empty!!"}';
+            self::$msgconcat .= $msg . PHP;
+            $this->LoadLog();
+            die($msg);
 
         }
-
     }
-
 
     //
     //
@@ -489,15 +624,23 @@ class GitHub
             break;
 
         default:
-            die("\nUnsupported content type: [".empty(self::$CONTENT_TYPE) ? " empty" : " [" . self::$CONTENT_TYPE . "] \n");
+
+            $msg = '{"msg":"Unsupported content type: ['.empty(self::$CONTENT_TYPE) ? " empty" : " [" . self::$CONTENT_TYPE . ']"}';
+            self::$msgconcat .= $msg . PHP_EOL;
+            $this->LoadLog();
+            die($msg);
         }
 
 
         if(!self::$payload) {
 
-            self::$msgconcat .= " Fatal error, payload not found!";
+            $msg = '{"msg":"Fatal error, payload not found!"}';
+            self::$msgconcat .= $msg . PHP_EOL;
+            self::$msgconcat .= "" . PHP_EOL;
+
+            $this->LoadLog();
             
-            die("\n".self::$msgconcat."\n");
+            die($msg);
         }
 
         //
@@ -508,12 +651,17 @@ class GitHub
 
         if(is_object(self::$jsonDecode) && isset(self::$jsonDecode->ref) && self::$jsonDecode->ref) {
 
-            self::$msgconcat .= "Mount Data jsonDecode success! ";    
+            self::$msgconcat .= "Mount Data jsonDecode success! " . PHP_EOL;
+            self::$msgconcat .= "" . PHP_EOL;
 
         } else { 
 
-            self::$msgconcat .= "Mount Data jsonDecode fatal error!";
-            die("\n".self::$msgconcat."\n");
+            $msg = '{"msg":"Mount Data jsonDecode fatal error!"}';
+            self::$msgconcat .= "" . $msg . PHP_EOL;
+            
+            $this->LoadLog();
+            
+            die($msg);
         }
 
     }
@@ -556,8 +704,12 @@ class GitHub
 
                 } else {
 
-                    self::$msgconcat .= "Fatal error, event not allowed [" . self::$HTTP_X_GITHUB_EVENT . " != {$EVENT}]";
-                    die("\n".self::$msgconcat."\n");
+                    $msg = '{"msg":"Fatal error, event not allowed [' . self::$HTTP_X_GITHUB_EVENT . " !=" . $EVENT . ']"}';
+                    self::$msgconcat .= $msg . PHP;
+
+                    $this->LoadLog();
+
+                    die($msg);
                 }
 
                 break;
@@ -569,18 +721,25 @@ class GitHub
 
             default:
 
-                self::$msgconcat .= "Fatal error, event not Event not allowed [$HTTP_X_GITHUB_EVENT]";
-                die("\n".self::$msgconcat."\n");
+                    $msg = '{"msg":"Fatal error, event not Event not allowed [' . self::$HTTP_X_GITHUB_EVENT . ']"}';
+                    self::$msgconcat .= $msg . PHP;
 
+                    $this->LoadLog();
+                    
+                    die($msg);
               // code...
               break;
             }
 
         } else {
 
-            self::$msgconcat .= "HTTP_X_GITHUB_EVENT empty , fatal error!";
-            die("\n".self::$msgconcat."\n");
 
+            $msg = '{"msg":"HTTP_X_GITHUB_EVENT empty , fatal error"}';
+            self::$msgconcat .= $msg . PHP;
+
+            $this->LoadLog();
+            
+            die($msg);
         }
     }
 
@@ -595,6 +754,12 @@ class GitHub
         //
         //
 
+        $this->LoadLog();
+        
+        //
+        //
+        //
+
         if(is_object($api)) {
             
             //
@@ -603,6 +768,61 @@ class GitHub
 
             return ($api->WScript());
         }
+    }
+
+    // 
+    // 
+    // 
+
+    public function LoadLog()
+    {
+
+        //
+        //
+        //
+
+        $IP = self::$REMOTE_ADDR;
+
+        //
+        //
+        //
+
+        $HTTP_USER_AGENT = self::$HTTP_USER_AGENT;
+
+        //
+        //
+        //
+        $msgtmp = PHP_EOL . "------------------------------------------------- Start GhitHub --------------------------------------------------" . PHP_EOL;
+        $msgtmp .= date("Y-m-d [H:i]") . " [{$IP}] [{$HTTP_USER_AGENT}]" . PHP_EOL;
+        $msgtmp .= "" . PHP_EOL;
+        self::$show_msg_load = $msgtmp . self::$msgconcat . PHP_EOL;
+
+        //
+        //
+        //
+
+        if(!file_put_contents(PATH_LOG, self::$show_msg_load, FILE_APPEND)) {
+
+            //
+            //
+            // 
+            self::$msgconcat .= "Error:" . PHP_EOL;
+            $msg = '{"msg":"Error writing log [' . PATH_LOG . ']"}';
+            self::$msgconcat .= $msg;
+            self::$msgconcat .= "".PHP_EOL;
+
+            //
+            //
+            //
+            
+            die($msg);
+        }
+
+        //
+        //
+        //
+
+        return $this;
     }
 
     //

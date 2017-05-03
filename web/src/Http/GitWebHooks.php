@@ -24,7 +24,9 @@ namespace web\src\Http;
 
 class GitWebHooks
 {
-        
+    
+    private static $show_msg_load = "";
+    
     //
     //
     //
