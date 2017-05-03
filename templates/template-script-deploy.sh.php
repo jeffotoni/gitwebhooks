@@ -46,6 +46,7 @@ echo "-----------------------------------------------------"
 echo "checkout {BRANCH}"
 echo "-----------------------------------------------------"
 echo ""
+
 #
 #
 #
@@ -67,7 +68,5 @@ echo "Starting pull.."
 #
 git pull origin {BRANCH}
 
-
-echo "\End deploy!!"
-echo " @@@@@@@@@@@@@@@@ "
-echo " ------------------ "
+echo "End deploy!!"
+echo ""

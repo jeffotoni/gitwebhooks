@@ -371,10 +371,10 @@ class WScript
             // 
             // 
 
-            self::$msg = "Save() ::: Error while saving!";
+            self::$msg = "Error while saving!";
 
             self::$msgconcat .= "------------------------------ Error Save ------------------------------" . PHP_EOL;
-            self::$msgconcat .= '{"msg":"'.self::$msg.'""}'.PHP_EOL;
+            self::$msgconcat .= '{"msg":"'.self::$msg.'"}'.PHP_EOL;
             self::$msgconcat .= "".PHP_EOL;
         }
 
