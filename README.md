@@ -10,33 +10,111 @@ Our example shows the class call executing all its methods: Handle the rules of 
 
 Our microservice has its own route controller and dynamic classes ie you will not need to make new there is an object that will dynamically mount them, using namespace and several other techniques to make it light and thin.
 
+
+There have been implemented 3 routes so far
+
+```php
+
+/github/webhooks
+    - This endpoint is responsible for receiving the webhooks of Github
+
+/webhooks/repository/add/{name}
+    - This endpoint is responsible for adding new git repository on our server.
+
+/webhooks/status
+ - This verifies the status of our microservice.
+
+```
+
+Check out how the calls are made just below, it receives WebHooks coming from github, creates and executes in real time our script from a template that we can configure it in the way that we think best
+
+```php
+
+$api->NewRouter()
+    ->Methods("POST")->HandleFunc("/github/webhooks", function (Response $response, Request $request) use ($api) {
+    
+        $GitHub = $api->GitHub();
+        $api->GitHub()
+            >AuthenticateSecretKey()
+            ->Event("push")
+            ->WScript($api)       
+            ->LoadTemplate(
+                [
+
+                "REPOSITORY" => $GitHub::$REPOSITORY,
+
+                "PATH"       => ARRAY_PROJECT_GIT[$GitHub::$REPOSITORY],
+
+                "BRANCH"     => $GitHub::$BRANCH,
+
+                ]
+            )          
+            ->LoadFileScript()
+            ->Save()
+            ->Execute()
+            ->DelFile()
+            ->LoadLog();
+    }
+
+)->Run();
+
+```
+
+Sometimes we want to add another git repository on our server, we need to create directory, run a git clone etc, this endpoint will do just that.
+
+```php
+
+$api->NewRouter()
+
+->Methods("GET")->HandleFunc(
+
+    '/webhooks/repository/add/{name}', function (Response $response, Request $request) use ($api) {
+    
+        $api->GitWebHooks()->AuthenticateMd5();
+
+        
+        $branch     = $request->GetBranch();
+        
+        $repository = $request->GetName();
+
+        $gitUser    = $request->GitUser();
+
+        $api->WScript()->AddRepository($gitUser, $repository, $branch);
+    }
+
+)->Run();
+
+```
+
 You can extend the entire application, just create your classes to apply them in your need.
 
 When creating a class in web/src/MyControler/MyControlerClass.php for example, you can use it for example as follows:
 
-
 ```php
 
-/**
- * 
- * $api->MyControlerClass()->MyMethod();
- *
- *              OR
- *
- * Use web\src\MyControler\MyControlerClass as MyCC;
- * 
- * $myobj = new MyCC();
- *
- *              OR
- *
- * $objMycc = new web\src\MyControler\MyControlerClass();
- *
- * // dependency injection
- * $objMycc->MyMethod($api);
- * 
- */
+$api->MyControlerClass()->MyMethod();
 
-```
+ /**
+ *              OR
+ */
+ 
+ Use web\src\MyControler\MyControlerClass as MyCC;
+ 
+ $myobj = new MyCC();
+ 
+ /**
+ *              OR
+ */
+ 
+ $objMycc = new web\src\MyControler\MyControlerClass();
+ 
+ /**
+ *              dependency injection
+ */
+ 
+ $objMycc->MyMethod($api);
+
+ ```
 
 If you want to access any class of the system just pass $ api as a parameter and with it you can access any class and method available on the platform.
 
@@ -354,7 +432,7 @@ curl -X GET \
      -H "GitWebHooks-Authentication: md5=827ccb0eea8a706c4c34a16891f84e7b" \
      -H "GitWebHooks-Branch: master" \
      -H "GitWebHooks-GitUser: jeffotoni" \
-     http://localhost:9001/webhooks/repository/add/s3designmania
+     http://localhost:9001/webhooks/repository/add/yourproject100
 
 ```
 
