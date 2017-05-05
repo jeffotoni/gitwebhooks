@@ -114,7 +114,10 @@ class WScript
 
         if(isset($_ARRAY['BRANCH'], $_ARRAY['PATH']) && $_ARRAY['BRANCH'] && $_ARRAY['PATH']) {
 
-            self::IsValidRepository($_ARRAY);
+            if($modelo!="repository" && $created == false )
+                self::IsValidRepository($_ARRAY);
+            else 
+                self::IsValidBranch($_ARRAY);
 
         } else {
 
