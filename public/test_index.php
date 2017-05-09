@@ -264,3 +264,56 @@ $api->NewRouter()
         }
         
     )->Run();
+
+
+
+//
+// under development
+//
+
+$api->NewRouter()
+
+    //
+    //
+    //
+
+    ->Methods("GET")
+
+    //
+    //
+    //
+
+    ->HandleFunc(
+        '/webhooks/branch/add/{name}', function (Response $response, Request $request) use ($api) {
+
+
+            //
+            // Authentication
+            // 
+
+            $api->GitWebHooks()
+
+                //
+                //
+                //
+                ->AuthenticateMd5();
+
+            //
+            //
+            //
+            
+            //$branch     = $request->GetBranch();
+            
+            $branch = $request->GetName();
+
+            $gitUser    = $request->GitUser();
+
+            //
+            //
+            //
+            
+            $api->WScript()->AddRepository($gitUser, $branch);
+
+        }
+        
+    )->Run();
