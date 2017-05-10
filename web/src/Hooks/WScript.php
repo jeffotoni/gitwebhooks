@@ -79,7 +79,7 @@ class WScript
         // use `self` to access class constants from inside the class definition. 
         // 
 
-        return TEMPLATE_DEPLOY;
+        return BRANCH_TEMPLATE_DEPLOY;
     } 
 
     // 
@@ -558,6 +558,13 @@ class WScript
             $path_projects = isset(ARRAY_PROJECT_GIT["gitwebhooks"]) ? ARRAY_PROJECT_GIT["gitwebhooks"] : "";
 
             //
+            // Ensuring you have a / at the end
+            //
+
+            $path_projects = rtrim($path_projects, "/");
+            $path_projects .= "/";
+
+            //
             //
             //
 
@@ -588,8 +595,42 @@ class WScript
             //
             //
 
-            $path_repository = "{$path_projects}/{$branch}/{$repository}";
+            $path_repository = "{$path_projects}{$branch}/{$repository}";
             
+
+            //
+            //
+            //
+
+            $path_branch = "{$path_projects}{$branch}";
+
+             if(!is_dir($path_branch)) {
+
+                //
+                //
+                // 
+                self::$msgconcat .= "Error: " . PHP_EOL;
+                $msg = '{"msg":"Directory branch not found, ['.$path_branch.'] so we can create new repository !!!"}';
+                self::$msgconcat .= $msg;
+                self::$msgconcat .= "".PHP_EOL;
+
+                //
+                //
+                //
+
+                $this->LoadLog();
+
+                //
+                //
+                //
+                
+                die($msg);
+            }
+            //
+            //
+            //
+
+            $content_config = $repository. ' = '.$path_projects.'';
 
             // 
             // check repository
@@ -635,8 +676,6 @@ class WScript
                 }
 
             }
-
-            $content_config = $repository. ' = '.$path_projects.'';
 
             // 
             // create line in file conf
@@ -795,38 +834,41 @@ class WScript
 
             $path_branch = "{$path_projects}/{$branch}";
             
+
             //
-            // under development
-            // 
-            exit("$path_branch");
+            // repository  = template-script-add-repository
+            //
+
+            $content_config = $branch. ' = template-script-deploy';
 
             // 
             // check repository
             // 
 
-            $ARRAY_PROJECT_GIT = parse_ini_file(PATH_REPOSITORY); // replace again
+            $ARRAY_BRANCH_DEPLOY = parse_ini_file(PATH_BRANCH_CREATE); // replace again
 
-            if(!array_key_exists($repository, $ARRAY_PROJECT_GIT)) {
+
+            if(!array_key_exists($branch, $ARRAY_BRANCH_DEPLOY)) {
 
                 // If there is no need to record
 
-                if(file_put_contents(PATH_REPOSITORY , PHP_EOL . PHP_EOL. $content_config, FILE_APPEND)) {
+                if(file_put_contents(PATH_BRANCH_CREATE , PHP_EOL . PHP_EOL. $content_config, FILE_APPEND)) {
 
                     self::$msgconcat .= "Successfully: " . PHP_EOL;
-                    self::$msgconcat .= "Successfully created content in config git.repositories [$repository]" . PHP_EOL;
+                    self::$msgconcat .= "Successfully created content in config git.branch [$branch]" . PHP_EOL;
                     self::$msgconcat .= "".PHP_EOL;
 
                     // 
                     // load file again
                     // 
 
-                    $ARRAY_PROJECT_GIT = parse_ini_file(PATH_REPOSITORY); // replace again
+                    $ARRAY_BRANCH = parse_ini_file(PATH_BRANCH_CREATE); // replace again
                  
                     //
                     //
                     //
 
-                    define("ARRAY_PROJECT_GIT", $ARRAY_PROJECT_GIT);
+                    define("BRANCH_TEMPLATE_DEPLOY", $ARRAY_BRANCH);
 
                 } else {
 
@@ -845,15 +887,15 @@ class WScript
 
             }
 
-            $content_config = $repository. ' = '.$path_projects.'';
-
             // 
             // create line in file conf
             // 
 
-            $path_repository = "{$path_projects}/{$branch}/{$repository}";
+            $path_branch = "{$path_projects}/{$branch}";
         }
 
+        exit("under development");
+        
 
         $_ARRAY["REPOSITORY"]   = $repository;
 

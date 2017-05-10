@@ -266,9 +266,59 @@ $api->NewRouter()
     )->Run();
 
 
+//
+// under development template
+//
+
+$api->NewRouter()
+
+    //
+    //
+    //
+
+    ->Methods("GET")
+
+    //
+    //
+    //
+
+    ->HandleFunc(
+        '/webhooks/template/add/{name}', function (Response $response, Request $request) use ($api) {
+
+
+            //
+            // Authentication
+            // 
+
+            $api->GitWebHooks()
+
+                //
+                //
+                //
+                ->AuthenticateMd5();
+
+            //
+            //
+            //
+            
+            //$branch     = $request->GetBranch();
+            
+            $template = $request->GetName();
+
+            $gitUser    = $request->GitUser();
+
+            //
+            //
+            //
+            echo "\nAdd Template: {$template}";
+            //$api->WScript()->AddTemplate($gitUser, $branch);
+
+        }
+        
+    )->Run();
 
 //
-// under development
+// under development branch
 //
 
 $api->NewRouter()
@@ -312,7 +362,7 @@ $api->NewRouter()
             //
             //
             
-            $api->WScript()->AddRepository($gitUser, $branch);
+            $api->WScript()->AddBranch($gitUser, $branch);
 
         }
         

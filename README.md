@@ -528,20 +528,28 @@ define("PATH_CLASS_NAMESPACE", "web\src");
 //
 //
 
-define("TEMPLATE_DEPLOY", [
+$BRANCH_TEMPLATE_DEPLOY = parse_ini_file(PATH_BRANCH_CREATE);
 
-    "beta"        => "template-script-deploy",
+/** 
+ *
+ * /var/www/gitmyprojects/branch
+ *
+ * OR
+ * 
+ * /var/www/gitmyprojects/product
+ *
+ * OR
+ * 
+ * /var/www/gitmyprojects/beta
+ *
+ * OR
+ * 
+ * /var/www/gitmyprojects/test
+ * 
+ *
+ */
 
-    "test"        => "template-script-deploy",
-
-    "product"     => "template-script-deploy",
-
-    "repository"  => "template-script-add-repository",
-
-    "simulation"  => "simulation-example",
-
-    ]
-   );
+define("BRANCH_TEMPLATE_DEPLOY", $BRANCH_TEMPLATE_DEPLOY, true);
 
 //
 //
@@ -1000,7 +1008,7 @@ class WScript
         // use `self` to access class constants from inside the class definition. 
         // 
 
-        return TEMPLATE_DEPLOY;
+        return BRANCH_TEMPLATE_DEPLOY;
     } 
 
     // 

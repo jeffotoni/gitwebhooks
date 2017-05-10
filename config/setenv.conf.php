@@ -47,6 +47,11 @@ define("PATH_REPOSITORY_CREATE", PATHSET_LOCAL. "config/git.repositories.conf.ph
 //
 //
 //
+define("PATH_BRANCH_CREATE", PATHSET_LOCAL. "config/git.branch.conf.php");
+
+//
+//
+//
 chdir(PATHSET_LOCAL);
 
 //
@@ -78,6 +83,31 @@ gitprojeto6  = /var/www/gitproject/
     //
 
     file_put_contents(PATH_REPOSITORY_CREATE, $SETCONF_PHP_GITREPO . PHP_EOL);
+}
+
+//
+//
+//
+
+if(!is_file(PATH_BRANCH_CREATE)) {
+
+$SETCONF_PHP_GITBRANCH = '[application]
+
+beta        = template-script-deploy
+
+test        = template-script-deploy
+
+product     = template-script-deploy
+
+repository  = template-script-add-repository
+
+simulation  = simulation-example';
+
+    //
+    //
+    //
+
+    file_put_contents(PATH_BRANCH_CREATE, $SETCONF_PHP_GITBRANCH . PHP_EOL);
 }
 
 //
@@ -163,24 +193,33 @@ define("PATH_CLASS", "web/src");
 
 define("PATH_CLASS_NAMESPACE", "web\src");
 
+
+/** 
+ *
+ * /var/www/gitmyprojects/branch
+ *
+ * OR
+ * 
+ * /var/www/gitmyprojects/product
+ *
+ * OR
+ * 
+ * /var/www/gitmyprojects/beta
+ *
+ * OR
+ * 
+ * /var/www/gitmyprojects/test
+ *
+ */
+
+$BRANCH_TEMPLATE_DEPLOY = parse_ini_file(PATH_BRANCH_CREATE);
+
 //
 //
 //
 
-define("TEMPLATE_DEPLOY", [
+define("BRANCH_TEMPLATE_DEPLOY", $BRANCH_TEMPLATE_DEPLOY, true);
 
-    "beta"        => "template-script-deploy",
-
-    "test"        => "template-script-deploy",
-
-    "product"     => "template-script-deploy",
-
-    "repository"  => "template-script-add-repository",
-
-    "simulation"  => "simulation-example",
-
-    ]
-   );
 
 //
 //
