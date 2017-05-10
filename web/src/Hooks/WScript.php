@@ -276,7 +276,7 @@ class WScript
             //
             // 
             self::$msgconcat .= "Error: " . PHP_EOL;
-            $msg = '{"msg":"erro, not found file [' . $file_template . '].."}';
+            $msg = '{"msg":"erro, not found file template [' . $file_template . '] to run."}';
             self::$msgconcat .= $msg;
             self::$msgconcat .= "" . PHP_EOL;
 
