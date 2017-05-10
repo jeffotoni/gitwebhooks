@@ -105,7 +105,9 @@ class WScript
 
         echo "\nMod: ";
         echo $modelo;
-        exit;
+        
+        exit("end");
+
         $modeloName = isset(self::GetTemplate()[$modelo]) ? self::GetTemplate()[$modelo] : "beta";
 
         // 
