@@ -100,6 +100,12 @@ class WScript
         // 
         // 
 
+        print " file: ";
+        print_r(self::GetTemplate);
+
+        echo "\nMod: ";
+        echo $modelo;
+        exit;
         $modeloName = isset(self::GetTemplate()[$modelo]) ? self::GetTemplate()[$modelo] : "beta";
 
         // 
