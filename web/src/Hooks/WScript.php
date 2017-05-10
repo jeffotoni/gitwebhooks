@@ -874,7 +874,8 @@ class WScript
 
                     //
                     //
-                    // 
+                    //
+
                     self::$msgconcat .= "error " . PHP_EOL;
                     $msg = '{"msg":"Error while creating directory ['.$path_projects.']"}' . PHP_EOL;
                     self::$msgconcat .= $msg;
@@ -895,7 +896,6 @@ class WScript
         }
 
         exit("under development");
-        
 
         $_ARRAY["REPOSITORY"]   = $repository;
 
