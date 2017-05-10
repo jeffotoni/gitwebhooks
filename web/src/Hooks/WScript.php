@@ -101,7 +101,7 @@ class WScript
         // 
 
         print " file: ";
-        print_r(self::GetTemplate);
+        print_r(self::GetTemplate());
 
         echo "\nMod: ";
         echo $modelo;
