@@ -100,7 +100,29 @@ class WScript
         // 
         //
 
-        $modeloName = isset(self::GetTemplate()[$modelo]) ? self::GetTemplate()[$modelo] : "beta";
+        $modeloName = isset(self::GetTemplate()[$modelo]) ? self::GetTemplate()[$modelo] : "";
+
+        if(!$modeloName) {
+
+            //
+            //
+            // 
+            self::$msgconcat .= "Error: " . PHP_EOL;
+            $msg = '{"msg":"The branch and template was not found in the git.branch.conf.php file, check if it really exists in config/"}';
+            self::$msgconcat .= $msg;
+
+            //
+            //
+            //
+
+            $this->LoadLog();
+
+            //
+            //
+            //
+
+            die($msg);
+        }
 
         // 
         // 
