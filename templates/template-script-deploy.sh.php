@@ -60,10 +60,10 @@ git checkout {BRANCH}
 #
 #
 #
-echo ""
-echo "git reset --hard HEAD"
-git reset --hard HEAD
-
+#echo ""
+#echo "git reset --hard HEAD"
+#git reset --hard HEAD
+#git reset --soft HEAD
 
 #
 #
