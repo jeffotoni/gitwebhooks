@@ -676,7 +676,8 @@ class GitHub
             $msg = '{"msg":"Mount Data jsonDecode fatal error!"}';
             self::$msgconcat .= "" . $msg . PHP_EOL;
             
-            $this->LoadLog();
+            // not exist object
+            //$this->LoadLog();
             
             die($msg);
         }
