@@ -1,5 +1,5 @@
-log/**/*
-script/**/*
+log/
+script/
 config/setconfig.conf.php
 config/git.repositories.conf.php
 config/git.branch.conf.php
