@@ -1063,7 +1063,7 @@ class WScript
                 //
 
                 self::$msgconcat .= "Erro trying to add new branch/repository :" . PHP_EOL;
-                $msg = '{"msg":"Branch '.$is_branch_exist.' does not exist, can not create new repository!"}';
+                $msg = '{"msg":"Branch '.$is_branch_exist.' does not exist, can not create new repository. ['.print_r($_ARRAY,true).']"}';
                 self::$msgconcat .= $msg;
                 self::$msgconcat .= "".PHP_EOL;
 
