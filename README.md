@@ -1,6 +1,6 @@
 # gitwebhooks
 
-Gitwebhooks is a service for receiving GHub WebHooks.
+Gitwebhooks is a service for receiving GHub WebHooks...
 
 Gitwebhooks is a microservice, it receives Http requests to be configured in addition to receiving requests from WebHooks.
 
